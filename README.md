@@ -67,7 +67,7 @@ app.get('/getsession',function(res,req){
   */
   /*
   这是得到session，在服务器端保存着的是一个object对象
-  
+
   {
     "cookie": {
         "originalMaxAge": null,
@@ -89,7 +89,7 @@ app.listen(3000);
 */
 
 /*
-    当我访问localhost:3000/getsession的时候就可以获取我写入的twsjob这个session，可以同时写入多个session，当浏览器关闭的时候session自动消失，可以通过这个技术来使用户可以跨页面登录
+    当我访问localhost:3000/getsession的时候就可以获取我写入的twsjob这个session，可以同时写入多个session，当页面关闭的时候不会消失，只有浏览器关闭的时候session与cookie都会自动消失，可以通过这个技术来使用户可以跨页面登录
 */
 ```
 
