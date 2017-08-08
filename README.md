@@ -93,14 +93,55 @@ app.listen(3000);
 */
 ```
 
-* * *
-
 ## 总结
 
->在用户通过url访问我们的网站的时候就是在用户的cookie里面自动生成一个我们定义好的名称的sessionID，用户在通过url访问我们的网站的时候就会在http请求里携带上cookie，我们可以通过设置的cookie来对应到相应的session，从而来管理用户在我们网站的各种状态
+>在用户通过url访问我们的网站的时候,我们就会在用户的cookie里面自动生成一个我们定义好的key的sessionID（value），在用户在通过url访问我们的网站的时候，就会在http请求里携带上cookie，我们可以通过用户发送过来的cookie来找到相应的session，从而来管理用户在我们网站的各种状态
 
+## 后台API规范
 
-* * *
+### GET 为后台为前台发送数据（数据获取）
+
+#### 代码示例
+
+```
+app.get('/somewhere',function(req,res)){
+     //dosomething...
+    res.send('Hello');
+}
+```
+
+### POST 为后台接收前台发送数据并发送结果（数据添加）
+
+#### 代码示例
+
+```
+app.post('/somewhere',function(req,res)){
+     //dosomething...
+    res.send('Hello');
+}
+```
+
+### PUT 为前台给后台发送数据（数据修改）
+
+#### 代码示例
+
+```
+app.put('/somewhere',function(req,res)){
+     //dosomething...
+    res.send('Hello');
+}
+```
+
+### DELETE 为前台给后台发送数据（删除）
+
+#### 代码示例
+
+```
+app.delete('/somewhere',function(req,res)){
+    //dosomething...
+    res.send('Hello');
+}
+```
 
 
 
