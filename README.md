@@ -14,11 +14,13 @@
 
 #### 后台框架
 
-#### express + body-parser + cookie-parser
+#### express + body-parser + cookie-parser + express-session
 
 [express文档](https://www.zybuluo.com/XiangZhou/note/208532#reqcookies)
 
 [cookie-parser](https://segmentfault.com/a/1190000004139342?_ea=504710)
+
+[express-session](http://www.xgllseo.com/?p=5162)
 
 #### 数据库
 
