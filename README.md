@@ -51,19 +51,33 @@ app.use(session({
   saveUninitialized: true
 }));
 //访问代码
-app.get('/', function (res, req, next) {
-    if(res.session.visit){
-        res.session.visit++
-    }else{
-        req.send('第一次访问页面');
-        res.session.visit = 1;
-    }
-    
+app.get('/', function (res, req) {
+  if (res.session.visit) {
+    res.session.visit++;
+    req.json(res.session);
+  } else {
+    res.session.visit = 1;
+    req.send("第一次访问页面");
+  }
 });
 
 app.get('/getsession',function(res,req){
   /*
-    每次用户访问服务器就会自动在http请求头里面带上本地的cookie，但是获取用户本地的cookie的时候一定要使用res.session.你的cookie的key
+    每次用户访问服务器就会自动在http请求头里面带上本地的cookie，但是获取用户本地的cookie的时候一定要使用res.session.你的cookie的key,在以上代码里，第一次访问localhost:3000的时候会输出第一次访问页面，以后每次访问res.session.visit都会加一
+  */
+  /*
+  这是得到session，在服务器端保存着的是一个object对象
+  
+  {
+    "cookie": {
+        "originalMaxAge": null,
+        "expires": null,
+        "httpOnly": true,
+        "path": "/"
+    },
+    "visit": 18
+   }   
+
   */
   let mysession = res.session.twsjob;
   console.log(res.session.twsjob);
@@ -75,7 +89,7 @@ app.listen(3000);
 */
 
 /*
-    当我访问localhost:3000/getsession的时候
+    当我访问localhost:3000/getsession的时候就可以获取我写入的twsjob这个session，可以同时写入多个session，当浏览器关闭的时候session自动消失，可以通过这个技术来使用户可以跨页面登录
 */
 ```
 
