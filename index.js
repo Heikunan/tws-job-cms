@@ -3,7 +3,7 @@ let Bodyparser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let session = require('express-session');
 let mysql = require('mysql');
-
+let urlencodedParser = bodyParser.urlencoded({ extended: true });
 let app = express();
 app.use(cookieParser());
 
