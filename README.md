@@ -30,10 +30,53 @@
 
 # 关于express-session和cookie
 
-### 使用cookie与session技术使用户可以跨页面登录
+### 使用cookie与session技术使用户可以跨页面保持登录状态
 
 ```
+let express = require('express');
+let cookieParser = require('cookie-parser');
+let session = require('express-session');
+//首先引入相关组件
+let app = express();
+//使用session与cookie组件
+/*
+    express-session和cookie-parser这两个组件联合使用可以在用户第一次访问的时候在用户浏览器里面写入cookie
+*/
+app.use(cookieParser('twsjob'));
+app.use(session({
+  name:'twsjob',//设置写入用户浏览器cookie的key
+  secret: 'twsjob',//签名，与cookie保持一致
+  resave: true,
+  maxAge: 90000,//设置失效时间单位为ms
+  saveUninitialized: true
+}));
+//访问代码
+app.get('/', function (res, req, next) {
+    if(res.session.visit){
+        res.session.visit++
+    }else{
+        req.send('第一次访问页面');
+        res.session.visit = 1;
+    }
+    
+});
 
+app.get('/getsession',function(res,req){
+  /*
+    每次用户访问服务器就会自动在http请求头里面带上本地的cookie，但是获取用户本地的cookie的时候一定要使用res.session.你的cookie的key
+  */
+  let mysession = res.session.twsjob;
+  console.log(res.session.twsjob);
+})
+
+app.listen(3000);
+/*
+    当浏览器访问localhost:3000的时候,初始就会自动写入一个cookie而且key为twsjob,本地cookie储存的是session的key，通过res.session.你的cookie的key可以获取你设置session的值
+*/
+
+/*
+    
+*/
 ```
 
 
@@ -41,9 +84,7 @@
 
 # 数据库的设计
 
-## 数据库的名称
-
-### twsjob
+## 数据库的名称 twsjob
 
 ### 用户表 T_user
 
