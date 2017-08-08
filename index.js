@@ -13,3 +13,5 @@ let connection = mysql.createConnection({
   password : 'hubuedu',
   database : 'twsjob'
 });
+
+connection.connect();
