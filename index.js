@@ -93,8 +93,11 @@ app.post('/sign_in',urlencodedParser,function (req,res){
         if (result.length===0) {
             res.send(false);//用户不存在返回false
         }else{
+            if (result[0].active==='0') {
+                res.send('inactivated')//用户存在且账号未激活，返回inactivated
+            }else{
             req.session.user=result[0];
-            res.send(true);//用户存在返回true
+            res.send(true);}//用户存在且账号已激活，返回true
         }
     })
 });
@@ -105,5 +108,4 @@ let server = app.listen(8081, function () {
     let host = server.address().address;
     let port = server.address().port;
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
-
 });
