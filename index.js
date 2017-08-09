@@ -15,7 +15,11 @@ var connection = mysql.createConnection({
   database: 'twsjob',
 });
 
-connection.connect();
+connection.connect(function (err) {
+  if (err) return console.log(err)
+    console.log('connected')
+});
+
 
 // ## 7 用户查看自己创建的职位Post列表
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -23,7 +27,7 @@ app.get('/myposts', function (req, res) {
   //得到用户的id
   let userid = req.query.userid;
   //查找用户的post
-  let sql = 'select * from t_job where userid = ' + userid
+  let sql = 'select title,company from t_job where userid = ' + userid
   console.log(sql)
   connection.query(sql, function (err, result) {
     if (err) {
@@ -34,10 +38,10 @@ app.get('/myposts', function (req, res) {
     console.log('--------------------------SELECT----------------------------');
     console.log(result);
     console.log('------------------------------------------------------------\n\n');
-    //返回自己全部的post
+    //返回自己全部的post的title和company
     res.send(result)
   })
-  connection.end();
+  // connection.end();
 })
 
 // ## 8 用户查看自己创建的职位Post详情
@@ -63,7 +67,7 @@ app.get('/post', function (req, res) {
     //返回自己全部的post
     res.send(result)
   })
-  connection.end();
+  // connection.end();
 })
 
 
