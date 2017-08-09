@@ -121,10 +121,10 @@ app.get('/confirm', function(req, res, next) {
         }
     });
 });
-/*11 登录部分 检查用户是否存在，并返回true/false start here*/
+/*11 登录部分 检查用户是否存在，并返回false/inactivated/用户对象 start here*/
 app.post('/sign_in',urlencodedParser,function (req,res){
-    let email=req.body.email;
-    let pw=req.body.password;
+    let email=cp.hex(req.body.email);
+    let pw=cp.hex(req.body.password);
     let  addSql = 'select * from t_user where email=? and password=?';
     let  addSqlParams = [email,pw];
     connection.query(addSql,addSqlParams,function (err, result) {
@@ -136,7 +136,7 @@ app.post('/sign_in',urlencodedParser,function (req,res){
                 res.send('inactivated')//用户存在且账号未激活，返回inactivated
             }else{
             req.session.user=result[0];
-            res.send(true);}//用户存在且账号已激活，返回true
+            res.send(result[0]);}//用户存在且账号已激活，返回用户对象
         }
     })
 });
