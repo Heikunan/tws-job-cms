@@ -82,6 +82,24 @@ app.get('/login2',urlencodedParser, function (req, res) {
 
 //////////////////////////*杨邵军的测试*//////////////////////////////////////////
 
+/*11 登录部分 检查用户是否存在，并返回true/false start here*/
+app.post('/sign_in',urlencodedParser,function (req,res){
+    let email=req.body.email;
+    let pw=req.body.password;
+    let  addSql = 'select * from t_user where email=? and password=?';
+    let  addSqlParams = [email,pw];
+    connection.query(addSql,addSqlParams,function (err, result) {
+        if(err) throw  err;
+        if (result.length===0) {
+            res.send(false);//用户不存在返回false
+        }else{
+            req.session.user=result[0];
+            res.send(true);//用户存在返回true
+        }
+    })
+});
+/*11 登陆部分 end here*/
+
 
 let server = app.listen(8081, function () {
     let host = server.address().address;
