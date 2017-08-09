@@ -7,6 +7,7 @@ let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 
 var i=0;
 let app = express();
+app.use(Bodyparser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(session({
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
