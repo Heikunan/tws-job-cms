@@ -25,6 +25,7 @@ let connection = mysql.createConnection({
   password : 'hubuedu',
   database : 'twsjob'
 });
+connection.connect();
 app.get('/allJobs',urlencodedParser, function (req, res)  {
 
 //点击显示所有职位的按钮，得到所有职位的信息
@@ -36,17 +37,7 @@ app.get('/allJobs',urlencodedParser, function (req, res)  {
 
 });
 
-app.post("/searchResult",urlencodedParser, function (req, res) {
-    let searchJobName=req.body.JobName;
-    //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
-    let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
-    //let sqlinfor=[searchJobName];escription
-    connection.query(sql,function(err, result) {
-        if(err) throw  err;
-//let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
-        res.send(result);
-    });
-});/*连接发送邮件的邮箱*/
+/*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host : 'smtp.126.com',
     port: 25,
@@ -56,18 +47,8 @@ let mailTransport = nodemailer.createTransport({
         pass : 'dalaodaifei555'
     },
 });
-var connection = mysql.createConnection({
-  host: '119.28.63.95',
-  user: 'myuser',
-  password: 'hubuedu',
-  port: '3306',
-  database: 'twsjob',
 
-});
-connection.connect();
-app.get('/allJobs',urlencodedParser, function (req, res) {
 
-});
 
 
 /*连接发送邮件的邮箱*/
@@ -409,16 +390,6 @@ app.get('/resettingLogin',function (req,res) {
         console.log(reply);
         res.send(reply.affectedRows);
     });
-
-
-
-//点击显示所有职位的按钮，得到所有职位的信息
-    let sql='select * from t_job';
-    connection.query(sql,function(err, result) {
-        if(err) throw  err;
-        res.send(result);
-    });
-
 });
 
 app.post("/searchResult",urlencodedParser, function (req, res) {
@@ -437,4 +408,4 @@ let server = app.listen(8081, function () {
     let host = server.address().address;
     let port = server.address().port;
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
-});
+})

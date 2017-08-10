@@ -11,7 +11,7 @@ let i=0;
 
 let app = express();
 app.use(express.static('src'));
-
+app.use(express.static('src'));
 app.use(Bodyparser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(session({

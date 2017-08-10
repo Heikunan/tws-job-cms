@@ -4,28 +4,42 @@
     <meta charset="UTF-8">
     <title>主页</title>
     <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="semantic.min.css"></script>
-    <script src="semantic.min.js"></script>
+
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="semantic.min.css">
+    <script src="semantic.min.js"></script>
 
 </head>
 <body>
-<div class="input-group">
-    <input type="text" class="form-control" placeholder="Search for...">
-    <span class="input-group-btn">
-        <button class="btn-default" type="button">Go!</button>
-      </span>
-</div>
+
 <button class="yhx" type="button">全部信息</button>
 
+<div class="form-group">
+    <input type="text" class="yhx-form-control" placeholder="Search">
+</div>
+<button type="submit" class="yhx-btn-default">Submit</button>
 
-<div class="ui grid">
-    <div class="four wide column">
-        <div class="ui segment">
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ttx-right">
+
+                <ol class="breadcrumb ttx-bread">
+                    <li class="active">全部职业</li>
+                </ol>
+
+                <div class="row ttx-movie-container">
+
+                </div>
+
+
+            </div>
         </div>
     </div>
-</div>
+</section>
 </body>
+<script src="js/main.js"></script>
 </html>
