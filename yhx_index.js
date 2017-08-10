@@ -5,7 +5,11 @@ let session = require('express-session');
 let mysql = require('mysql');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 
+<<<<<<< HEAD
 let i=0;
+=======
+var i=0;
+>>>>>>> s
 let app = express();
 app.use(express.static('src'));
 app.use(Bodyparser.urlencoded({extended:true}));
@@ -37,6 +41,10 @@ app.post('/',urlencodedParser,function (req,res) {
         if(err) throw  err;
         res.send(result);
     });
+});
+
+app.get('/hh',urlencodedParser,function (req,res) {
+    res.sendFile( __dirname + "/src/" + "yapp.html" );
 });
 ///////////////////*杨邵军的测试*/////////////////////////////////////////////
 
@@ -98,6 +106,7 @@ app.get('/allJobs',urlencodedParser, function (req, res)  {
 
 app.post("/searchResult",urlencodedParser, function (req, res) {
     let searchJobName=req.body.jobName;
+    console.log(searchJobName);
     //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
     let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
     //let sqlinfor=[searchJobName];escription
