@@ -189,7 +189,29 @@ app.post('/sign_in',urlencodedParser,function (req,res){
         }
     })
 });
+app.get('/allJobs',urlencodedParser, function (req, res)  {
 
+//点击显示所有职位的按钮，得到所有职位的信息
+    let sql='select * from t_job';
+    connection.query(sql,function(err, result) {
+        if(err) throw  err;
+        res.send(result);
+    });
+
+});
+
+app.post("/searchResult",urlencodedParser, function (req, res) {
+    let searchJobName=req.body.jobName;
+    console.log(searchJobName);
+    //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
+    let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
+    //let sqlinfor=[searchJobName];escription
+    connection.query(sql,function(err, result) {
+        if(err) throw  err;
+//let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
+        res.send(result);
+    });
+});
 let server = app.listen(8081, function () {
     let host = server.address().address;
     let port = server.address().port;
