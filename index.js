@@ -9,44 +9,13 @@ let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 let cp = new Crypto('you secret code');
 
 let app = express();
+app.use(express.static('src'));
 app.use(Bodyparser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(session({
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
     cookie: { maxAge: 60 * 1000 }
 }));
-
-
-var connection = mysql.createConnection({
-  host: '119.28.63.95',
-  user: 'myuser',
-  password: 'hubuedu',
-  port: '3306',
-  database: 'twsjob',
-
-});
-app.get('/allJobs',urlencodedParser, function (req, res)  {
-
-//点击显示所有职位的按钮，得到所有职位的信息
-    let sql='select * from t_job';
-    connection.query(sql,function(err, result) {
-        if(err) throw  err;
-        res.send(result);
-    });
-
-});
-
-app.post("/searchResult",urlencodedParser, function (req, res) {
-    let searchJobName=req.body.JobName;
-    //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
-    let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
-    //let sqlinfor=[searchJobName];escription
-    connection.query(sql,function(err, result) {
-        if(err) throw  err;
-//let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
-        res.send(result);
-    });
-});/*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host : 'smtp.126.com',
     port: 25,
@@ -56,20 +25,28 @@ let mailTransport = nodemailer.createTransport({
         pass : 'dalaodaifei555'
     },
 });
+var connection = mysql.createConnection({
+  host: '119.28.63.95',
+  user: 'myuser',
+  password: 'hubuedu',
+  port: '3306',
+  database: 'twsjob',
 
+});
 connection.connect();
+app.get('/allJobs',urlencodedParser, function (req, res) {
 
-app.get('/',function (req,res) {
-    res.sendFile( __dirname + "/" + "l.html" );
-})
+});
 
+
+/*连接发送邮件的邮箱*/
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
 app.post('/',urlencodedParser,function (req,res) {
-  let jobtype=req.body.jobtype;
-  let category=req.body.category;
-  console.log(jobtype,category);
+    let jobtype=req.body.jobtype;
+    let category=req.body.category;
+    console.log(jobtype,category);
     let sql='select * from t_job where category=? and jobtype=?';
     let sqlinfor=[category,jobtype];
     connection.query(sql,sqlinfor,function (err, result) {
@@ -88,12 +65,12 @@ app.get('/login',urlencodedParser, function (req, res) {
     connection.query(sql,sqlinfor,function (err, result) {
         if(err) throw  err;
         if(result.length===0){
-          res.send(false);          //不存在这个用户,返回false;
+            res.send(false);          //不存在这个用户,返回false;
         }
         else{
             req.session.user=result[0];//将登陆的用户存入session
             res.send(result[0]);        //返回查找结果，也是session 的用户
-       }
+        }
     });
 });
 
@@ -101,6 +78,7 @@ app.get('/login',urlencodedParser, function (req, res) {
 // ## 7 用户查看自己创建的职位Post列表
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 app.get('/myposts', function (req, res) {
+
   //得到用户的id
   let userid = req.session.userid;
   //查找用户的post
@@ -112,14 +90,7 @@ app.get('/myposts', function (req, res) {
       return;
     }
 
-    console.log('--------------------------SELECT----------------------------');
-    console.log(result);
-    console.log('------------------------------------------------------------\n\n');
-    //返回自己全部的post的title和company
-    res.send(result)
-  })
-  // connection.end();
-})
+
 
 // ## 8 用户查看自己创建的职位Post详情
 // 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
@@ -145,9 +116,6 @@ app.get('/postdetial', function (req, res) {
     res.send(result)
   })
   // connection.end();
-})
-
-
 
 
 //////////////////////////*杨邵军的测试*//////////////////////////////////////////
@@ -216,8 +184,8 @@ app.post('/sign_in',urlencodedParser,function (req,res){
             if (result[0].active===0) {
                 res.send('inactivated')//用户存在且账号未激活，返回inactivated
             }else{
-            req.session.user=result[0];
-            res.send(true);}//用户存在且账号已激活，返回true
+                req.session.user=result[0];
+                res.send(true);}//用户存在且账号已激活，返回true
         }
     })
 });
@@ -227,4 +195,3 @@ let server = app.listen(8081, function () {
     let port = server.address().port;
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
 });
-

@@ -5,8 +5,9 @@ let session = require('express-session');
 let mysql = require('mysql');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 
-var i=0;
+let i=0;
 let app = express();
+app.use(express.static('src'));
 app.use(Bodyparser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(session({
@@ -96,7 +97,7 @@ app.get('/allJobs',urlencodedParser, function (req, res)  {
 });
 
 app.post("/searchResult",urlencodedParser, function (req, res) {
-    let searchJobName=req.body.JobName;
+    let searchJobName=req.body.jobName;
     //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
     let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
     //let sqlinfor=[searchJobName];escription
