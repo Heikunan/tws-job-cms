@@ -166,10 +166,10 @@ app.delete('/somewhere',function(req,res)){
 |ID|职位主键|
 |---|---|
 |userId|用户ID|
-|title|用户密码|
+|title|标题|
 |company|用户所在公司|
-|description|公司地址|
-|applyApproach|公司所属行业|
+|description|职位描述|
+|applyApproach|申请职位的方法|
 |expiryDate|职位申请的截止时间|
 |category|工作职位的种类|
 |jobType|工作性质|
