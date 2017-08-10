@@ -5,11 +5,9 @@ let session = require('express-session');
 let mysql = require('mysql');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 
-<<<<<<< HEAD
+
 let i=0;
-=======
-var i=0;
->>>>>>> s
+
 let app = express();
 app.use(express.static('src'));
 app.use(Bodyparser.urlencoded({extended:true}));
