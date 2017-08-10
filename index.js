@@ -72,12 +72,6 @@ app.get('/login',urlencodedParser, function (req, res) {
 });
 
 
-connection.connect(function (err) {
-  if (err) return console.log(err)
-    console.log('connected')
-});
-
-
 // ## 7 用户查看自己创建的职位Post列表
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 app.get('/myposts', function (req, res) {
@@ -128,9 +122,6 @@ app.get('/post', function (req, res) {
 })
 
 
-app.listen(8081, function () {
-  console.log('listening!')
-})
 
 
 //////////////////////////*杨邵军的测试*//////////////////////////////////////////
