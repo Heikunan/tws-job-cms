@@ -181,24 +181,94 @@ app.get('/confirm', function(req, res, next) {
         }
     });
 });
-/*11 登录部分 检查用户是否存在，并返回false/inactivated/true start here*/
+/*11 登录部分 输入对象，返回字符串 start here*/
 app.post('/sign_in',urlencodedParser,function (req,res){
-    let email=cp.hex(req.body.email);
-    let pw=cp.hex(req.body.password);
-    let  addSql = 'select * from t_user where email=? and password=?';
-    let  addSqlParams = [email,pw];
+    // let email=cp.hex(req.body.email);
+    // let password=cp.hex(req.body.password);
+    let email=req.body.email;
+    let password=req.body.password;
+    console.log(email,password);
+    let  addSql = 'select * from t_user where email=?';
+    let  addSqlParams = [email];
     connection.query(addSql,addSqlParams,function (err, result) {
+        console.log(result);
         if(err) throw  err;
         if (result.length===0) {
-            res.send(false);//用户不存在返回false
+            res.send('null');//用户不存在,则返回null
         }else{
-            if (result[0].active===0) {
-                res.send('inactivated')//用户存在且账号未激活，返回inactivated
+            if (result[0].password!==password) {
+                res.send('wrong')//用户存在，但密码错误,返回wrong
             }else{
-            req.session.user=result[0];
-            res.send(true);}//用户存在且账号已激活，返回true
+                if (result[0].isactive===0) {
+                    res.send('inactivated')//用户存在,但账号未激活，返回inactivated
+                }else{
+                    req.session.user=result[0];
+                    res.send('ok');}//用户存在,且账号已激活，返回OK
+            }
         }
     })
+});
+/*11 登录部分 输入对象，返回字符串 end here*/
+
+//获取职位详情
+// 输入{id:4};
+// 输出： //result为对象数组
+//     [ RowDataPacket {
+// userId: 0,
+// id: 4,
+// title: 'oo',
+// company: '77',
+// description: 'ss',
+// applyApproach: 'sss',
+// expiryDate: 'sss',
+// category: 'development',
+// jobType: 'volunteer',
+// tags: '0',
+// city: 'newyork',
+// country: 'usa' }]
+app.get('/getJobDetail', function (req, res) {
+    req.body=JSON.parse(req.body)
+    let sql = 'SELECT * FROM t_job where id ='+req.body.id;
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        }
+        res.send(result);
+
+        connection.end();
+    });
+});
+//接收发布招聘的信息
+//输入：// {
+// userId:666,
+// title:'good',
+// company:'thoughtworks',
+// description:'goo',
+// applyApproach:'email',
+// expiryDate:'5years',
+// category:'manager',
+// jobType:'fulltime',
+// tags：'logo',
+// city:'shenzhen',
+// country:'China'
+//}
+//输出：成功：200添加成功
+//      失败：500服务器发生错误
+app.post('/postJob', function (req, res) {
+    let userId=req.session.user.id;
+    let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
+    console.log(req.body);
+    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryDate, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country
+    ];
+    connection.query(addSql, addSqlParams, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        }
+        res.status(200).send('添加成功');
+        connection.end();
+    });
 });
 
 let server = app.listen(8081, function () {
