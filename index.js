@@ -25,7 +25,7 @@ connection.connect(function (err) {
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 app.get('/myposts', function (req, res) {
   //得到用户的id
-  let userid = req.query.userid;
+  let userid = req.session.userid;
   //查找用户的post
   let sql = 'select title,company from t_job where userid = ' + userid
   console.log(sql)
