@@ -38,6 +38,11 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
+app.get('/',function (req,res) {
+    res.sendFile( __dirname + "/" + "l.html" );
+})
+
+
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
 app.post('/',urlencodedParser,function (req,res) {
@@ -76,7 +81,7 @@ app.get('/login',urlencodedParser, function (req, res) {
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 app.get('/myposts', function (req, res) {
   //得到用户的id
-  let userid = req.query.userid;
+  let userid = req.session.userid;
   //查找用户的post
   let sql = 'select title,company from t_job where userid = ' + userid
   console.log(sql)
@@ -97,7 +102,7 @@ app.get('/myposts', function (req, res) {
 
 // ## 8 用户查看自己创建的职位Post详情
 // 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
-app.get('/post', function (req, res) {
+app.get('/postdetial', function (req, res) {
   if (err) {
     console.log('[SELECT ERROR] - ', err.message);
     return;
@@ -153,7 +158,7 @@ app.post('/send', function(req, res, next) {
             /*发送邮件*/
             mailTransport.sendMail(options, function(err, msg){
                 if(err){
-                    console.log(err);
+                    return console.log(err);
                 }
                 else {
                     console.log(msg);
