@@ -2,15 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-<script type="text/javascript" src='./index.js'></script>
+<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+<script type="text/javascript" src='../index.js'></script>
 <script type="text/javascript" src='./src/semantic.min.js'></script>
 <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="./src/css/login.css">
 <title>login</title>
 </head>
 <body>
-
+<div  id="login_frame">
+    <p id="image_logo"><img src="./picture/logo.png"></p>
+    <form>
+        <p><label class="label_input">Email</label><input type="text" name="email" class="text_field"/></p>
+        <p><label class="label_input">Password</label><input type="text" name="password" class="text_field"/></p>
+        <div id="login_control">
+            <input type="button" id="btn_login" value="登录"/>
+            <a id="forget_pwd" href="#">忘记密码？</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>
