@@ -7,8 +7,9 @@ let nodemailer = require('nodemailer');
 let Crypto = require('node-crypto');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 let cp = new Crypto('you secret code');
-
 let app = express();
+
+app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
@@ -39,7 +40,7 @@ let mailTransport = nodemailer.createTransport({
 connection.connect();
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + "/" + "l.html");
+
 })
 
 
