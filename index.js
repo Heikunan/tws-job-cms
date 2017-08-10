@@ -16,6 +16,37 @@ app.use(session({
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
     cookie: { maxAge: 60 * 1000 }
 }));
+
+
+/*连接数据库*/
+let connection = mysql.createConnection({
+  host     : '119.28.63.95',
+  user     : 'myuser',
+  password : 'hubuedu',
+  database : 'twsjob'
+});
+app.get('/allJobs',urlencodedParser, function (req, res)  {
+
+//点击显示所有职位的按钮，得到所有职位的信息
+    let sql='select * from t_job';
+    connection.query(sql,function(err, result) {
+        if(err) throw  err;
+        res.send(result);
+    });
+
+});
+
+app.post("/searchResult",urlencodedParser, function (req, res) {
+    let searchJobName=req.body.JobName;
+    //根据工作的标题、公司名字和职位描述等来搜索已发布的工作，
+    let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
+    //let sqlinfor=[searchJobName];escription
+    connection.query(sql,function(err, result) {
+        if(err) throw  err;
+//let sql= "select * from t_job where title like '%"+searchJobName+"%' or company like '%"+searchJobName+"%' or description like '%"+searchJobName+"%'";
+        res.send(result);
+    });
+});/*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host : 'smtp.126.com',
     port: 25,
