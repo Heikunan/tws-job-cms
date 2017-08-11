@@ -371,7 +371,7 @@ app.put('/resettingLogin',function (req,res) {
     });
 })
 
-app.get('/aaa',function (req,res) {
+app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html")
 })
 let server = app.listen(8081, function() {
