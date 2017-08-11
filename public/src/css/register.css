@@ -4,14 +4,14 @@ body {
     background-size: cover;
 }
 
-#login_frame {
+#register_frame {
     width: 500px;
     height: 350px;
     padding: 13px;
 
     position: relative;
-    left: 50%;
-    top: 50%;
+    left:50%;
+    top:50%;
     margin-left: -300px;
     margin-top: -280px;
 
@@ -21,40 +21,26 @@ body {
     text-align: center;
 }
 
-form p > * {
-    display: inline-block;
-    vertical-align: middle;
-}
-
 #image_logo img{
     width: 350px;
     height: 65px;
     margin-top: 22px;
 }
 
-.label_input {
-    font-size: 14px;
-
-    width: 65px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-
-    color: white;
-    background-color: #209b60;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+form p > * {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .text_field {
-    width: 278px;
+    width: 350px;
     height: 28px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 0;
 }
 
-#btn_login {
+#btn_register {
     font-size: 14px;
 
     width: 120px;
@@ -68,24 +54,18 @@ form p > * {
     border: 0;
 
     float: left;
-    margin-left: 45px;
+    margin-left: 75px;
 }
 
-#remember_me {
-    position: relative;
-    text-align: right;
-    margin-right: 45px;
-    color: #209b60;
-}
-
-#forget_pwd {
+#no_email {
     font-size: 13px;
     color:  #209b60;
     text-decoration: none;
     position: relative;
     float: right;
-    margin-right: 45px;
     top: 5px;
+
+    margin-right: 65px;
 }
 
 #register{
@@ -94,20 +74,17 @@ form p > * {
     text-decoration: none;
     position: relative;
     float: right;
-    margin-right: 5px;
     top: 5px;
+
+    margin-right: 0px;
 }
 
-#forget_pwd:hover {
+#no_email:hover{
     color:  #209b60;
     text-decoration: underline;
 }
 
-#register:hover {
+#register:hover{
     color:  #209b60;
     text-decoration: underline;
-}
-
-#login_control {
-    padding: 0 28px;
 }
