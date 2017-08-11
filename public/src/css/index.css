@@ -1,0 +1,52 @@
+#logo{
+    padding-left: 220px;
+
+}
+header{
+    background: #209b60;
+}
+header{
+    color: #ffffff;
+}
+.container-fluid{
+    display: inline;
+}
+ul{
+    padding-right: 160px;
+    vertical-align: middle;
+    float: right;
+    display: inline;
+    padding-top: 40px;
+}
+li{
+    font-size: 80px;
+    display: inline;
+}
+a{
+    text-decoration: blink;
+    color: #ffffff;
+}
+a:hover{
+    color: #29ff19;
+}
+.panel-body:hover .job-description{
+    display: inline;
+}
+.job-description{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.job-description{
+    display: none;
+}
+.panel-body h1{
+    color: #209b60;
+    font-size: 5em;
+}
+.panel-body p{
+    padding-left: 3em;
+    padding-right: 3em;
+}
+.job-company{
+    padding-top: 1em;
+}
