@@ -14,19 +14,18 @@
 <body>
 <div  id="register_frame">
 	<p id="image_logo"><img src="./picture/logo.png"></p>
-	<form>
-		<p><input type="text" name="email" class="text_field" placeholder="Email"/></p>
-		<p><input type="text" name="password" class="text_field" placeholder="Password"/></p>
-		<p><input type="text" name="password" class="text_field" placeholder="Password Confirmation"/></p>
+	<form action="/send" method="post">
+		<p><input type="text" id="email" class="text_field" placeholder="Email"/></p>
+		<p><input type="password" id="password" class="text_field" placeholder="Password"/></p>
+		<p><input type="password" id="password_conf" class="text_field" placeholder="Password Confirmation"/></p>
 		<br>
 		<div id="register_control">
-			<input type="button" id="btn_register" value="注册"/>
+			<input type="button" id="register" value="注册"/>
 			<a id="no_email" href="#">没有收到验证邮件</a>
-			<a id="register" href="#">登陆/</a>
+			<a id="sign_in" href="#">登陆/</a>
 		</div>
-
 	</form>
 </div>
-
 </body>
+<script type="text/javascript" src="./src/js/app.js"></script>
 </html>

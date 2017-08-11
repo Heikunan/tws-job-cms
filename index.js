@@ -120,8 +120,12 @@ app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
     let email = req.body.email;
     let password = req.body.password;
+    let password_conf=req.body.password_conf;
+    if (password!==password_conf) {
+        res.send('wrong')//用户两次填写的密码不一样，返回wrong
+    }else{
     //邮件中显示的信息
-    let html = "欢迎注册请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
     //sql语句插入语句
     let sql = 'insert into t_user (password,email,activeToken) values (?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
@@ -144,13 +148,17 @@ app.post('/send', function(req, res, next) {
                 if (err) {
                     return console.log(err);
                 } else {
-                    console.log(msg);
-                    res.send("发送成功！");
+                    res.send(true);
                 }
             });
         }
     });
+    }
 });
+// //发送注册界面[测试用]
+// app.get('/test',function (req,res) {
+//     res.sendFile(__dirname+'/public/register.html')
+// })
 
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
