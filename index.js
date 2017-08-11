@@ -332,51 +332,60 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
 })
 
 /**
- * 12重置密码，点击重置按钮，发送邮件,用户在邮箱进入重置密码页面
+ * 12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
  * 输入：email
  * 输出：email，passwordCode(验证码)
  */
-app.put('/resettingPassword',urlencodedParser,function (req,res) {
+let passwordCode=parseInt(Math.random()*1000000);
+app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let email='2738794789@qq.com';//req.query.email
-    let passwordCode=parseInt(Math.random()*1000000);
     console.log(passwordCode);
-    let content= "您在进行重置密码操作，请<a href='http://localhost:8081/resettingLogin?passwordCode="+passwordCode+"?email="+email+"'>点击此处前往</a>";
-    let options = {
-        from           : 'cr<thoughtworkersfive@126.com>',
-        to             :  email,
-        subject        : '重置密码',
-        text           : '重置密码',
-        html           :  content
-    };
-    mailTransport.sendMail(options, function(err, msg){
-        if(err){
-            console.log(err);
-        }
-        else {
-            console.log(msg);
-        }
-    });
-    let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
-    let data=[passwordCode,email];
-    connection.query(sql,data,function (err, reply) {
-        console.log(reply);
+    let sql='QUERY isactive FROM t_user WHERE email = ?';
+    let data=email;
+    connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
-    });
+        if(reply===1){
+            let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
+            let options = {
+                from           : 'cr<thoughtworkersfive@126.com>',
+                to             :  email,
+                subject        : '重置密码',
+                text           : '验证码',
+                html           :  content
+            };
+            mailTransport.sendMail(options, function(err, msg){
+                if(err){
+                    console.log(err);
+                }
+                else {
+                    console.log(msg);
+                }
+            });
+            let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
+            let data=[passwordCode,email];
+            connection.query(sql,data,function (err, reply) {
+                console.log(reply);
+                if(err) throw  err;
+            });
+        }else {
+            res.send('该邮箱尚未注册，请先注册！')
+        }
+    })
 })
 
 /**
- * 12重置密码后登录，点击登录按钮，进入
+ * 12重置密码后登录，输入验证码和密码，点击登录按钮，直接进入主页
  * 输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
  * 输出：affectedRows(更改数据条数)
  */
-app.get('/resettingLogin',function (req,res) {
+app.put('/resettingLogin',function (req,res) {
     let email='2738794789@qq.com';//req.query.email;
-    let passwordCode=req.query.passwordCode;
+    let inputPasswordCode=passwordCode;//req.body.passwordCode;
     let password='c2';//req.body.password
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
     let rePasswordCode=parseInt(Math.random()*1000000);
     console.log(rePasswordCode);
-    let dataCode=[password,rePasswordCode,email,passwordCode];
+    let dataCode=[password,rePasswordCode,email,inputPasswordCode];
     connection.query(sqlCode,dataCode,function (err, reply) {
         if(err) throw  err;
         console.log(reply);
