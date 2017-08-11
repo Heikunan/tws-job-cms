@@ -17,15 +17,14 @@ app.use(session({
     cookie: { maxAge: 60 * 1000 }
 }));
 
-
 let connection = mysql.createConnection({
     host: '119.28.63.95',
     user: 'myuser',
     password: 'hubuedu',
     port: '3306',
     database: 'twsjob',
-
 });
+
 /*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host: 'smtp.126.com',
@@ -39,6 +38,9 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
+/*
+显示所有职位
+ */
 app.get('/testjobs', function(req, res) {
     let sql='select * from t_job';
     connection.query(sql, function(err, result) {
@@ -50,7 +52,6 @@ app.get('/testjobs', function(req, res) {
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
-
 app.post('/', urlencodedParser, function(req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
@@ -63,9 +64,9 @@ app.post('/', urlencodedParser, function(req, res) {
     });
 });
 
-
-// ## 7 用户查看自己创建的职位Post列表
-// 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
+/*7 用户查看自己创建的职位Post列表
+作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
+*/
 app.get('/myposts', function(req, res) {
     //得到用户的id
     let userid = req.session.userid;
@@ -77,7 +78,6 @@ app.get('/myposts', function(req, res) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-
             console.log('--------------------------SELECT----------------------------');
             console.log(result);
             console.log('------------------------------------------------------------\n\n');
@@ -87,8 +87,9 @@ app.get('/myposts', function(req, res) {
         // connection.end();
 })
 
-// ## 8 用户查看自己创建的职位Post详情
-// 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
+/* 8 用户查看自己创建的职位Post详情
+作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
+ */
 app.get('/postdetial', function(req, res) {
     if (err) {
         console.log('[SELECT ERROR] - ', err.message);
@@ -103,7 +104,6 @@ app.get('/postdetial', function(req, res) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-
             console.log('--------------------------SELECT----------------------------');
             console.log(result);
             console.log('------------------------------------------------------------\n\n');
@@ -112,8 +112,10 @@ app.get('/postdetial', function(req, res) {
         })
         // connection.end();
 })
-/*10 注册部分 start here */
-/*发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放*/
+
+/*10 注册部分
+发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放
+*/
 app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
     let email = req.body.email;
@@ -149,9 +151,9 @@ app.post('/send', function(req, res, next) {
         }
     });
 });
-/*10 注册部分 end here */
 
-/*邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
+/* 注册部分
+邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
     let url = req.query;
     /*将传入的hex(email)转化为base ，在数据库中查询*/
@@ -164,8 +166,9 @@ app.get('/confirm', function(req, res, next) {
     });
 });
 
-
-/*11 登录部分 输入对象，返回字符串 start here*/
+/*11 登录部分
+输入对象，返回字符串
+*/
 app.post('/sign_in', urlencodedParser, function(req, res) {
     let email=cp.hex(req.body.email);
     let password=cp.hex(req.body.password);
@@ -189,28 +192,16 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
         }
     })
 });
-/*11 登录部分 输入对象，返回字符串 end here*/
+
 // //发送登陆界面[测试用]
 // app.get('/test',function (req,res) {
 //     res.sendFile(__dirname+'/public/login.html')
 // })
 
 /*获取职位详情
-输入{id:4};
-输出： //result为对象数组
-    [ RowDataPacket {
-userId: 0,
-id: 4,
-title: 'oo',
-company: '77',
-description: 'ss',
-applyApproach: 'sss',
-expiryDate: 'sss',
-category: 'development',
-jobType: 'volunteer',
-tags: '0',
-city: 'newyork',
-country: 'usa' }]*/
+输入：{id:4};
+输出：对象数组
+*/
 app.get('/getJobDetail', function(req, res) {
     req.body = JSON.parse(req.body)
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
@@ -224,22 +215,12 @@ app.get('/getJobDetail', function(req, res) {
         connection.end();
     });
 });
+
 /*接收发布招聘的信息
-输入：// {
-userId:666,
-title:'good',
-company:'thoughtworks',
-description:'goo',
-applyApproach:'email',
-expiryDate:'5years',
-category:'manager',
-jobType:'fulltime',
-tags：'logo',
-city:'shenzhen',
-country:'China'
-}
+输入：招聘表单内容
 输出：成功：200添加成功
-     失败：500服务器发生错误*/
+     失败：500服务器发生错误
+*/
 app.post('/postJob', function(req, res) {
     let userId = req.session.user.id;
     let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
@@ -254,9 +235,10 @@ app.post('/postJob', function(req, res) {
         connection.end();
     });
 });
-/**9获得用户详细信息
- * 输入：
- * 输出：req.session.user除密码之外的所有信息
+
+/*9获得用户详细信息
+输入：
+输出：req.session.user除密码之外的所有信息
  */
 app.get('/userInfo', urlencodedParser, function(req, res) {
     let user = {};
@@ -268,9 +250,9 @@ app.get('/userInfo', urlencodedParser, function(req, res) {
     res.send(user);
 })
 
-/**9更改用户详细信息
- * 输入：用户详细信息：CurrentPassword，其他需要修改的信息，如company，password
- * 输出：req.session.user
+/*9更改用户详细信息
+输入：用户详细信息：CurrentPassword，其他需要修改的信息，如company，password
+输出：req.session.user
  */
 app.put('/userInfo', urlencodedParser, function(req, res) {
     let userInfo = { email: 'cr', currentPassword: 'c', company: 'd', address: 'd', trade: 'd', password: 'd', passwordConfirmation: 'd' }; //req.body
@@ -296,9 +278,9 @@ app.put('/userInfo', urlencodedParser, function(req, res) {
     });
 })
 
-/**9注销用户
- * 输入：
- * 输出：req.session.user//空值
+/*9注销用户
+输入：
+输出：req.session.user//空值
  */
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
@@ -306,19 +288,15 @@ app.get('/loginout', urlencodedParser, function(req, res) {
     res.send(req.session.user);
 })
 
-/**
- * 12找回密码,点击找回密码，进入找回密码页面，里面包括email输入框和重置按钮
- * 输入：
- * 输出：
+/*12找回密码,点击找回密码，进入找回密码页面，里面包括email输入框和重置按钮
  */
 app.get('/findPassword',urlencodedParser,function (req,res) {
 
 })
 
-/**
- * 12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
- * 输入：email
- * 输出：email，passwordCode(验证码)
+/*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
+输入：email
+输出：email，passwordCode(验证码)
  */
 let passwordCode=parseInt(Math.random()*1000000);
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
@@ -357,10 +335,9 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
     })
 })
 
-/**
- * 12重置密码后登录，输入验证码和密码，点击登录按钮，直接进入主页
- * 输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
- * 输出：affectedRows(更改数据条数)
+/*12重置密码后登录，输入验证码和密码，点击登录按钮，直接进入主页
+输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
+输出：affectedRows(更改数据条数)
  */
 app.put('/resettingLogin',function (req,res) {
     let email='2738794789@qq.com';//req.query.email;
