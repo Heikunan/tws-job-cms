@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-<script type="text/javascript" src='./index.js'></script>
-<script type="text/javascript" src='./src/semantic.min.js'></script>
-<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-
-	<title>userInfo</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src='./src/semantic.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+    <style type="text/css">
+        #daohang {
+            height: 100px;
+            background: chartreuse;
+            margin-bottom: 30px;
+        }
+        #right {
+            border: solid 1px;
+            height: 800px;
+        }
+    </style>
+    <title>userInfo</title>
 </head>
 <body>
+<div id="daohang"><h1 style="text-align: center ">导航栏</h1></div>
+<div class="container">
+    <div class="row">
+        <!--左边-->
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a  href="#home" data-toggle="pill"><span>我的资料</span></a></li>
+                <li><a href="#profile" data-toggle="pill" ><span>我的发布</span></a></li>
+                <li><a href="#messages" data-toggle="pill"><span>我的消息</span></a></li>
+            </ul>
+        </div>
+        <!--右边-->
+        <div class="col-md-10" id="right">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active " id="home">.1.</div>
+                <div role="tabpanel" class="tab-pane fade" id="profile">.2..</div>
+                <div role="tabpanel" class="tab-pane fade" id="messages">.3..</div>
+            </div>
+        </div>
+    </div>
 
+</div>
+<script>
+</script>
 </body>
 </html>
