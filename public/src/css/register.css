@@ -37,6 +37,7 @@ form p > * {
     height: 28px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    outline-color: white;
     border: 0;
 }
 

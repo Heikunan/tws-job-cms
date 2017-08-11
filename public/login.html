@@ -5,8 +5,10 @@
 <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
 <script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 <script type="text/javascript" src='../index.js'></script>
+<script type="text/javascript" src="./src/semantic.js"></script>
 <script type="text/javascript" src='./src/semantic.min.js'></script>
 <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./src/semantic.css">
 <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="./src/css/login.css">
 <title>login</title>
@@ -17,8 +19,8 @@
     <form>
         <p><label class="label_input">Email</label><input type="text" name="email" class="text_field"/></p>
         <p><label class="label_input">Password</label><input type="text" name="password" class="text_field"/></p>
-        <div id="remember_me">
-            <input type="checkbox"><label>remember me</label>
+        <div class="checkbox" id="remember_me">
+            <input type="checkbox" name="reme_checkbox">Remember me
         </div>
         <div id="login_control">
             <input type="button" id="btn_login" value="登录"/>
