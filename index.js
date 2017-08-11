@@ -57,25 +57,6 @@ app.post('/', urlencodedParser, function(req, res) {
         res.send(result);
     });
 });
-///////////////////*杨邵军的测试*/////////////////////////////////////////////
-
-/*将用户登陆的数据传入*/
-app.get('/login', urlencodedParser, function(req, res) {
-    let username = req.body.username; //req.body.username;
-    let password = req.body.password; //req.body.password;
-    let sql = 'select * from t_user where email=? and password=?'; //sql查询语句
-    let sqlinfor = [username, password]; //sql问号的值
-    connection.query(sql, sqlinfor, function(err, result) {
-        if (err) throw err;
-        if (result.length === 0) {
-            res.send(false); //不存在这个用户,返回false;
-        } else {
-            req.session.user = result[0]; //将登陆的用户存入session
-            res.send(result[0]); //返回查找结果，也是session 的用户
-        }
-    });
-});
-
 
 // ## 7 用户查看自己创建的职位Post列表
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -125,23 +106,18 @@ app.get('/postdetial', function(req, res) {
         })
         // connection.end();
 })
-
-
-
-
-//////////////////////////*杨邵军的测试*//////////////////////////////////////////
+/*10 注册部分 start here */
 /*发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放*/
 app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
-    let id = req.body.id;
     let email = req.body.email;
     let password = req.body.password;
     //邮件中显示的信息
     let html = "欢迎注册请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
     //sql语句插入语句
-    let sql = 'insert into t_user (id,password,email,activeToken) values (?,?,?,?);';
+    let sql = 'insert into t_user (password,email,activeToken) values (?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
-    let sqlinfor = [parseInt(id), cp.hex(password), cp.hex(email), cp.base(email)];
+    let sqlinfor = [cp.hex(password), cp.hex(email), cp.base(email)];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) {
             //插入失败，返回false，就是用户已经存在
@@ -167,6 +143,7 @@ app.post('/send', function(req, res, next) {
         }
     });
 });
+/*10 注册部分 end here */
 
 /*邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
@@ -180,6 +157,8 @@ app.get('/confirm', function(req, res, next) {
         }
     });
 });
+
+
 /*11 登录部分 输入对象，返回字符串 start here*/
 app.post('/sign_in', urlencodedParser, function(req, res) {
     // let email=cp.hex(req.body.email);
