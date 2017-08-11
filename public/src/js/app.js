@@ -25,8 +25,6 @@ function getMyPostdetail(event) {
 //点击主界面的signIn，进行登陆操作 start here//
 $(function () {
     $('#sign_in').click(function () {
-//            let email=cp.hex($('#email').val());
-//            let password=cp.hex($('#password').val());
         let email=$('#email').val();
         let password=$('#password').val();
         $.post('/sign_in',{
