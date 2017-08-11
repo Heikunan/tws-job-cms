@@ -175,7 +175,7 @@ app.post('/send', function(req, res, next) {
 app.get('/confirm', function(req, res, next) {
     let url = req.query;
     /*将传入的hex(email)转化为base ，在数据库中查询*/
-    let sql = "update t_user set active=1 where activeToken='" + cp.hexToBase(url.hex) + "'";
+    let sql = "update t_user set isactive=1 where activeToken='" + cp.hexToBase(url.hex) + "'";
     connection.query(sql, function(err, result) {
         if (err) throw err;
         else { //如果没有直接对数据库进行操作，不会返回error
@@ -187,11 +187,8 @@ app.get('/confirm', function(req, res, next) {
 
 /*11 登录部分 输入对象，返回字符串 start here*/
 app.post('/sign_in', urlencodedParser, function(req, res) {
-    // let email=cp.hex(req.body.email);
-    // let password=cp.hex(req.body.password);
-    let email = req.body.email;
-    let password = req.body.password;
-    console.log(email, password);
+    let email=cp.hex(req.body.email);
+    let password=cp.hex(req.body.password);
     let addSql = 'select * from t_user where email=?';
     let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function(err, result) {
