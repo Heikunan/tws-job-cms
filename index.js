@@ -81,7 +81,7 @@ app.get('/login', urlencodedParser, function(req, res) {
 // 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 app.get('/myposts', function(req, res) {
     //得到用户的id
-    let userid = req.session.userid;
+    let userid = req.session.user.id;
     //查找用户的post
     let sql = 'select title,company from t_job where userid = ' + userid
     console.log(sql)
@@ -273,45 +273,58 @@ app.post('/postJob', function(req, res) {
  * 输入：
  * 输出：req.session.user除密码之外的所有信息
  */
-app.get('/userInfo', urlencodedParser, function(req, res) {
+app.get('/getUserInfo', urlencodedParser, function(req, res) {
     let user = {};
+    req.session.user = {
+        email: '951576941@qq.com',
+        company: 'szx',
+        address: 'wuhan',
+        trade: 'studnet'
+    };
     user.email = req.session.user.email;
     user.company = req.session.user.company;
     user.address = req.session.user.address;
     user.trade = req.session.user.trade;
-    console.log('当前用户的信息如下：' + user);
+    // console.log('当前用户的信息如下：' + user);
     res.send(user);
 })
 
-/**9更改用户详细信息
- * 输入：用户详细信息：CurrentPassword，其他需要修改的信息，如company，password
+/**9更改用户信息
+ * 输入：用户详细信息：如company，password
  * 输出：req.session.user
  */
-app.put('/userInfo', urlencodedParser, function(req, res) {
-    let userInfo = { email: 'cr', currentPassword: 'c', company: 'd', address: 'd', trade: 'd', password: 'd', passwordConfirmation: 'd' }; //req.body
-    let sql = null;
-    let data = null;
-    if (userInfo.password !== '') {
-        sql = 'UPDATE t_user SET password = ?,company = ?,address=?,trade=? WHERE email = ? and password = ?'; //where后只能用and表示并，不能用都逗号
-        data = [userInfo.password, userInfo.company, userInfo.address, userInfo.trade, userInfo.email, userInfo.currentPassword];
-    } else {
-        sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE email = ? and password = ?'; //where后只能用and表示并，不能用都逗号
-        data = [userInfo.company, userInfo.address, userInfo.trade, userInfo.email, userInfo.currentPassword];
-    }
+app.post('/changeUserInfo', urlencodedParser, function(req, res) {
+    let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
+    let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
     connection.query(sql, data, function(err, reply) {
+        if (err) {
+            console.log('error!' + err);
+            res.send('error');
+        }
         res.send(reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
-    let sqlSession = 'SELECT * FROM t_user WHERE email = ?';
-    let dataSession = userInfo.email;
-    connection.query(sqlSession, dataSession, function(err, reply) {
-        req.session.user = reply[0];
-        console.log(req.session);
-        //res.send(req.session.user);
+})
+
+/**10更改密码
+ * 输入：当前密码,新密码
+ * 输出：req.session.user//空值
+ */
+app.get('changePsw',function (req,res) {
+    let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
+    console.log(req.query.newPsw)
+    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
+    connection.query(sql, data, function(err, reply) {
+        if (err) {
+            console.log('error!' + err);
+            res.send('error');
+        }
+        res.send(reply.affectedRows);
+        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
 })
 
-/**9注销用户
+/**11注销用户
  * 输入：
  * 输出：req.session.user//空值
  */
@@ -392,6 +405,9 @@ app.put('/resettingLogin',function (req,res) {
     });
 })
 
+app.get('/aaa',function (req,res) {
+    res.sendFile( __dirname + "/public/" + "userInfo.html")
+})
 let server = app.listen(8081, function() {
     let host = server.address().address;
     let port = server.address().port;
