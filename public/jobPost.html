@@ -1,16 +1,110 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-<script type="text/javascript" src='./index.js'></script>
-<script type="text/javascript" src='./src/semantic.min.js'></script>
-<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-<title>changeUserInfo</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src='./index.js'></script>
+	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="./jobP.css">
+	<title>jobPost</title>
 </head>
 <body>
+<div class="container">
+<nav class="navbar" style="background-color:green; ">
 
+</nav>
+	<div class="center-block gyf">
+		<form class="form-horizontal" >
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">标<i class = 'space2'></i>题</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="title" placeholder="title" name="title">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="category" class="col-sm-2 control-label">职业种类</label>
+				<div class="col-sm-5">
+					<select id='category' name='category'class="form-control">
+						<option value="development">development</option>
+						<option value="designer">designer</option>
+						<option value="marketing">marketing</option>
+						<option value="prodect manager">prodect manager</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="jobType" class="col-sm-2 control-label">工作性质</label>
+				<div class="col-sm-5">
+					<select id='jobType' name='jobType'class="form-control">
+						<option value="valunteer">valunteer</option>
+						<option value="permanent">permanent</option>
+						<option value="freelance">freelance</option>
+						<option value="contract">contract</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="number" class="col-sm-2 control-label">招聘人数</label>
+				<div class="col-sm-5">
+					<input type="number" class="form-control" name="number" id='number' placeholder="5人">
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="Educational" class="col-sm-2 control-label">学<i class = 'space2'></i>历</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" name="Educational" id='Educational' placeholder="专科">
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="expiryDate" class="col-sm-2 control-label">工作年限</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="expiryDate" placeholder="5年">
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="salary" class="col-sm-2 control-label">月<i class = 'space2'></i>薪</label>
+				<div class="col-sm-5">
+					<select class="form-control" id="salary" name="salary">
+						<option value="3000元以下">3000元以下</option>
+						<option value='3000-5000元'>3000-5000元</option>
+						<option value="5000-8000元">5000-8000元</option>
+						<option value="8000-12000元">8000-12000元</option>
+						<option value="12000-20000元">12000-20000元</option>
+						<option value="20000-50000元">20000-50000元</option>
+						<option value="50000元以上">50000元以上</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">职位详情</label>
+				<div class="col-sm-5">
+					<textarea class="form-control" rows="3" id="description" name="description" placeholder="职业描述，职业要求"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				
+				<label for="applyApproach" class="col-sm-2 control-label">申请方式</label>
+				<div class="col-sm-5">
+					<textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-5">
+					<button type="submit" class="btn btn-default positive ui button">发<i class = 'space2'></i>布</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	</div>
 </body>
 </html>
