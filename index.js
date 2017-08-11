@@ -51,26 +51,6 @@ app.get('/testjobs', function(req, res) {
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
 
-/////////////////////////////////////////*杨邵军的测试*/////////////////////////////////////////////
-
-/*将用户登陆的数据传入*/
-app.get('/login', urlencodedParser, function(req, res) {
-    let username = req.body.username; //req.body.username;
-    let password = req.body.password; //req.body.password;
-    let sql = 'select * from t_user where email=? and password=?'; //sql查询语句
-    let sqlinfor = [username, password]; //sql问号的值
-    connection.query(sql, sqlinfor, function(err, result) {
-        if (err) throw err;
-        if (result.length === 0) {
-            res.send(false); //不存在这个用户,返回false;
-        } else {
-            req.session.user = result[0]; //将登陆的用户存入session
-            res.send(result[0]); //返回查找结果，也是session 的用户
-        }
-    });
-});
-
-
 app.post('/', urlencodedParser, function(req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
@@ -192,7 +172,6 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
     let addSql = 'select * from t_user where email=?';
     let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function(err, result) {
-        console.log(result);
         if (err) throw err;
         if (result.length === 0) {
             res.send('null'); //用户不存在,则返回null
@@ -211,6 +190,10 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
     })
 });
 /*11 登录部分 输入对象，返回字符串 end here*/
+// //发送登陆界面[测试用]
+// app.get('/test',function (req,res) {
+//     res.sendFile(__dirname+'/public/login.html')
+// })
 
 /*获取职位详情
 输入{id:4};
