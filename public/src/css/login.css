@@ -5,15 +5,15 @@ body {
 }
 
 #login_frame {
-    width: 400px;
-    height: 260px;
+    width: 420px;
+    height: 300px;
     padding: 13px;
 
-    position: absolute;
+    position: relative;
     left: 50%;
     top: 50%;
-    margin-left: -200px;
-    margin-top: -200px;
+    margin-left: -220px;
+    margin-top: -220px;
 
     background-color: rgba(240, 255, 255, 0.5);
 
@@ -41,7 +41,7 @@ form p > * {
     text-align: center;
 
     color: white;
-    background-color: green;
+    background-color: #209b60;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -63,25 +63,45 @@ form p > * {
     text-align: center;
 
     color: white;
-    background-color: green;
+    background-color:  #209b60;
     border-radius: 6px;
     border: 0;
 
     float: left;
 }
 
+#remember_me {
+    position: relative;
+    text-align: right;
+    margin-right: 25px;
+    color: #209b60;
+}
+
 #forget_pwd {
     font-size: 13px;
-    color: green;
+    color:  #209b60;
     text-decoration: none;
     position: relative;
     float: right;
     top: 5px;
+}
 
+#register{
+    font-size: 13px;
+    color:  #209b60;
+    text-decoration: none;
+    position: relative;
+    float: right;
+    top: 5px;
 }
 
 #forget_pwd:hover {
-    color: green;
+    color:  #209b60;
+    text-decoration: underline;
+}
+
+#register:hover {
+    color:  #209b60;
     text-decoration: underline;
 }
 
