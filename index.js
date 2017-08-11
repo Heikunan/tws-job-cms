@@ -50,6 +50,7 @@ app.get('/testjobs', function(req, res) {
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
+
 /////////////////////////////////////////*杨邵军的测试*/////////////////////////////////////////////
 
 /*将用户登陆的数据传入*/
@@ -66,6 +67,19 @@ app.get('/login', urlencodedParser, function(req, res) {
             req.session.user = result[0]; //将登陆的用户存入session
             res.send(result[0]); //返回查找结果，也是session 的用户
         }
+    });
+});
+
+
+app.post('/', urlencodedParser, function(req, res) {
+    let jobtype = req.body.jobtype;
+    let category = req.body.category;
+    console.log(jobtype, category);
+    let sql = 'select * from t_job where category=? and jobtype=?';
+    let sqlinfor = [category, jobtype];
+    connection.query(sql, sqlinfor, function(err, result) {
+        if (err) throw err;
+        res.send(result);
     });
 });
 
@@ -118,23 +132,18 @@ app.get('/postdetial', function(req, res) {
         })
         // connection.end();
 })
-
-
-
-
-//////////////////////////*杨邵军的测试*//////////////////////////////////////////
+/*10 注册部分 start here */
 /*发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放*/
 app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
-    let id = req.body.id;
     let email = req.body.email;
     let password = req.body.password;
     //邮件中显示的信息
     let html = "欢迎注册请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
     //sql语句插入语句
-    let sql = 'insert into t_user (id,password,email,activeToken) values (?,?,?,?);';
+    let sql = 'insert into t_user (password,email,activeToken) values (?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
-    let sqlinfor = [parseInt(id), cp.hex(password), cp.hex(email), cp.base(email)];
+    let sqlinfor = [cp.hex(password), cp.hex(email), cp.base(email)];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) {
             //插入失败，返回false，就是用户已经存在
@@ -160,6 +169,7 @@ app.post('/send', function(req, res, next) {
         }
     });
 });
+/*10 注册部分 end here */
 
 /*邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
@@ -173,6 +183,8 @@ app.get('/confirm', function(req, res, next) {
         }
     });
 });
+
+
 /*11 登录部分 输入对象，返回字符串 start here*/
 app.post('/sign_in', urlencodedParser, function(req, res) {
     // let email=cp.hex(req.body.email);
