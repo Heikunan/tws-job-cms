@@ -39,25 +39,18 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
-app.get('/', function(req, res) {
-
+app.get('/testjobs', function(req, res) {
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
 })
 
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
-app.post('/', urlencodedParser, function(req, res) {
-    let jobtype = req.body.jobtype;
-    let category = req.body.category;
-    console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? and jobtype=?';
-    let sqlinfor = [category, jobtype];
-    connection.query(sql, sqlinfor, function(err, result) {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-///////////////////*杨邵军的测试*/////////////////////////////////////////////
+/////////////////////////////////////////*杨邵军的测试*/////////////////////////////////////////////
 
 /*将用户登陆的数据传入*/
 app.get('/login', urlencodedParser, function(req, res) {

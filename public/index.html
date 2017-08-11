@@ -4,45 +4,11 @@
 <meta charset="utf-8">
 	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
 	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src='./index.js'></script>
-<script type="text/javascript" src='./src/semantic.min.js'></script>
-<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-	<style>
-		#logo{
-			padding-left: 220px;
-
-		}
-		header{
-			background: #209b60;
-		}
-		header{
-			color: #ffffff;
-		}
-		.container-fluid{
-			display: inline;
-		}
-		ul{
-			padding-right: 160px;
-			vertical-align: middle;
-			float: right;
-			display: inline;
-			padding-top: 40px;
-		}
-		li{
-			font-size: 80px;
-			display: inline;
-		}
-		a{
-			text-decoration: blink;
-			color: #ffffff;
-		}
-		a:hover{
-			color: #29ff19;
-		}
-	</style>
-
-	<title>index</title>
+	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<link rel="stylesheet" href="src/css/index.css">
+	<title>job</title>
 </head>
 <header >
 	<div class="container-fluid">
@@ -56,15 +22,14 @@
 </header>
 
 <body>
-<div class="left infor col-lg-7" style="padding-top: 120px;padding-left: 120px; margin: 80px;width: 60%">
-
+<div class="left infor col-lg-9" style=" padding-right: 280px;border-right: 1px solid;padding-top: 120px;padding-left: 420px; margin: 80px;">
 	<!--标签页-->
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="first">职位</a>
 		<a class="item" data-tab="second">企业</a>
 	</div>
-	<div class="ui bottom attached active tab segment" data-tab="first" >
-		<div class="ui action input" style="width: 80%;padding: 200px">
+	<div class="ui bottom attached active tab segment" data-tab="first" style="text-align: center" >
+		<div class="ui action input" style="width: 100%;padding: 300px">
 			<input type="text" placeholder="Search...">
 			<button class="ui button" style="background:#209b60;">搜索职位</button>
 		</div>
@@ -76,12 +41,72 @@
 		</div>
 	</div>
 	<!--搜索结果显示区域-->
-	<div class="searchresult" style="margin-top: 300px">
+	<div class="searchresult"  id="showjobs"  style="margin-top: 130px;">
 
+		<div>
+			<h1 style="font-size: 100px">最新职位</h1>
+			<div class="ui divider" style="margin-top: 30px;"></div>
+		</div>
+
+			<div class="panel-body"  style="padding-top: 130px">
+				<div class="job-box">
+					<div class="job-title" style="padding-bottom: 2em;">
+						<span><h1>JAVA开发工程师</h1></span>
+					</div>
+					<div class="job-description">
+						<span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
+					</div>
+					<div class="job-company">
+						<p><span class="glyphicon glyphicon-globe"></span>&nbsp;阿里巴巴股份有限公司</p>
+					</div>
+					<div class="job-bottom">
+						<div class="pull-left">
+							<div class="job-city">
+								<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;武汉</p>
+							</div>
+						</div>
+						<div class="pull-right job-bottom-right">
+							<div class="job-time">
+								<p><span class="glyphicon glyphicon-time"></span>&nbsp;2017-12-10</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui divider" style="margin-top: 130px;"></div>
+			</div>
+
+
+		<div class="panel-body" style="padding-top: 130px">
+			<div class="job-box">
+				<div class="job-title" style="padding-bottom: 2em;">
+					<span><h1>JAVA开发工程师</h1></span>
+				</div>
+				<div class="job-description">
+					<span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
+				</div>
+				<div class="job-company">
+					<p><span class="glyphicon glyphicon-globe"></span>&nbsp;阿里巴巴股份有限公司</p>
+				</div>
+				<div class="job-bottom">
+					<div class="pull-left">
+						<div class="job-city">
+							<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;武汉</p>
+						</div>
+					</div>
+					<div class="pull-right job-bottom-right">
+						<div class="job-time">
+							<p><span class="glyphicon glyphicon-time"></span>&nbsp;2017-12-10</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui divider" style="margin-top: 130px;"></div>
+		</div>
+
+	</div>
 </div>
 
-<div class="right ">
-
+<div class="right ad col-lg-3" style="border-left: gainsboro;">
 </div>
 </body>
 <footer>
@@ -92,5 +117,6 @@
         .tab()
     ;
 </script>
+<script src="src/js/app.js"></script>
 
 </html>
