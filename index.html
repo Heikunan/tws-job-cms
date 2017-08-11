@@ -2,16 +2,95 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 <script type="text/javascript" src='./index.js'></script>
 <script type="text/javascript" src='./src/semantic.min.js'></script>
 <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<style>
+		#logo{
+			padding-left: 220px;
+
+		}
+		header{
+			background: #209b60;
+		}
+		header{
+			color: #ffffff;
+		}
+		.container-fluid{
+			display: inline;
+		}
+		ul{
+			padding-right: 160px;
+			vertical-align: middle;
+			float: right;
+			display: inline;
+			padding-top: 40px;
+		}
+		li{
+			font-size: 80px;
+			display: inline;
+		}
+		a{
+			text-decoration: blink;
+			color: #ffffff;
+		}
+		a:hover{
+			color: #29ff19;
+		}
+	</style>
 
 	<title>index</title>
 </head>
-<body>
+<header >
+	<div class="container-fluid">
+		<img class="img" id="logo" src="src/img/logo.png">
+		<ul>
+			<li><i class="user icon" ></i> <a href="#" >注册</a></li>
+			<li><i class="user icon"></i>  <a href="#" >登录</a></li>
+			<li><i class="user icon" ></i>  <a href="#" >jobpost</a></li>
+		</ul>
+	</div>
+</header>
 
+<body>
+<div class="left infor col-lg-7" style="padding-top: 120px;padding-left: 120px; margin: 80px;width: 60%">
+
+	<!--标签页-->
+	<div class="ui top attached tabular menu">
+		<a class="active item" data-tab="first">职位</a>
+		<a class="item" data-tab="second">企业</a>
+	</div>
+	<div class="ui bottom attached active tab segment" data-tab="first" >
+		<div class="ui action input" style="width: 80%;padding: 200px">
+			<input type="text" placeholder="Search...">
+			<button class="ui button" style="background:#209b60;">搜索职位</button>
+		</div>
+	</div>
+	<div class="ui bottom attached tab segment" data-tab="second">
+		<div class="ui action input" style="width: 80%;padding: 200px">
+			<input type="text" placeholder="Search...">
+			<button class="ui button" style="background:#209b60;">搜索企业</button>
+		</div>
+	</div>
+	<!--搜索结果显示区域-->
+	<div class="searchresult" style="margin-top: 300px">
+
+</div>
+
+<div class="right ">
+
+</div>
 </body>
+<footer>
+
+</footer>
+<script>
+    $('.menu .item')
+        .tab()
+    ;
+</script>
+
 </html>

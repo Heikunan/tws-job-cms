@@ -46,3 +46,7 @@ $(function () {
     });
 })
 //点击主界面的signIn，进行登陆操作 end here//
+
+$(document).ready(function () {
+$.get()
+});
