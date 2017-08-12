@@ -1,0 +1,62 @@
+.gyf_button{
+	float: right;
+}
+.space2{
+	display: inline-block;
+	width:2em; 
+}
+.gyf_about_content{
+	margin: 12px;
+}
+.gyf_company_name{
+	max-height: 1em!important;
+}
+.image{
+	max-width: 80%!important;
+}
+.jumbotron{
+	padding:0px!important;
+}
+.gyf_panel{
+	margin: 1rem 0;
+	text-align: center;
+}
+.gyf_panel_button{
+	color:#fff;
+	background-color: #21ba45;
+	border-color:#07c;
+	box-shadow: inset 0 1px  #66bfff;
+	border: 1px solid transparent;
+	width: 80%;
+	min-height:2.46em;
+	margin:0 2em 2em;
+}
+.post-job{
+	border:solid;
+	border-color:#18cc99;
+	border-width: 1px;
+	border-radius:2px;
+	padding-top: 0;
+	background: #fff;
+	z-index: 2;
+}
+.header-img{
+	margin:-10px -15px 0 -15px;
+	padding-top:0px;
+	height: 50px;
+	background:#18cc99;
+}
+.post_job_button{
+	color: green;
+	background-color: rgba(0,119,204,0);
+	/* border-color: rgba(69, 161, 119, 0.95); */
+	min-height:2.46em;
+	margin:0 2em 2em;
+	min-height:2.46em;
+}
+.gyf_icon{
+	margin-right: 1em;
+}
+.gyf_more_jobs{
+	margin-top: 2em;
+}
