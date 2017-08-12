@@ -38,6 +38,22 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
+/*查找所有的工作性质*/
+app.get('/getcategory',function (req,res) {
+    let sql='select * from t_category';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+/*查找所有的工作类型*/
+app.get('/getjobtype',function (req,res) {
+    let sql='select * from t_jobtype';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 /*
 显示所有职位
  */
@@ -52,13 +68,13 @@ app.get('/testjobs', function(req, res) {
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
-app.post('/', urlencodedParser, function(req, res) {
+app.post('/searchjobs', urlencodedParser, function(req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
+    let jobname =req.body.jobname;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? and jobtype=?';
-    let sqlinfor = [category, jobtype];
-    connection.query(sql, sqlinfor, function(err, result) {
+    let sql = "select * from t_job where category like '%"+category+"%' and jobtype like '%"+jobtype+"%' and title like '%"+jobname+"%'";
+    connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
     });

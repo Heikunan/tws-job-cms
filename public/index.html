@@ -1,122 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src='./src/semantic.min.js'></script>
-	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-	<link rel="stylesheet" href="src/css/index.css">
-	<title>job</title>
-</head>
-<header >
-	<div class="container-fluid">
-		<img class="img" id="logo" src="src/img/logo.png">
-		<ul>
-			<li><i class="user icon" ></i> <a href="#" >注册</a></li>
-			<li><i class="user icon"></i>  <a href="#" >登录</a></li>
-			<li><i class="user icon" ></i>  <a href="#" >jobpost</a></li>
-		</ul>
-	</div>
-</header>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<title>job</title>
+	<link rel="stylesheet" href="src/css/index.css">
+</head>
 <body>
-<div class="left infor col-lg-9" style=" padding-right: 280px;border-right: 1px solid;padding-top: 120px;padding-left: 420px; margin: 80px;">
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<img class="img" id="logo" src="picture/logo.png"/>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">getposts</a></li>
+				<li><a href="#">register</a></li>
+				<li><a href="#">login</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+<div class="mid infor col-lg-9 col-md-12">
 	<!--标签页-->
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="first">职位</a>
 		<a class="item" data-tab="second">企业</a>
 	</div>
-	<div class="ui bottom attached active tab segment" data-tab="first" style="text-align: center" >
-		<div class="ui action input" style="width: 100%;padding: 300px">
-			<input type="text" placeholder="Search...">
-			<button class="ui button" style="background:#209b60;">搜索职位</button>
+
+	<div class="ui bottom attached active tab segment" data-tab="first">
+		<div class="ui action input">
+			<select id="category" class="ui compact selection dropdown">
+				<option value="">职位</option>
+			</select>
+			<select id="jobtype" class="ui compact selection dropdown">
+				<option value="">工作类型</option>
+			</select>
+			<input type="text" id="jobname" placeholder="Search...">
+			<button class="ui button" onclick="searchJobs()">搜索职位</button>
 		</div>
+
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="second">
-		<div class="ui action input" style="width: 80%;padding: 200px">
+		<div class="ui action input">
 			<input type="text" placeholder="Search...">
-			<button class="ui button" style="background:#209b60;">搜索企业</button>
+			<button class="ui button">搜索企业</button>
 		</div>
 	</div>
+
 	<!--搜索结果显示区域-->
-	<div class="searchresult"  id="showjobs"  style="margin-top: 130px;">
+	<div class="searchresult" >
+	<div>
+		<h1>最新职位</h1>
+		<div class="ui divider" ></div>
+	</div>
 
-		<div>
-			<h1 style="font-size: 100px">最新职位</h1>
-			<div class="ui divider" style="margin-top: 30px;"></div>
-		</div>
-
-			<div class="panel-body"  style="padding-top: 130px">
-				<div class="job-box">
-					<div class="job-title" style="padding-bottom: 2em;">
-						<span><h1>JAVA开发工程师</h1></span>
-					</div>
-					<div class="job-description">
-						<span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-					</div>
-					<div class="job-company">
-						<p><span class="glyphicon glyphicon-globe"></span>&nbsp;阿里巴巴股份有限公司</p>
-					</div>
-					<div class="job-bottom">
-						<div class="pull-left">
-							<div class="job-city">
-								<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;武汉</p>
-							</div>
-						</div>
-						<div class="pull-right job-bottom-right">
-							<div class="job-time">
-								<p><span class="glyphicon glyphicon-time"></span>&nbsp;2017-12-10</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="ui divider" style="margin-top: 130px;"></div>
-			</div>
-
-
-		<div class="panel-body" style="padding-top: 130px">
-			<div class="job-box">
-				<div class="job-title" style="padding-bottom: 2em;">
-					<span><h1>JAVA开发工程师</h1></span>
-				</div>
-				<div class="job-description">
-					<span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-				</div>
-				<div class="job-company">
-					<p><span class="glyphicon glyphicon-globe"></span>&nbsp;阿里巴巴股份有限公司</p>
-				</div>
-				<div class="job-bottom">
-					<div class="pull-left">
-						<div class="job-city">
-							<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;武汉</p>
-						</div>
-					</div>
-					<div class="pull-right job-bottom-right">
-						<div class="job-time">
-							<p><span class="glyphicon glyphicon-time"></span>&nbsp;2017-12-10</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="ui divider" style="margin-top: 130px;"></div>
-		</div>
-
+	<div class="showposts" id="showjobs" >
 	</div>
 </div>
+</div>
 
-<div class="right ad col-lg-3" style="border-left: gainsboro;">
+<div class="ad rigiht col-lg-3" >
+	<div  id="ad"></div>
 </div>
 </body>
-<footer>
 
-</footer>
-<script>
-    $('.menu .item')
-        .tab()
-    ;
-</script>
 <script src="src/js/app.js"></script>
 
 </html>
