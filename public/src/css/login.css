@@ -51,10 +51,11 @@ form p > * {
     height: 28px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    outline-color: white;
     border: 0;
 }
 
-#btn_login {
+#sign_in {
     font-size: 14px;
 
     width: 120px;
@@ -73,8 +74,7 @@ form p > * {
 
 #remember_me {
     position: relative;
-    text-align: right;
-    margin-right: 45px;
+    margin-left: 250px;
     color: #209b60;
 }
 

@@ -37,10 +37,11 @@ form p > * {
     height: 28px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    outline-color: white;
     border: 0;
 }
 
-#btn_register {
+#register {
     font-size: 14px;
 
     width: 120px;
@@ -68,7 +69,7 @@ form p > * {
     margin-right: 65px;
 }
 
-#register{
+#sign_in{
     font-size: 13px;
     color:  #209b60;
     text-decoration: none;
@@ -84,7 +85,7 @@ form p > * {
     text-decoration: underline;
 }
 
-#register:hover{
+#sign_in:hover{
     color:  #209b60;
     text-decoration: underline;
 }

@@ -1,17 +1,200 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-<script type="text/javascript" src='./index.js'></script>
-<script type="text/javascript" src='./src/semantic.min.js'></script>
-<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-
-	<title>userInfo</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src='./src/semantic.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+    <style type="text/css">
+        #daohang {
+            height: 100px;
+            background: #209b60;
+            margin-bottom: 30px;
+        }
+        #right {
+            border: solid 1px;
+            height: 800px;
+        }
+    </style>
+    <title>userInfo</title>
 </head>
 <body>
+<div id="daohang"><h1 style="text-align: center ">导航栏</h1></div>
+<div class="container">
+    <div class="row">
+        <!--左边-->
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a  href="#myinfo" data-toggle="pill" ><span>我的资料</span></a></li>
+                <li><a href="#myposts" data-toggle="pill" ><span>我的发布</span></a></li>
+                <li><a href="#changepassword" data-toggle="pill"><span>修改密码</span></a></li>
+            </ul>
+        </div>
+        <!--右边-->
+        <div class="col-md-10" id="right">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active " id="myinfo">
+                    <!--个人资料-->
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputEmail" disabled >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCompany" class="col-sm-2 control-label">Company</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputCompany" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputAddress" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrade" class="col-sm-2 control-label">Trade</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputTrade" readonly>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-default">编辑</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="myposts">.2..</div>
+                <div role="tabpanel" class="tab-pane fade" id="changepassword">
+                    <!--修改密码页面-->
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="currentPsw" class="col-sm-2 col-xs-2 control-label">原密码</label>
+                            <div class="col-sm-5 col-xs-5">
+                                <input type="password" class="form-control" id="currentPsw" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPsw" class="col-sm-2 col-xs-2 control-label">新密码</label>
+                            <div class="col-sm-5 col-xs-5">
+                                <input type="password" class="form-control" id="newPsw" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPsw" class="col-sm-2 col-xs-2 control-label">确认密码</label>
+                            <div class="col-sm-5 col-xs-5">
+                                <input type="password" class="form-control" id="confirmNewPsw" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-5 col-xs-1">
+                                <button type="button" class="btn btn-default" id="pswbutton">确定修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    getUserInfo();
+    //获得用户详细信息,填入表单
+    function getUserInfo() {
+        $.get('/getUserInfo', function (data) {
+            $('#inputEmail').val(data.email)
+            $('#inputCompany').val(data.company)
+            $('#inputAddress').val(data.address)
+            $('#inputTrade').val(data.trade)
+        });
+        //监听我的资料中的编辑按钮
+        $('#myinfo button').click(function () {
+            if ($('#myinfo button').html()==='编辑') {
+                $('#myinfo .form-control').attr('readonly', false);
+                $('#myinfo button').html('完成')
+            }else {
+                //调用修改信息的函数
+                changeInfo($('#inputCompany').val(),$('#inputAddress').val(),$('#inputTrade').val());
+                $('#myinfo button').html('编辑')
+                $('#myinfo .form-control').attr('readonly', true);
+//                alert('修改成功！')
+            }
+
+        });
+    }
+
+    //修改信息
+    function changeInfo(com,add,tra) {
+        $.ajax({
+            url: '/changeUserInfo',
+            method: 'post',
+            data: {
+                company: com,
+                address: add,
+                trade: tra
+            }
+        }).done(function (date) {
+            alert('修改成功！ '+JSON.stringify(date));
+        }).fail(function (err) {
+            alert('失敗：'+err.status)
+            
+        });
+
+    }
+    //得到我的發佈
+    function getMyPosts() {
+        $.get('/myposts', function (data) {
+
+        });
+    }
+
+    //修改密碼
+    function changePassWord() {
+        let currentPsw = $('#currentPsw').val();
+        let newPsw = $('#newPsw').val();
+        let confimeNewPsw = $('#confirmNewPsw').val();
+        if (newPsw!==confimeNewPsw) {
+            return alert('两次密码不一致！')
+        }
+        //监听修改密码的按钮
+        $('#pswbutton').click(function () {
+            $.get('/changePsw', {
+                data: {
+                    newPsw: newPsw,
+                    currentPsw:currentPsw
+                }
+            }).done(function (data) {
+                alert('修改成功：' + data)
+            }).fail(function (err) {
+                alert('错误：' + err);
+            });
+        });
+
+    }
+
+
+    //监听标签页按钮
+    $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
+        switch (e.target.href.split('#')[1]) {
+            case 'myinfo':
+                getUserInfo();
+                break;
+            case 'myposts':
+                getMyPosts();
+                break;
+            case 'changepassword':
+                changePassWord()
+                break;
+        } // newly activated tab
+
+    })
+</script>
 </body>
 </html>

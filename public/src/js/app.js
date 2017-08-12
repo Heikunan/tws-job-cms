@@ -22,11 +22,9 @@ function getMyPostdetail(event) {
         })
 }
 
-//点击主界面的signIn，进行登陆操作 start here//
 $(function () {
+    //点击登陆按钮，进行登陆操作
     $('#sign_in').click(function () {
-//            let email=cp.hex($('#email').val());
-//            let password=cp.hex($('#password').val());
         let email=$('#email').val();
         let password=$('#password').val();
         $.post('/sign_in',{
@@ -44,8 +42,24 @@ $(function () {
             }
         });
     });
-})
-//点击主界面的signIn，进行登陆操作 end here//
+    //点击注册按钮，进行注册操作
+    $('#register').click(function () {
+        let email_register=$('#email').val();
+        let password_register=$('#password').val();
+        let password_conf=$('#password_conf').val();
+        $.post('/send',{
+            email:email_register,password:password_register,password_conf:password_conf
+        },function (data) {
+            if (data===true) {
+                alert('注册成功，请前往邮箱验证！')
+            }else if(data===false){
+                alert('账号已注册！')
+            }else if(data==='wrong'){
+                alert('两次输入的密码不一致！')
+            }
+        });
+    });
+});
 
 /*进入首页得到最新的职位*/
 $(document).ready(function () {
