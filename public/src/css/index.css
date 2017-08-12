@@ -113,8 +113,9 @@ option{
     right: 5%;
     top: 6em;
     vertical-align: middle;
-    z-index: 1000;
+    z-index: 999;
 }
+
 
 
 /*************************************/
@@ -177,3 +178,25 @@ p.job-description{
     font-size: 15px;
     float: left;
 }
+
+
+
+
+
+
+
+/*********css动画******************/
+.ad.rigiht
+{
+    transition: linear;
+    -webkit-animation:myfirst 16s infinite; /* Safari and Chrome */
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+    0%   {top: 6em}
+    50% {  top: 18em;}
+    100%{ top: 5em;}
+
+}
+/***************************/

@@ -65,9 +65,7 @@ $(function () {
 $(document).ready(function () {
     /*刷新最新的内容*/
     $.get('/testjobs',function (data) {
-        console.log(data);
         let result='';
-        let result1='';
         for(let i=0;i<data.length;i++){
             result+=`
                 <a href="#">
@@ -88,30 +86,8 @@ $(document).ready(function () {
 			<div class="ui divider" ></div>
 		</div>
         </a>`
-            if(i<3){
-                result1+=`
-                <a href="#">
-                <div class="panel-body col-lg-12" >
-			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-				<div class="equal height row">
-					<div class="ui teal piled segment">
-						<p class="ui center aligned dividing header">${data[i].title}</p>
-
-						<p class="job-description center">${data[i].description}
-						</p>
-						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
-
-						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
-					</div>
-				</div>
-			</div>
-		</div>
-        </a>`
-            }
         }
-        console.log(result);
         $('#showjobs').append(result);
-        $('#ad').append(result1);
     });
     $.get('/getjobtype',function (data) {
         let result='';
@@ -134,7 +110,6 @@ function searchJobs() {
     let jobtype=$("#jobtype").val();
     let category=$("#category").val();
     let jobname=$("#jobname").val();
-    alert(jobtype+category);
     $('#showjobs').empty();
     $.post('/searchjobs',{jobtype:jobtype,category:category,jobname:jobname},function (data) {
         let result=''
@@ -163,3 +138,51 @@ function searchJobs() {
         $('#showjobs').append(result);
     });
 }
+
+/******************************************
+ * 每过五秒更新推送的内容，循环数据库里的所有内容 *
+ ******************************************/
+showTime();
+var t=0;
+function showTime()
+{
+    $("#ad").empty();
+    $.get('/testjobs',function (data) {
+        if(t>data.length-3){
+            t=0;
+        }
+        let result='';
+        for(let i=t;i<data.length;i++){
+            if(i-t<3&&i-t>=0){
+                result+=`
+                <a href="#">
+                <div class="panel-body col-lg-12"  >
+			<div class="sixteen wide mobile eight wide tablet four wide computer column">
+				<div class="equal height row">
+					<div class="ui teal piled segment">
+						<p class="ui center aligned dividing header">${data[i].title}</p>
+
+						<p class="job-description center">${data[i].description}
+						</p>
+						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
+
+						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+        </a>`
+            }
+            else {
+                break;
+            }
+        }
+        $('#ad').append(result);
+        t+=3;
+        setTimeout("showTime()", 15000);
+    });
+}
+
+/******************************************
+ * 每过五秒更新推送的内容，循环数据库里的所有内容 *
+ ******************************************/
