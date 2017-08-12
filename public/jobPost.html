@@ -3,10 +3,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+	
 	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-	<script type="text/javascript" src='./index.js'></script>
+	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src='../index.js'></script>
 	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<script type="text/javascript" src="../wangEditor/release/wangEditor.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="./jobP.css">
@@ -86,15 +88,15 @@
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-2 control-label">职位详情</label>
-				<div class="col-sm-5">
-					<textarea class="form-control" rows="3" id="description" name="description" placeholder="职业描述，职业要求"></textarea>
+				<div class="col-sm-8"  id='Post_jobDescript'>
+					<!-- <textarea class="form-control" rows="3" id="description" name="description" placeholder="职业描述，职业要求"></textarea> -->
 				</div>
 			</div>
 			<div class="form-group">
 				
-				<label for="applyApproach" class="col-sm-2 control-label">申请方式</label>
-				<div class="col-sm-5">
-					<textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea>
+				<label for="applyApproach" class="col-sm-2 control-label" >申请方式</label>
+				<div class="col-sm-8" id="post_job_approch">
+					<!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
 				</div>
 			</div>
 
@@ -107,4 +109,11 @@
 	</div>
 	</div>
 </body>
+<script type="text/javascript">
+        var E = window.wangEditor;
+        var editor2 = new E('#Post_jobDescript');
+        let editor3= new E('#post_job_approch');
+        editor2.create();
+        editor3.create();
+    </script>
 </html>
