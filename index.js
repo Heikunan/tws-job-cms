@@ -39,9 +39,7 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
-app.get('/', function(req, res) {
 
-})
 
 
 /*2 根据工作职位过滤职位
@@ -335,15 +333,14 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
  * 输入：email
  * 输出：email，passwordCode(验证码)
  */
-let passwordCode=parseInt(Math.random()*1000000);
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
-    let email='2738794789@qq.com';//req.query.email
-    console.log(passwordCode);
-    let sql='QUERY isactive FROM t_user WHERE email = ?';
-    let data=email;
+    let passwordCode=parseInt(Math.random()*1000000);
+    let email=req.query.email;
+    let sql='SELECT isactive FROM t_user WHERE email = ?';
+    let data=[email];
     connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
-        if(reply===1){
+        if(reply.length===1&&reply[0].isactive===1){
             let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
             let options = {
                 from           : 'cr<thoughtworkersfive@126.com>',
@@ -362,12 +359,13 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             });
             let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
             let data=[passwordCode,email];
-            connection.query(sql,data,function (err, reply) {
-                console.log(reply);
+            connection.query(sql,data,function (err, rep) {
                 if(err) throw  err;
+                res.send(rep);
             });
         }else {
-            res.send('该邮箱尚未注册，请先注册！')
+            res.send('fail');
+            console.log('该邮箱尚未注册，请先注册！')
         }
     })
 })
@@ -391,6 +389,15 @@ app.put('/resettingLogin',function (req,res) {
         res.send(reply.affectedRows);
     });
 })
+
+
+/**
+ * cr测试用
+ * @type {http.Server}
+ */
+ app.get('/test',function (req,res) {
+     res.sendFile(__dirname+'/public/changePassword.html');
+ })
 
 let server = app.listen(8081, function() {
     let host = server.address().address;
