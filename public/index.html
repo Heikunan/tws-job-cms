@@ -43,17 +43,25 @@
 	</div><!-- /.container-fluid -->
 </nav>
 
-<div class="left infor col-lg-9">
+<div class="mid infor col-lg-9 col-md-12">
 	<!--标签页-->
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="first">职位</a>
 		<a class="item" data-tab="second">企业</a>
 	</div>
+
 	<div class="ui bottom attached active tab segment" data-tab="first">
-			<div class="ui action input">
-			<input type="text" placeholder="Search...">
-			<button class="ui button">搜索职位</button>
+		<div class="ui action input">
+			<select id="category" class="ui compact selection dropdown">
+				<option value="">职位</option>
+			</select>
+			<select id="jobtype" class="ui compact selection dropdown">
+				<option value="">工作类型</option>
+			</select>
+			<input type="text" id="jobname" placeholder="Search...">
+			<button class="ui button" onclick="searchJobs()">搜索职位</button>
 		</div>
+
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="second">
 		<div class="ui action input">
@@ -61,84 +69,22 @@
 			<button class="ui button">搜索企业</button>
 		</div>
 	</div>
+
 	<!--搜索结果显示区域-->
-	<div class="searchresult"  id="showjobs">
+	<div class="searchresult" >
 	<div>
 		<h1>最新职位</h1>
 		<div class="ui divider" ></div>
 	</div>
 
-	<div class="showposts">
-		<div class="panel-body" >
-			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-				<div class="equal height row">
-					<div class="ui teal piled segment">
-						<p class="ui center aligned dividing header">java工程师</p>
-
-						<p class="job-description"><span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-						</p>
-						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">北京/中国/10K-14K</span></p>
-
-						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">2017/12/05</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="ui divider" ></div>
-		</div>
-		<div class="panel-body" >
-			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-				<div class="equal height row">
-					<div class="ui teal piled segment">
-						<p class="ui center aligned dividing header">java工程师</p>
-
-						<p class="job-description"><span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-						</p>
-						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">北京/中国/10K-14K</span></p>
-
-						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">2017/12/05</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="ui divider" ></div>
-		</div>
-		<div class="panel-body" >
-			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-				<div class="equal height row">
-					<div class="ui teal piled segment">
-						<p class="ui center aligned dividing header">java工程师</p>
-
-						<p class="job-description"><span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-						</p>
-						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">北京/中国/10K-14K</span></p>
-
-						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">2017/12/05</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="ui divider" ></div>
-		</div>
-		<div class="panel-body" >
-			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-				<div class="equal height row">
-					<div class="ui teal piled segment">
-						<p class="ui center aligned dividing header">java工程师</p>
-
-						<p class="job-description"><span>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </span>
-						</p>
-						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">北京/中国/10K-14K</span></p>
-
-						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">2017/12/05</span></p>
-					</div>
-				</div>
-			</div>
-			<div class="ui divider" ></div>
-		</div>
-
+	<div class="showposts" id="showjobs" >
 	</div>
 </div>
 </div>
 
-
+<div class="ad rigiht col-lg-3" >
+	<div  id="ad"></div>
+</div>
 </body>
 
 <script src="src/js/app.js"></script>

@@ -19,6 +19,80 @@ header{
     padding: 30px;
 }
 
+/*搜索按钮*/
+.ui.action.input:not([class*="left action"])>.button:last-child, .ui.action.input:not([class*="left action"])>.buttons:last-child>.button, .ui.action.input:not([class*="left action"])>.dropdown:last-child
+{
+    border-radius: 0;
+}
+/*搜索栏*/
+.ui.action.input{
+    padding: 0!important;
+    border: 1px solid!important;
+    width: 90%;
+    height: 4em;
+}
+/*光标在输入框里的时候*/
+.ui.input input:focus{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    outline:none;border-color:#209b60;
+    box-shadow:0 0 8px #209b60;
+    -moz-box-shadow:0 0 8px #209b60;
+    -webkit-box-shadow:0 0 8px #209b60;
+}
+/*点击下拉框发光*/
+.ui.selection.dropdown:focus{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    outline:none;border-color:#209b60;
+    box-shadow:0 0 8px #209b60;
+    -moz-box-shadow:0 0 8px #209b60;
+    -webkit-box-shadow:0 0 8px #209b60;
+}
+
+.ui.action.input:not([class*="left action"]) input:focus {
+    border-right-color: #209b60!important;
+}
+
+.ui.input{
+    color:rgb(221, 221, 221);
+    border-radius: 0.285714rem 0.285714rem 0.285714rem  0.28571429rem;
+}
+
+/*下拉框*/
+.ui.selection.dropdown{
+    color: #209b60;
+    border-radius: 0;
+    /* border-radius: 0.285714rem 0 0 .28571429rem; */
+    border: 1px solid #dddddd;
+    height: initial;
+    padding: 0;
+    width: 10em;
+    font-size: medium;
+
+}
+option{
+    font-size: 1.5em;
+    color: #dddddd;
+}
+/*搜索框*/
+.ui.input input{
+    border-radius: 0;
+}
+
+.ui.segment{
+    vertical-align: middle;
+    padding: 3em 0;
+}
+
+/* 搜索按钮*/
+.ui.button{
+    background-color: #209b60 ;
+    font-size: inherit;
+}
+
 @media (min-width: 768px){
     .navbar-right {
         float: right!important;
@@ -28,35 +102,56 @@ header{
         padding-right: 30px;
     }
 }
+/***ad的css*******************************/
+#ad.panel-body{
+    height: 500px;
+    width: 100%;
+}
 
+.ad.rigiht{
+    position: fixed;
+    right: 5%;
+    top: 6em;
+    vertical-align: middle;
+    z-index: 1000;
+}
+
+
+/*************************************/
 
 
 
 .ui.center.aligned.header, .ui.centered.header {
     text-align: center;
-    font-size: 45px;
+    font-size: 25px;
 }
 
 .searchresult{
     padding-top: 70px;
+    text-align: center;
 }
 
 .panel-body{
-    padding-top: 60px;
+    padding: 2em 2em 0em 2em;
+ }
+a:hover{
+    color: #0e8c8c;
+    text-decoration:none;
 }
 
-.left.infor{
-    padding-left: 120px;
-    padding-top: 60px;
+.mid.infor{
+   text-align: center;
+    padding: 8%;
+    padding-top: inherit;
 }
 
-.ui.action.input{
-    width: 100%;
-    padding: 20px;
-}
 
 .panel-body:hover .job-description{
-    display: inline;
+    font-size: 15px;
+    display: inherit;
+    color: rgba(133, 145, 141, 0.4);
+}
+.panel-body:hover{
 }
 
 p.job-description{
@@ -68,16 +163,17 @@ p.job-description{
     display: none;
 }
 .yhx-ef {
-    font-size: 25px;
+    font-size: 15px;
     color: #75c19d;
 }
 .job-time{
-    padding-right: 70px;
-    font-size: 25px;
+    padding: 0em 3em;
+    font-size: 15px;
     color: #75c19d;
     float: right;
 }
-.job-company{
-    padding-left: 70px;
+.job-company {
+    padding: 0em 2em;
     font-size: 15px;
+    float: left;
 }
