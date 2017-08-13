@@ -58,11 +58,39 @@ app.get('/getjobtype',function (req,res) {
 /*
 显示所有职位
  */
+app.post('/testjobs', function(req, res) {
+    let start=(req.body.page-1)*10;
+    console.log(req.body.page);
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        let data=[];
+        let end=result.length>=start+10?start+10:result.length;
+        for (let i=start;i<end;i++){
+            data.push(result[i]);
+            if(i===end-1){
+                console.log(start+end);
+                res.send(data);
+            }
+        }
+
+    });
+})
+
+/*返回一共条数*/
+app.get('/gettotal', function(req, res) {
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) console( err);
+        res.send({length:result.length});
+    });
+})
+
 app.get('/testjobs', function(req, res) {
     let sql='select * from t_job';
     connection.query(sql, function(err, result) {
         if (err) throw err;
-        res.send(result);
+        res.send(result)
     });
 })
 
@@ -80,6 +108,7 @@ app.post('/searchjobs', urlencodedParser, function(req, res) {
         res.send(result);
     });
 });
+
 
 /*7 用户查看自己创建的职位Post列表
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -218,15 +247,6 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
     })
 });
 
-// //发送登陆界面[测试用]
-// app.get('/test',function (req,res) {
-//     res.sendFile(__dirname+'/public/login.html')
-// })
-
-/*获取职位详情
-输入：{id:4};
-输出：对象数组
-*/
 app.get('/getJobDetail', function(req, res) {
     req.body = JSON.parse(req.body)
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
@@ -241,11 +261,7 @@ app.get('/getJobDetail', function(req, res) {
     });
 });
 
-/*接收发布招聘的信息
-输入：招聘表单内容
-输出：成功：200添加成功
-     失败：500服务器发生错误
-*/
+
 app.post('/postJob', function(req, res) {
     let userId = req.session.user.id;
     let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
@@ -261,10 +277,6 @@ app.post('/postJob', function(req, res) {
     });
 });
 
-/*9获得用户详细信息
-输入：
-输出：req.session.user除密码之外的所有信息
- */
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
     let user = {};
     req.session.user = {
@@ -281,12 +293,6 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
     res.send(user);
 })
 
-
-/**9更改用户信息
- * 输入：用户详细信息：如company，password
- * 输出：req.session.user
-
- */
 app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
     let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
@@ -300,10 +306,6 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     });
 })
 
-/**10更改密码
- * 输入：当前密码,新密码
- * 输出：req.session.user//空值
- */
 app.get('changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.query.newPsw)
@@ -318,20 +320,12 @@ app.get('changePsw',function (req,res) {
     });
 })
 
-
-/**11注销用户
- * 输入：
- * 输出：req.session.user//空值
-
- */
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
     res.send(req.session.user);
 })
 
-/*12找回密码,点击找回密码，进入找回密码页面，里面包括email输入框和重置按钮
- */
 app.get('/findPassword',urlencodedParser,function (req,res) {
 
 })
@@ -377,10 +371,6 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
     })
 })
 
-/*12重置密码后登录，输入验证码和密码，点击登录按钮，直接进入主页
-输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
-输出：affectedRows(更改数据条数)
- */
 app.put('/resettingLogin',function (req,res) {
     let email='2738794789@qq.com';//req.query.email;
     let inputPasswordCode=passwordCode;//req.body.passwordCode;
@@ -395,6 +385,37 @@ app.put('/resettingLogin',function (req,res) {
         res.send(reply.affectedRows);
     });
 })
+
+
+
+
+////////////////**/////////////////////////////////
+app.get('/init',function (req,res) {
+    let sql='select * from t_job';
+    let categorys=['development','designer','marketing','prodectManager'];
+    let jobtypes=['volunteer','permanent','freelance','contract'];
+    connection.query(sql,function (err, jobs) {
+        if(err) throw  err;
+        for(let i=0;i<jobs.length;i++) {
+            let j = jobs[i].city.indexOf('-');
+            let city = jobs[i].city.substring(0, j);
+            let country = jobs[i].city.substring(j + 2);
+            let id = parseInt(jobs[i].id);
+            let category = categorys[id % 4];
+            let jobtype = jobtypes[id % 4];
+            let sql2 = "update t_job set category='" + category + "',jobtype='" + jobtype + "',country='" + country + "',city='"
+                + city + "'where id='" + jobs[i].id+"'";
+            connection.query(sql2, function (err, jobs) {
+                if (err) throw  err;
+            });
+        }
+        res.send(jobs);
+    });
+})
+
+/**************************************************/
+
+
 
 
 /**
