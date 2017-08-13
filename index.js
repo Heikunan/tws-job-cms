@@ -38,6 +38,7 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
+
 /*查找所有的工作性质*/
 app.get('/getcategory',function (req,res) {
     let sql='select * from t_category';
@@ -329,16 +330,18 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
 
 })
 
-
-let passwordCode=parseInt(Math.random()*1000000);
+/*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
+输入：email
+输出：email，passwordCode(验证码)
+ */
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
-    let email='2738794789@qq.com';//req.query.email
-    console.log(passwordCode);
-    let sql='QUERY isactive FROM t_user WHERE email = ?';
-    let data=email;
+    let passwordCode=parseInt(Math.random()*1000000);
+    let email=req.query.email;
+    let sql='SELECT isactive FROM t_user WHERE email = ?';
+    let data=[email];
     connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
-        if(reply===1){
+        if(reply.length===1&&reply[0].isactive===1){
             let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
             let options = {
                 from           : 'cr<thoughtworkersfive@126.com>',
@@ -357,12 +360,13 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             });
             let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
             let data=[passwordCode,email];
-            connection.query(sql,data,function (err, reply) {
-                console.log(reply);
+            connection.query(sql,data,function (err, rep) {
                 if(err) throw  err;
+                res.send(rep);
             });
         }else {
-            res.send('该邮箱尚未注册，请先注册！')
+            res.send('fail');
+            console.log('该邮箱尚未注册，请先注册！')
         }
     })
 })
@@ -413,6 +417,14 @@ app.get('/init',function (req,res) {
 
 
 
+
+/**
+ * cr测试用
+ * @type {http.Server}
+ */
+ app.get('/test',function (req,res) {
+     res.sendFile(__dirname+'/public/changePassword.html');
+ })
 
 app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html")
