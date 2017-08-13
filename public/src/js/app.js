@@ -31,14 +31,14 @@ $(function () {
             email:email,password:password
         },function (data) {
             if (data==='ok') {
-                alert('登陆成功！')
+                $('.flash_container').append('<div class=alert>登陆成功！</div>')
                 //获取session中用户信息，在主页更新用户状态
             }else if(data==='wrong'){
-                alert('密码错误！')
+                $('.flash_container').append('<div class=alert>密码错误！</div>')
             } else if (data==='inactivated') {
-                alert('您已注册，请前往邮箱激活账号！')
+                $('.flash_container').append('<div class=alert>您已注册，请前往邮箱激活账号！</div>')
             }else if(data==='null'){
-                alert('账号不存在，请注册后登陆！')
+                $('.flash_container').append('<div class=alert>账号不存在，请注册后登陆！</div>')
             }
         });
     });
@@ -51,11 +51,11 @@ $(function () {
             email:email_register,password:password_register,password_conf:password_conf
         },function (data) {
             if (data===true) {
-                alert('注册成功，请前往邮箱验证！')
+                $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>')
             }else if(data===false){
-                alert('账号已注册！')
+                $('.flash_container').append('<div class=alert>账号已注册！</div>')
             }else if(data==='wrong'){
-                alert('两次输入的密码不一致！')
+                $('.flash_container').append('<div class=alert>两次输入的密码不一致！</div>')
             }
         });
     });

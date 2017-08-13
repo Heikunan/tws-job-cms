@@ -12,12 +12,17 @@ body {
     position: relative;
     left:50%;
     top:50%;
-    margin-left: -300px;
+    margin-left: -260px;
     margin-top: -280px;
 
     background-color: rgba(240, 255, 255, 0.5);
 
     border-radius: 10px;
+    text-align: center;
+}
+
+.alert{
+    background-color: #ff6666;
     text-align: center;
 }
 
