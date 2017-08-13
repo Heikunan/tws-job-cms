@@ -1,2 +1,4 @@
 node_modules/
 .idea/
+public/cxSelect/node_modules/
+public/wangEditor/node_modules/

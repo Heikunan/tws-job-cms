@@ -20,19 +20,20 @@
 		<div class="row">
 			<div class="jumbotron gyf_jumbotron" >
 				<div class="ui segment row">
-					<img class="ui small left floated image col-xs-1" src="https://i.stack.imgur.com/Nppgg.jpg">
-					<div class="gyf_jumbotron_content col-xs-4">
-						<h2>DevOps Engineer</h2>
+					<img class="ui small left floated image col-xs-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'> 
+					<div class="gyf_jumbotron_content col-xs-6">
+						<h2 id="gyf_title">DevOps Engineer</h2>
 						<div class="row gyf_company_name">
-							<div class="col-xs-2">TenXun</div>
-							<div class="col-xs-2">Shenzheng</div>
+							<div class="col-xs-2" id="gyf_inner_company_name">TenXun</div>
+							<div class="col-xs-2" id="gyf_inner_company_city">Shenzheng</div>
+							<div class="col-xs-2" id="gyf_inner_company_country">China</div>
 						</div>
-						<h3>￥30k-50k</h3>
+						<h3 id="gyf_salary">￥30k-50k</h3>
 					</div>
-					<div class="gyf_share col-xs-5">
+					<div class="gyf_share col-xs-3">
 						<div class="ui labeled button" tabindex="0">
 							<div class="ui red button"><i class="heart icon"></i> Like </div>
-							<a class="ui basic red left pointing label">
+							<a class="ui basic red left pointing label" id="gyf_like_number">
 								1,048
 							</a>
 						</div>
@@ -50,6 +51,7 @@
 								<i class="google plus icon"></i>
 							</button>
 						</div>
+					
 					</div>
 				</div>
 			</div>
@@ -64,33 +66,31 @@
 		 			<div class="row gyf_About">
 		 				<h1 style="padding-left: 0.5em"> About this job</h1>
 		 				<div class="row col-md-8 gyf_about_row">
-
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong>Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong>Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong id="gyf_job_type">Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job category:<strong id="gyf_job_category">Permanent</strong></div>
 		 				</div>
 		 				<div class="row col-md-8 gyf_about_row">
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong>Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type: <strong>Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Company size:<strong id="gyf_company_size">Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Company type: <strong id="gyf_company_type">Permanent</strong></div>
 		 				</div>
 		 				<div class="row col-md-8 gyf_about_row">
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong>Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type: <strong>Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Release time:<strong id="gyf_release_time">Permanent</strong></div>
+		 					<div class="col-xs-5 col-md-5 gyf_about_content">Expiry time: <strong id="gyf_expiry_time">Permanent</strong></div>
 		 				</div>
 		 			</div>
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="Tags gyf_tags" style="clear: both;">
 		 				<h1>Tags</h1>
-		 				<span class="label label-default gyf_label">Default</span>
-		 				<span class="label label-primary gyf_label">Primary</span>
-		 				<span class="label label-success gyf_label">Success</span>
-		 				<span class="label label-info gyf_label">Info</span>
-		 				<span class="label label-warning gyf_label">Warning</span>
-		 				<span class="label label-danger gyf_label">Danger</span>
+		 				<span class="label label-default gyf_label" id="gyf_jobInfo_tag1">Default</span>
+		 				<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2">Primary</span>
+		 				<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1">Success</span>
+		 				<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2">Info</span>
+		 				<span class="label label-warning gyf_label" id="gyf_jobInfo_Education">Warning</span>
 		 			</div>
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="gyf_descript">
 		 				<h1>Job description</h1>
-		 				<div class="description_content">
+		 				<div class="description_content" id="gyf_descript_content">
 		 					The DevOps  Engineer will create a vision for software delivery automation and engineering tooling and drive the team to deliver to that vision. You will also work across the Organization to drive and support continuous integration and delivery. You will work with the Agile Teams to improve software delivery and configuration management, and will be responsible for maintaining the development environment which comprises of myriad of platforms including Unix and Windows based systems..
 
 		 					Required Job Specific Skills:
@@ -115,13 +115,13 @@
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="company_introduce">
 		 				<h1>Company introduce</h1>
-		 				<div class="company_introduce_content">The DevOps  Engineer will create a vision for software delivery automation and engineering tooling and drive the team to deliver to that vision. You will also work across the Organization to drive and support continuous integration and delivery. You will work with the Agile Teams to improve software delivery and configuration management, and will be responsible for maintaining the development environment which comprises of myriad of platforms including Unix and Windows based systems..
+		 				<div class="company_introduce_content" id="gyf_company_introduce_content">The DevOps  Engineer will create a vision for software delivery automation and engineering tooling and drive the team to deliver to that vision. You will also work across the Organization to drive and support continuous integration and delivery. You will work with the Agile Teams to improve software delivery and configuration management, and will be responsible for maintaining the development environment which comprises of myriad of platforms including Unix and Windows based systems..
 		 				</div>
 		 			</div>
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="gyf_apply_Approach">
 		 				<h1>How to Apply</h1>
-		 				<div class="gyf_apply_content">
+		 				<div class="gyf_apply_content" id="gyf_apply_content">
 		 					Email:xxxxxxx@163.com
 		 					Phone:xxxxxxxx
 		 				</div>
@@ -151,6 +151,7 @@
 		 			</div>
 		 			<div class="gyf_more_jobs">
 		 				<h2>Jobs you might like</h2>
+		 				<div id="gyf_list">
 		 				<div class="list-group">
 		 					<a href="#" class="list-group-item success">
 		 						<h3 class="list-group-item-heading">List group item heading</h3>
@@ -183,7 +184,7 @@
 		 						<span class="label label-success gyf_label">Primary</span>
 		 					</a>
 		 				</div>
-
+					</div>
 		 			</div>
 
 		 		</div>
@@ -192,9 +193,58 @@
 		 </div>
 		</body>
 		<script type="text/javascript">
-		function load() {
-			
-		}
+			let myurl=window.location.href.split("?id=");
+			sendInfo=myurl[1];
+			function load() {
+				$.get('/getJobDetail',{id:myurl[1]}).done(function (data) {
+					$('#gyf_postInfo_image').attr('src',data.Logo);
+					$('#gyf_title').text(data.title);
+					$('#gyf_inner_company_name').text(data.company);
+					$('#gyf_inner_company_city').text(data.city);
+					$('#gyf_inner_company_country').text(data.country);
+					$('#gyf_salary').text(data.salary);
+					$('#gyf_job_type').text(data.jobType);
+					$('#gyf_job_category').text(data.category);
+					$('#gyf_release_time').text(data.releaseTime);
+					$('#gyf_like_number').text(data.likes);
+					$('#gyf_expiry_time').text(data.expiryTime);
+					$('#gyf_company_type').text(data.companyType);
+					$('#gyf_company_size').text(data.companySize);
+					$('#gyf_descript_content').text(data.description);
+					$('#gyf_company_introduce_content').text(data.companyIntroduce);
+					$('gyf_apply_content').text(data.applyApproach);
+				}).fail(function (xhr,status) {
+					ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+				});
+				let category=$('#gyf_job_category').text();
+				let type=$('#gyf_job_type').text();
+				let title=$('#gyf_title').text();
+				/*还可以根据tags*/
+				let datas={};
+				datas.category=category;
+				datas.type=type;
+				datas.title=title;
+				/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
+				/*返回给我的是[{},{},{},{}]*/
+				/*缺陷：list里的tag 还没做*/
+				$.post('/getSuggestion',datas).done{
+					function(data){
+						let suggestion='';
+						for(let object of data){
+							suggestion=suggestion+
+							`<div class="list-group">
+								<a href="#" class="list-group-item success">
+									<h3 class="list-group-item-heading"> ${object.title} </h3>
+									<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
+									<span class="label label-success gyf_label">Default</span>
+									<span class="label label-success gyf_label">Primary</span>
+								</a>
+							</div>`;
+						}
+						$('#gyf_list').append(suggestion);
+					}
+				}
 
+			}
 		</script>
 		</html> 
