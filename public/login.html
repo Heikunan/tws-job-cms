@@ -14,13 +14,21 @@
 <title>login</title>
 </head>
 <body>
+<div class="flash_container">
+</div>
 <div  id="login_frame">
     <p id="image_logo"><img src="./picture/logo.png"></p>
     <form action="/sign_in" method="post">
-        <p><label class="label_input">Email</label><input type="text" id="email" class="text_field"/></p>
-        <p><label class="label_input">Password</label><input type="password" id="password" class="text_field"/></p>
+        <p>
+            <label class="label_input">邮箱</label>
+            <input type="text" id="email" class="text_field"/>
+        </p>
+        <p>
+            <label class="label_input">密码</label>
+            <input type="password" id="password" class="text_field"/>
+        </p>
         <div class="checkbox" id="remember_me">
-            <input type="checkbox" name="reme_checkbox">Remember me
+            <input type="checkbox" name="reme_checkbox">记住密码
         </div>
         <div id="login_control">
             <input type="button" id="sign_in" value="登录"/>
