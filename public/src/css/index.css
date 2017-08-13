@@ -85,6 +85,7 @@ option{
 .ui.segment{
     vertical-align: middle;
     padding: 3em 0;
+    text-align: center;
 }
 
 /* 搜索按钮*/
@@ -102,18 +103,31 @@ option{
         padding-right: 30px;
     }
 }
+
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
+    opacity: 1.8;
+}
+.dimmer{
+    width: 100%;
+}
+.ui.inverted.dimmer .ui.loader, .ui.loader {
+    font-size: 3em;
+}
+
 /***ad的css*******************************/
 #ad.panel-body{
     height: 500px;
     width: 100%;
+    padding: 2em 2em 0em 2em
 }
 
 .ad.rigiht{
     position: fixed;
-    right: 5%;
+    right: 1%;
     top: 6em;
     vertical-align: middle;
     z-index: 999;
+    width: 30%;
 }
 
 
@@ -141,7 +155,7 @@ a:hover{
 }
 
 .mid.infor{
-   text-align: center;
+   text-align: inherit;
     padding: 8%;
     padding-top: inherit;
 }
@@ -179,6 +193,9 @@ p.job-description{
     float: left;
 }
 
+#page123{
+    text-align: center;
+}
 
 
 
@@ -200,3 +217,4 @@ p.job-description{
 
 }
 /***************************/
+
