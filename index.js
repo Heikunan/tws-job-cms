@@ -60,7 +60,7 @@ app.get('/getjobtype',function (req,res) {
 app.post('/testjobs', function(req, res) {
     let start=(req.body.page-1)*10;
     console.log(req.body.page);
-    let sql='select * from t_job';
+    let sql='select * from t_job LIMIT 5,10';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         let data=[];
@@ -86,7 +86,7 @@ app.get('/gettotal', function(req, res) {
 });
 
 app.get('/testjobs', function(req, res) {
-    let sql='select * from t_job';
+    let sql='SELECT * FROM t_job ';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
@@ -130,7 +130,7 @@ app.get('/myposts', function(req, res) {
             res.send(result)
         })
         // connection.end();
-})
+});
 
 /* 8 用户查看自己创建的职位Post详情
 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
@@ -331,7 +331,7 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
     user.trade = req.session.user.trade;
     // console.log('当前用户的信息如下：' + user);
     res.send(user);
-})
+});
 
 app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
@@ -344,7 +344,7 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
         res.send(reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
-})
+});
 
 app.get('changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
@@ -410,7 +410,7 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             console.log('该邮箱尚未注册，请先注册！');
         }
     })
-})
+});
 
 /*12重置密码后登录，输入验证码和密码，点击登录按钮，若验证通过直接进入主页并将数据库中验证码重新覆盖
 输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
