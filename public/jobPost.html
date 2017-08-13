@@ -236,7 +236,7 @@
 		let companyIntroduce=$('#gyf_post_companyIntroduce>div:last-child>*').html();
 		let datas=$('#gyf_myform').serialize();
 		console.log(datas);
-		datas=datas+'&description='+description+'&applyApproach='+applyApproach+'&companyIntroduce'+companyIntroduce;
+		datas=datas+'&description='+description+'&applyApproach='+applyApproach+'&companyIntroduce='+companyIntroduce;
 		// datas=JSON.stringify(datas);
 	    // console.log(datas);
 		$.post('/postJob',datas).done(function(data){
