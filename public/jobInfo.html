@@ -20,17 +20,20 @@
 		<div class="row">
 			<div class="jumbotron gyf_jumbotron" >
 				<div class="ui segment row">
-					<img class="ui small left floated image col-xs-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'> 
-					<div class="gyf_jumbotron_content col-xs-6">
+					<img class="ui small left floated image col-md-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'> 
+					<div class="gyf_jumbotron_content col-md-6">
 						<h2 id="gyf_title">DevOps Engineer</h2>
 						<div class="row gyf_company_name">
-							<div class="col-xs-2" id="gyf_inner_company_name">TenXun</div>
-							<div class="col-xs-2" id="gyf_inner_company_city">Shenzheng</div>
-							<div class="col-xs-2" id="gyf_inner_company_country">China</div>
+							<div class="col-md-2" id="gyf_inner_company_name">TenXun</div>
+							<div class="col-md-2" id="gyf_inner_company_area">深圳市</div>
+							<div class="col-md-2" id="gyf_inner_company_city">广东省</div>
+							<div class="col-md-2" id="gyf_inner_company_country">中国</div>
+							
 						</div>
-						<h3 id="gyf_salary">￥30k-50k</h3>
+						<h3 id="gyf_salary">￥30k-50k <i class="space2"></i><strong id="gyf_jobInfo_num">2人</strong></h3>
+						
 					</div>
-					<div class="gyf_share col-xs-3">
+					<div class="gyf_share col-md-3">
 						<div class="ui labeled button" tabindex="0">
 							<div class="ui red button"><i class="heart icon"></i> Like </div>
 							<a class="ui basic red left pointing label" id="gyf_like_number">
@@ -200,6 +203,7 @@
 					$('#gyf_postInfo_image').attr('src',data.Logo);
 					$('#gyf_title').text(data.title);
 					$('#gyf_inner_company_name').text(data.company);
+					$('#gyf_inner_company_area').text(data.area);
 					$('#gyf_inner_company_city').text(data.city);
 					$('#gyf_inner_company_country').text(data.country);
 					$('#gyf_salary').text(data.salary);
@@ -213,6 +217,14 @@
 					$('#gyf_descript_content').text(data.description);
 					$('#gyf_company_introduce_content').text(data.companyIntroduce);
 					$('gyf_apply_content').text(data.applyApproach);
+					let language_tags=data.tags.split(',');
+					let benefits_tags=data.tags.split(',');
+					$("#gyf_jobInfo_tag1").text(language_tags[0]);
+					$('#gyf_jobInfo_tag2').text(language_tags[1]);
+					$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
+					$('#gyf_jobInfo_benefits1').text(benefits_tags[1]);
+					$("#gyf_jobInfo_Education").text(data.education);
+					$('#gyf_jobInfo_num').text(data.num);
 				}).fail(function (xhr,status) {
 					ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
 				});
@@ -227,7 +239,7 @@
 				/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
 				/*返回给我的是[{},{},{},{}]*/
 				/*缺陷：list里的tag 还没做*/
-				$.post('/getSuggestion',datas).done{
+				$.post('/getSuggestion',datas).done(
 					function(data){
 						let suggestion='';
 						for(let object of data){
@@ -242,9 +254,9 @@
 							</div>`;
 						}
 						$('#gyf_list').append(suggestion);
-					}
-				}
-
+					}).fail(function(xhr,status){
+						console.log('失败: ' + xhr.status + ', 原因: ' + status);
+					})
 			}
 		</script>
 		</html> 
