@@ -17,9 +17,9 @@ app.use(session({
 }));
 
 let connection = mysql.createConnection({
-    host: '119.28.63.95',
-    user: 'myuser',
-    password: 'hubuedu',
+    host: '47.94.199.111',
+    user: 'tws',
+    password: '123456',
     port: '3306',
     database: 'twsjob',
 });
