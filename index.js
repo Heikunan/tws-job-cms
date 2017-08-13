@@ -362,27 +362,32 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             let data=[passwordCode,email];
             connection.query(sql,data,function (err, rep) {
                 if(err) throw  err;
+                console.log(rep);
                 res.send(rep);
             });
         }else {
             res.send('fail');
-            console.log('该邮箱尚未注册，请先注册！')
+            console.log('该邮箱尚未注册，请先注册！');
         }
     })
 })
 
+/*12重置密码后登录，输入验证码和密码，点击登录按钮，若验证通过直接进入主页并将数据库中验证码重新覆盖
+输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
+输出：reply(更改数据的信息)
+ */
+
 app.put('/resettingLogin',function (req,res) {
-    let email='2738794789@qq.com';//req.query.email;
-    let inputPasswordCode=passwordCode;//req.body.passwordCode;
-    let password='c2';//req.body.password
+    let email=req.query.email;
+    let passwordCode=req.body.passwordCode;
+    let password=req.body.password;
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode=parseInt(Math.random()*1000000);
-    console.log(rePasswordCode);
-    let dataCode=[password,rePasswordCode,email,inputPasswordCode];
+    let rePasswordCode=parseInt(Math.random()*10000000);
+    let dataCode=[password,rePasswordCode,email,passwordCode];
     connection.query(sqlCode,dataCode,function (err, reply) {
         if(err) throw  err;
         console.log(reply);
-        res.send(reply.affectedRows);
+        res.send(reply);
     });
 })
 
@@ -425,6 +430,10 @@ app.get('/init',function (req,res) {
  app.get('/test',function (req,res) {
      res.sendFile(__dirname+'/public/changePassword.html');
  })
+app.get('/',function (req,res) {
+    res.sendFile(__dirname+'/public/index.html');
+})
+//////////////cr测试用////////////////////
 
 app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html")
