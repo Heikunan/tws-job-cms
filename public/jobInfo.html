@@ -24,33 +24,22 @@
 						<div class="row gyf_company_name">
 							<div class="col-md-2" id="gyf_inner_company_name">TenXun</div>
 							<div class="col-md-2" id="gyf_inner_company_area">深圳市</div>
-							<div class="col-md-2" id="gyf_inner_company_city">广东省</div>
+							 <div class="col-md-2" id="gyf_inner_company_city">广东省</div> 
 							<div class="col-md-2" id="gyf_inner_company_country">中国</div>
-							
 						</div>
-						<h3 id="gyf_salary">￥30k-50k <i class="space2"></i><strong id="gyf_jobInfo_num">2人</strong></h3>
-						
+					
+						<h3 id="gyf_salary">￥30k-50k </h3>
 					</div>
 					<div class="gyf_share col-md-3">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button"><i class="heart icon"></i> Like </div>
-							<a class="ui basic red left pointing label" id="gyf_like_number">
+							<div class="ui red button" style="background-color:cyan;"><i class="heart icon"></i> Like </div>
+							<a class="ui basic  left pointing label" style=" border-color:cyan" id="gyf_like_number">
 								1,048
 							</a>
 						</div>
 						<div class="share_icon" style="margin-top:2em;">
-							<button class="ui circular facebook icon button">
-								<i class="facebook icon"></i>
-							</button>
-							<button class="ui circular twitter icon button">
-								<i class="twitter icon"></i>
-							</button>
-							<button class="ui circular linkedin icon button">
-								<i class="linkedin icon"></i>
-							</button>
-							<button class="ui circular google plus icon button">
-								<i class="google plus icon"></i>
-							</button>
+							招聘人数：<strong id="gyf_jobInfo_num"></strong>
+							<i class="users icon col-md-3"></i>
 						</div>
 					
 					</div>
@@ -81,12 +70,12 @@
 		 			</div>
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="Tags gyf_tags" style="clear: both;">
-		 				<h1>Tags</h1>
+						 <h1>Tags</h1>
+						<span class="label label-warning gyf_label" id="gyf_jobInfo_Education">Warning</span>
 		 				<span class="label label-default gyf_label" id="gyf_jobInfo_tag1">Default</span>
 		 				<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2">Primary</span>
 		 				<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1">Success</span>
 		 				<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2">Info</span>
-		 				<span class="label label-warning gyf_label" id="gyf_jobInfo_Education">Warning</span>
 		 			</div>
 		 			<div class="ui divider gyf_divider"></div>
 		 			<div class="gyf_descript">
@@ -210,24 +199,24 @@
 					$('#gyf_salary').text(data.salary);
 					$('#gyf_job_type').text(data.jobType);
 					$('#gyf_job_category').text(data.category);
-					console.log('time:'+data.releaseTime)
 					let releaseTime=data.releaseTime.split('T');
-					console.log('time:'+data.releaseTime)/*时间问题*/
-					$('#gyf_release_time').text(data.releaseTime[0]);
+					$('#gyf_release_time').text(releaseTime[0]);
 					$('#gyf_like_number').text(data.likes);
-					$('#gyf_expiry_time').text(data.expiryTime);
+					$('#gyf_expiry_time').text(data.expiryDate);
 					$('#gyf_company_type').text(data.companyType);
 					$('#gyf_company_size').text(data.companySize);
-					$('#gyf_descript_content').text(data.description);/*html问题*/
-					$('#gyf_company_introduce_content').text(data.companyIntroduce);
+					$('#gyf_descript_content').html(data.description);/*html问题*/
+					$('#gyf_company_introduce_content').html(data.companyIntroduce);
 					$('gyf_apply_content').text(data.applyApproach);
 					let language_tags=data.tags.split(',');
-					let benefits_tags=data.tags.split(',');
+					let benefits_tags=data.benefits.split(',');
+					console.log('benefits:'+benefits_tags);
 					$("#gyf_jobInfo_tag1").text(language_tags[0]);
 					$('#gyf_jobInfo_tag2').text(language_tags[1]);
 					$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
-					$('#gyf_jobInfo_benefits1').text(benefits_tags[1]);
+					$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 					$("#gyf_jobInfo_Education").text(data.education);
+					console.log('num:'+data.num);
 					$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
 				}).fail(function (xhr,status) {
 					console.log('失败: ' + xhr.status + ', 原因: ' + status);
