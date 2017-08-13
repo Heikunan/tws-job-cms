@@ -37,31 +37,77 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
+
+/*查找所有的工作性质*/
+app.get('/getcategory',function (req,res) {
+    let sql='select * from t_category';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+/*查找所有的工作类型*/
+app.get('/getjobtype',function (req,res) {
+    let sql='select * from t_jobtype';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 /*
 显示所有职位
  */
+app.post('/testjobs', function(req, res) {
+    let start=(req.body.page-1)*10;
+    console.log(req.body.page);
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        let data=[];
+        let end=result.length>=start+10?start+10:result.length;
+        for (let i=start;i<end;i++){
+            data.push(result[i]);
+            if(i===end-1){
+                console.log(start+end);
+                res.send(data);
+            }
+        }
+
+    });
+})
+
+/*返回一共条数*/
+app.get('/gettotal', function(req, res) {
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) console( err);
+        res.send({length:result.length});
+    });
+})
+
 app.get('/testjobs', function(req, res) {
     let sql='select * from t_job';
     connection.query(sql, function(err, result) {
         if (err) throw err;
-        res.send(result);
+        res.send(result)
     });
 })
 
 
 /*2 根据工作职位过滤职位
 3 根据工作性质过滤职位*/
-app.post('/', urlencodedParser, function(req, res) {
+app.post('/searchjobs', urlencodedParser, function(req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
+    let jobname =req.body.jobname;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? and jobtype=?';
-    let sqlinfor = [category, jobtype];
-    connection.query(sql, sqlinfor, function(err, result) {
+    let sql = "select * from t_job where category like '%"+category+"%' and jobtype like '%"+jobtype+"%' and title like '%"+jobname+"%'";
+    connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
     });
 });
+
 
 /*7 用户查看自己创建的职位Post列表
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -200,15 +246,6 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
     })
 });
 
-// //发送登陆界面[测试用]
-// app.get('/test',function (req,res) {
-//     res.sendFile(__dirname+'/public/login.html')
-// })
-
-/*获取职位详情
-输入：{id:4};
-输出：对象数组
-*/
 app.get('/getJobDetail', function(req, res) {
     req.body = JSON.parse(req.body);
     console.log(req.body);
@@ -223,6 +260,7 @@ app.get('/getJobDetail', function(req, res) {
     //     connection.end();
     // });
 });
+
 app.get('/postJob',function(req,res){
     res.sendFile( __dirname + "/public/" + "jobPost.html");
 })
@@ -231,6 +269,7 @@ app.get('/postJob',function(req,res){
 输出：成功：200添加成功
      失败：500服务器发生错误
 */
+
 app.post('/postJob', function(req, res) {
     //  req.body = JSON.parse(req.body);
     console.log(req.body);
@@ -269,11 +308,13 @@ app.post('/getSuggestion',function(req,res){
         res.send(result);
     });
 
+
 })
 /*9获得用户详细信息
 输入：
 输出：req.session.user除密码之外的所有信息
  */
+
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
     let user = {};
     req.session.user = {
@@ -290,12 +331,6 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
     res.send(user);
 })
 
-
-/**9更改用户信息
- * 输入：用户详细信息：如company，password
- * 输出：req.session.user
-
- */
 app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
     let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
@@ -309,10 +344,6 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     });
 })
 
-/**10更改密码
- * 输入：当前密码,新密码
- * 输出：req.session.user//空值
- */
 app.get('changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.query.newPsw)
@@ -327,20 +358,12 @@ app.get('changePsw',function (req,res) {
     });
 })
 
-
-/**11注销用户
- * 输入：
- * 输出：req.session.user//空值
-
- */
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
     res.send(req.session.user);
 })
 
-/*12找回密码,点击找回密码，进入找回密码页面，里面包括email输入框和重置按钮
- */
 app.get('/findPassword',urlencodedParser,function (req,res) {
 
 })
@@ -349,15 +372,14 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
 输入：email
 输出：email，passwordCode(验证码)
  */
-let passwordCode=parseInt(Math.random()*1000000);
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
-    let email='2738794789@qq.com';//req.query.email
-    console.log(passwordCode);
-    let sql='QUERY isactive FROM t_user WHERE email = ?';
-    let data=email;
+    let passwordCode=parseInt(Math.random()*1000000);
+    let email=req.query.email;
+    let sql='SELECT isactive FROM t_user WHERE email = ?';
+    let data=[email];
     connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
-        if(reply===1){
+        if(reply.length===1&&reply[0].isactive===1){
             let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
             let options = {
                 from           : 'cr<thoughtworkersfive@126.com>',
@@ -376,34 +398,80 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             });
             let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
             let data=[passwordCode,email];
-            connection.query(sql,data,function (err, reply) {
-                console.log(reply);
+            connection.query(sql,data,function (err, rep) {
                 if(err) throw  err;
+                console.log(rep);
+                res.send(rep);
             });
         }else {
-            res.send('该邮箱尚未注册，请先注册！')
+            res.send('fail');
+            console.log('该邮箱尚未注册，请先注册！');
         }
     })
 })
 
-/*12重置密码后登录，输入验证码和密码，点击登录按钮，直接进入主页
+/*12重置密码后登录，输入验证码和密码，点击登录按钮，若验证通过直接进入主页并将数据库中验证码重新覆盖
 输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
-输出：affectedRows(更改数据条数)
+输出：reply(更改数据的信息)
  */
+
 app.put('/resettingLogin',function (req,res) {
-    let email='2738794789@qq.com';//req.query.email;
-    let inputPasswordCode=passwordCode;//req.body.passwordCode;
-    let password='c2';//req.body.password
+    let email=req.query.email;
+    let passwordCode=req.body.passwordCode;
+    let password=req.body.password;
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode=parseInt(Math.random()*1000000);
-    console.log(rePasswordCode);
-    let dataCode=[password,rePasswordCode,email,inputPasswordCode];
+    let rePasswordCode=parseInt(Math.random()*10000000);
+    let dataCode=[password,rePasswordCode,email,passwordCode];
     connection.query(sqlCode,dataCode,function (err, reply) {
         if(err) throw  err;
         console.log(reply);
-        res.send(reply.affectedRows);
+        res.send(reply);
     });
 })
+
+
+
+
+////////////////**/////////////////////////////////
+app.get('/init',function (req,res) {
+    let sql='select * from t_job';
+    let categorys=['development','designer','marketing','prodectManager'];
+    let jobtypes=['volunteer','permanent','freelance','contract'];
+    connection.query(sql,function (err, jobs) {
+        if(err) throw  err;
+        for(let i=0;i<jobs.length;i++) {
+            let j = jobs[i].city.indexOf('-');
+            let city = jobs[i].city.substring(0, j);
+            let country = jobs[i].city.substring(j + 2);
+            let id = parseInt(jobs[i].id);
+            let category = categorys[id % 4];
+            let jobtype = jobtypes[id % 4];
+            let sql2 = "update t_job set category='" + category + "',jobtype='" + jobtype + "',country='" + country + "',city='"
+                + city + "'where id='" + jobs[i].id+"'";
+            connection.query(sql2, function (err, jobs) {
+                if (err) throw  err;
+            });
+        }
+        res.send(jobs);
+    });
+})
+
+/**************************************************/
+
+
+
+
+/**
+ * cr测试用
+ * @type {http.Server}
+ */
+ app.get('/test',function (req,res) {
+     res.sendFile(__dirname+'/public/changePassword.html');
+ })
+app.get('/',function (req,res) {
+    res.sendFile(__dirname+'/public/index.html');
+})
+//////////////cr测试用////////////////////
 
 app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html")

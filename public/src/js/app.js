@@ -31,14 +31,14 @@ $(function () {
             email:email,password:password
         },function (data) {
             if (data==='ok') {
-                alert('登陆成功！')
+                $('.flash_container').append('<div class=alert>登陆成功！</div>')
                 //获取session中用户信息，在主页更新用户状态
             }else if(data==='wrong'){
-                alert('密码错误！')
+                $('.flash_container').append('<div class=alert>密码错误！</div>')
             } else if (data==='inactivated') {
-                alert('您已注册，请前往邮箱激活账号！')
+                $('.flash_container').append('<div class=alert>您已注册，请前往邮箱激活账号！</div>')
             }else if(data==='null'){
-                alert('账号不存在，请注册后登陆！')
+                $('.flash_container').append('<div class=alert>账号不存在，请注册后登陆！</div>')
             }
         });
     });
@@ -51,55 +51,210 @@ $(function () {
             email:email_register,password:password_register,password_conf:password_conf
         },function (data) {
             if (data===true) {
-                alert('注册成功，请前往邮箱验证！')
+                $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>')
             }else if(data===false){
-                alert('账号已注册！')
+                $('.flash_container').append('<div class=alert>账号已注册！</div>')
             }else if(data==='wrong'){
-                alert('两次输入的密码不一致！')
+                $('.flash_container').append('<div class=alert>两次输入的密码不一致！</div>')
             }
         });
     });
 });
 
 /*进入首页得到最新的职位*/
+
+/!*得到page的值*!/
+function getpage() {
+    let href=window.location.href;
+    let pages=href.split('?page=');
+    console.log(pages);
+    let page='';
+    if(pages.length===1){
+        page='1';
+    }else{
+        page=pages[1];
+    }
+    return parseInt(page);
+}
+
+function changepagenumber(page) {
+    $.get('/gettotal',function (data) {
+        let totalpage=parseInt(data.length/10)+1;
+        /*在最后五页*/
+        if(page>=totalpage-3){
+            $("#page1").html(totalpage-4);
+            $("#page2").html(totalpage-3);
+            $("#page3").html(totalpage-2);
+            $("#page4").html(totalpage-1);
+            $("#page5").html(totalpage);
+        }else if(page<=3){
+            $("#page1").html(1);
+            $("#page2").html(2);
+            $("#page3").html(3);
+            $("#page4").html(4);
+            $("#page5").html(5);
+        }else{
+            $("#page1").html(page-2);
+            $("#page2").html(page-1);
+            $("#page3").html(page);
+            $("#page4").html(page+1);
+            $("#page5").html(page+2);
+        }
+
+        $("#pagefirst").attr('href',window.location.href.split("?page=")[0]+"?page=1");
+        $("#pagelast").attr('href',window.location.href.split("?page=")[0]+"?page="+totalpage );
+        sethref();
+        if(page===1){$("#pagefirst").hide()}else {$("#pagefirst").show()}
+        if(page===totalpage){$("#pagelast").hide()}else {$("#pagefirst").show()}
+    })
+}
+
+function sethref() {
+    $("#page1").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page1").html() );
+    $("#page2").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page2").html() );
+    $("#page3").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page3").html() );
+    $("#page4").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page4").html() );
+    $("#page5").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page5").html() );
+    console.log( window.location.href.split("?page=")[0]+"?page="+$("#page1").html()+"  hhhhh  ");
+}
 $(document).ready(function () {
-    $.get('/testjobs',function (data) {
-        console.log(data);
+    showdimmer();
+    $("#changepage").hide();
+    let page=getpage();
+    changepagenumber(page);
+    let pageshoeline=10;
+    /*刷新最新的内容*/
+    $.get('/getjobtype',function (data) {
+        let result='';
+        for(let i=0;i<data.length;i++){
+            result+=`<option value="${data[i].content}">${data[i].content}</option>`
+        }
+        $("#jobtype").append(result);
+    });
+    $.get('/getcategory',function (data) {
+        let result='';
+        for(let i=0;i<data.length;i++){
+            result+=`<option value="${data[i].content}">${data[i].content}</option>`
+        }
+        $("#category").append(result);
+    });
+    $.post('/testjobs',{page:page},function (data) {
+        let result = '';
+        for (let i = 0; i < data.length; i++) {
+            result += `
+                <a href="#">
+                <div class="panel-body col-lg-12 col-md-12" >
+			<div class="sixteen wide mobile eight wide tablet four wide computer column">
+				<div class="equal height row">
+					<div class="ui teal piled segment">
+						<p class="ui center aligned dividing header">${data[i].title}</p>
+
+						<p class="job-description center">${data[i].description}
+						</p>
+						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
+
+						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="ui divider" ></div>
+		</div>
+        </a>`;
+        }
+        $('#showjobs').append(result);
+        $("#changepage").show();
+        hiddendimmer();
+    });
+
+});
+
+/*点击搜索工作*/
+function searchJobs() {
+    let jobtype=$("#jobtype").val();
+    let category=$("#category").val();
+    let jobname=$("#jobname").val();
+    $('#showjobs').empty();
+    $.post('/searchjobs',{jobtype:jobtype,category:category,jobname:jobname},function (data) {
         let result=''
         for(let i=0;i<data.length;i++){
             result+=`
-                <div class="panel-body"  style="padding-top: 130px">
-                    <div class="job-box">
-                        <div class="job-title" style="padding-bottom: 2em;">
-                        	<h1>${data[i].title}</h1>
-                    	</div>
+                <a href="#">
+                <div class="panel-body col-lg-6 col-md-6" >
+			<div class="sixteen wide mobile eight wide tablet four wide computer column">
+				<div class="equal height row">
+					<div class="ui teal piled segment">
+						<p class="ui center aligned dividing header">${data[i].title}</p>
 
-                    	<div class="job-description">
-                        	<p>在互联网时代，javaEE技术体系毫无疑问的成为了服务器端编程领域的王者，在未来新的业务领域有着更辉煌的发展前景，可以从事金融、互联网、电商、医疗等行业的核心软件系统开发。构建基于Hadoop、spark、Storm等大数据核心技术的商业支撑系统。 </p>
-                    	</div>
+						<p class="job-description center">${data[i].description}
+						</p>
+						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
 
-                    	<div class="job-company">
-                        	<p><span class="glyphicon glyphicon-globe"></span>&nbsp;阿里巴巴股份有限公司</p>
-                    	</div>
-
-                    	<div class="job-bottom">
-                        	<div class="pull-left">
-								<div class="job-city">
-									<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;武汉</p>
-								</div>
-                    		</div>
-
-                    		<div class="pull-right job-bottom-right">
-                        		<div class="job-time">
-                        			<p><span class="glyphicon glyphicon-time"></span>&nbsp;2017-12-10</p>
-                    			</div>
-                    		</div>
-                    	</div>
-                    </div>
-                    <div class="ui divider" style="margin-top: 130px;"></div>
-                </div>`
+						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="ui divider" ></div>
+		</div>
+        </a>`
         }
         console.log(result);
         $('#showjobs').append(result);
     });
-});
+}
+
+/******************************************
+ * 每过五秒更新推送的内容，循环数据库里的所有内容 *
+ ******************************************/
+showTime();
+var t=0;
+function showTime()
+{
+    $("#ad").empty();
+    $.get('/testjobs',function (data) {
+        if(t>data.length-3){
+            t=0;
+        }
+        let result='';
+        for(let i=t;i<data.length;i++){
+            if(i-t<3&&i-t>=0){
+                result+=`
+                <a href="#">
+                <div class="panel-body col-lg-12"  >
+			<div class="sixteen wide mobile eight wide tablet four wide computer column">
+				<div class="equal height row">
+					<div class="ui teal piled segment">
+						<p class="ui center aligned dividing header">${data[i].title}</p>
+
+						<p class="job-description center">${data[i].description}
+						</p>
+						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
+
+						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+        </a>`
+            }
+            else {
+                break;
+            }
+        }
+        $('#ad').append(result);
+        t+=3;
+        setTimeout("showTime()", 15000);
+    });
+}
+
+/******************************************
+ * 每过五秒更新推送的内容，循环数据库里的所有内容 *
+ ******************************************/
+
+
+
+function showdimmer() {
+    $('#dimmerall').show();
+}
+function hiddendimmer() {
+    $('#dimmerall').hide();
+}
