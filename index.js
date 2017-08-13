@@ -8,7 +8,6 @@ let Crypto = require('node-crypto');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 let cp = new Crypto('you secret code');
 let app = express();
-
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -211,39 +210,66 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
 输出：对象数组
 */
 app.get('/getJobDetail', function(req, res) {
-    req.body = JSON.parse(req.body)
-    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
-    connection.query(sql, function(err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.status(500).send('服务器发生错误');
-        }
-        res.send(result);
+    req.body = JSON.parse(req.body);
+    console.log(req.body);
+    // let sql = 'SELECT * FROM t_job where id =' + req.body.id;
+    // connection.query(sql, function(err, result) {
+    //     if (err) {
+    //         console.log('[SELECT ERROR] - ', err.message);
+    //         res.status(500).send('服务器发生错误');
+    //     }
+    //     res.send(result);
 
-        connection.end();
-    });
+    //     connection.end();
+    // });
 });
-
+app.get('/postJob',function(req,res){
+    res.sendFile( __dirname + "/public/" + "jobPost.html");
+})
 /*接收发布招聘的信息
 输入：招聘表单内容
 输出：成功：200添加成功
      失败：500服务器发生错误
 */
 app.post('/postJob', function(req, res) {
-    let userId = req.session.user.id;
-    let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
+    //  req.body = JSON.parse(req.body);
     console.log(req.body);
-    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryDate, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country];
+    // let userId = req.session.user.id;
+    let userId='1';
+    let likes=0;
+    let releaseTime=new Date(Date.now());
+    console.log(releaseTime);
+    // let addSql='INSERT INTO t_test(userId) VALUES (?)';
+    // let addSqlParams=['1'];
+    req.body.tags=req.body.tags[0]+','+req.body.tags[1];
+    req.body.benefits=req.body.benefits[0]+','+req.body.benefits[1];
+    let addSql = 'INSERT INTO t_test(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes,req.body.companyIntroduce];
     connection.query(addSql, addSqlParams, function(err, result) {
+        console.log(result);
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
-        }
-        res.status(200).send('添加成功');
-        connection.end();
+        }else{
+            res.status(200).send('添加成功');  
+        } 
+        console.log('end');
+         connection.end();
     });
 });
+app.post('/getSuggestion',function(req,res){
+    let jobtype = req.body.type;
+    let category = req.body.category;
+    let title = req.body.title;
+    console.log(jobtype, category);
+    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sqlinfor = [category, jobtype,`%${title}%`];
+    connection.query(sql, sqlinfor, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
 
+})
 /*9获得用户详细信息
 输入：
 输出：req.session.user除密码之外的所有信息
