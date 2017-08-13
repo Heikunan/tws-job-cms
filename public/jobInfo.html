@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<meta charset="utf-8">
-	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src='../index.js'></script>
-	<script type="text/javascript" src='./src/semantic.min.js'></script>
-	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="./jobInfo.css">
-	<title></title>
+	<script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src='../src/semantic.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../src/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../jobInfo.css">
+	<title>JobInfo</title>
 </head>
 <body onload="load()">
 	<div class="container">
@@ -196,10 +194,13 @@
 		 </div>
 		</body>
 		<script type="text/javascript">
-			let myurl=window.location.href.split("?id=");
-			sendInfo=myurl[1];
+			let myurl=window.location.href.split("id=");
+				let datas={};
+				datas.id=myurl[1];
 			function load() {
-				$.get('/getJobDetail',{id:myurl[1]}).done(function (data) {
+				$.post('/getJobDetail/id=:id',datas).done(function (data) {
+					console.log(data);
+					data=data[0];
 					$('#gyf_postInfo_image').attr('src',data.Logo);
 					$('#gyf_title').text(data.title);
 					$('#gyf_inner_company_name').text(data.company);
@@ -209,12 +210,15 @@
 					$('#gyf_salary').text(data.salary);
 					$('#gyf_job_type').text(data.jobType);
 					$('#gyf_job_category').text(data.category);
-					$('#gyf_release_time').text(data.releaseTime);
+					console.log('time:'+data.releaseTime)
+					let releaseTime=data.releaseTime.split('T');
+					console.log('time:'+data.releaseTime)/*时间问题*/
+					$('#gyf_release_time').text(data.releaseTime[0]);
 					$('#gyf_like_number').text(data.likes);
 					$('#gyf_expiry_time').text(data.expiryTime);
 					$('#gyf_company_type').text(data.companyType);
 					$('#gyf_company_size').text(data.companySize);
-					$('#gyf_descript_content').text(data.description);
+					$('#gyf_descript_content').text(data.description);/*html问题*/
 					$('#gyf_company_introduce_content').text(data.companyIntroduce);
 					$('gyf_apply_content').text(data.applyApproach);
 					let language_tags=data.tags.split(',');
@@ -224,39 +228,40 @@
 					$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
 					$('#gyf_jobInfo_benefits1').text(benefits_tags[1]);
 					$("#gyf_jobInfo_Education").text(data.education);
-					$('#gyf_jobInfo_num').text(data.num);
+					$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
 				}).fail(function (xhr,status) {
-					ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+					console.log('失败: ' + xhr.status + ', 原因: ' + status);
 				});
 				let category=$('#gyf_job_category').text();
 				let type=$('#gyf_job_type').text();
 				let title=$('#gyf_title').text();
+			}
 				/*还可以根据tags*/
-				let datas={};
-				datas.category=category;
-				datas.type=type;
-				datas.title=title;
+				// let datas={};
+				// datas.category=category;
+				// datas.type=type;
+				// datas.title=title;
 				/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
 				/*返回给我的是[{},{},{},{}]*/
 				/*缺陷：list里的tag 还没做*/
-				$.post('/getSuggestion',datas).done(
-					function(data){
-						let suggestion='';
-						for(let object of data){
-							suggestion=suggestion+
-							`<div class="list-group">
-								<a href="#" class="list-group-item success">
-									<h3 class="list-group-item-heading"> ${object.title} </h3>
-									<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
-									<span class="label label-success gyf_label">Default</span>
-									<span class="label label-success gyf_label">Primary</span>
-								</a>
-							</div>`;
-						}
-						$('#gyf_list').append(suggestion);
-					}).fail(function(xhr,status){
-						console.log('失败: ' + xhr.status + ', 原因: ' + status);
-					})
-			}
+			// 	$.post('/getSuggestion',datas).done(
+			// 		function(data){
+			// 			let suggestion='';
+			// 			for(let object of data){
+			// 				suggestion=suggestion+
+			// 				`<div class="list-group">
+			// 					<a href="#" class="list-group-item success">
+			// 						<h3 class="list-group-item-heading"> ${object.title} </h3>
+			// 						<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
+			// 						<span class="label label-success gyf_label">Default</span>
+			// 						<span class="label label-success gyf_label">Primary</span>
+			// 					</a>
+			// 				</div>`;
+			// 			}
+			// 			$('#gyf_list').append(suggestion);
+			// 		}).fail(function(xhr,status){
+			// 			console.log('失败: ' + xhr.status + ', 原因: ' + status);
+			// 		})
+			// }
 		</script>
 		</html> 

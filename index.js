@@ -245,20 +245,22 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
         }
     })
 });
-
-app.get('/getJobDetail', function(req, res) {
-    req.body = JSON.parse(req.body);
+app.get('/getJobDetail/id=:id',function(req,res){
+    res.sendFile(__dirname + "/public/" + "jobInfo.html");
+});
+app.post('/getJobDetail/id=:id', function(req, res) {
     console.log(req.body);
-    // let sql = 'SELECT * FROM t_job where id =' + req.body.id;
-    // connection.query(sql, function(err, result) {
-    //     if (err) {
-    //         console.log('[SELECT ERROR] - ', err.message);
-    //         res.status(500).send('服务器发生错误');
-    //     }
-    //     res.send(result);
-
-    //     connection.end();
-    // });
+    let sql = 'SELECT * FROM t_test where id =' + req.body.id;
+    connection.query(sql, function(err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        }
+        else{
+            res.send(result);
+        }
+         connection.end();
+    });
 });
 
 app.get('/postJob',function(req,res){
