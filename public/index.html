@@ -18,7 +18,13 @@
 	<link rel="stylesheet" href="src/css/index.css">
 </head>
 <body>
+<!--遮罩层-->
+<!--<div class="ui blurring segment" id="dimmerall" style="display: inline;position: fixed;z-index: 10000000;height: 100%;width: 100%;opacity: 0.8">
 
+</div>-->
+<div class="ui active inverted dimmer" id="dimmerall">
+	<div class="ui text loader">Loading</div>
+</div>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -44,49 +50,82 @@
 </nav>
 
 <div class="mid infor col-lg-9 col-md-12">
+
 	<!--标签页-->
-	<div class="ui top attached tabular menu">
-		<a class="active item" data-tab="first">职位</a>
-		<a class="item" data-tab="second">企业</a>
+	<div class="ui top attached tabular menu" id="biaoqian">
+		<a class="item" data-tab="first">post</a>
+		<a class="active item" data-tab="second">company</a>
 	</div>
 
-	<div class="ui bottom attached active tab segment" data-tab="first">
+	<div class="ui bottom attached tab segment" data-tab="first">
 		<div class="ui action input">
 			<select id="category" class="ui compact selection dropdown">
-				<option value="">职位</option>
+				<option value="">category</option>
 			</select>
 			<select id="jobtype" class="ui compact selection dropdown">
-				<option value="">工作类型</option>
+				<option value="">jobtype</option>
 			</select>
 			<input type="text" id="jobname" placeholder="Search...">
-			<button class="ui button" onclick="searchJobs()">搜索职位</button>
+			<button class="ui button" onclick="searchJobs()">search post</button>
 		</div>
 
 	</div>
-	<div class="ui bottom attached tab segment" data-tab="second">
+	<div class="ui bottom attached active  tab segment" data-tab="second">
 		<div class="ui action input">
-			<input type="text" placeholder="Search...">
-			<button class="ui button">搜索企业</button>
+			<select id="category1" class="ui compact selection dropdown">
+				<option value="">category</option>
+			</select>
+			<select id="jobtype1" class="ui compact selection dropdown">
+				<option value="">jobtype</option>
+			</select>
+			<input type="text" id="jobname1" placeholder="Search...">
+			<button class="ui button" onclick="searchJobs()">search company</button>
 		</div>
 	</div>
-
 	<!--搜索结果显示区域-->
 	<div class="searchresult" >
-	<div>
-		<h1>最新职位</h1>
-		<div class="ui divider" ></div>
-	</div>
+		<div>
+			<h1>New Posts</h1>
+			<div class="ui divider" ></div>
+		</div>
 
-	<div class="showposts" id="showjobs" >
+		<div class="showposts" id="showjobs" >
+
+		</div>
+		<nav id="changepage" aria-label="Page navigation" style="display: inline; text-align: center; font-size: 1.8em">
+			<ul class="pagination">
+				<li>
+					<a id="pagefirst" href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li><a 	id="page1" href="#">1</a></li>
+				<li><a 	id="page2" href="#">2</a></li>
+				<li><a 	id="page3" href="#">3</a></li>
+				<li><a 	id="page4" href="#">4</a></li>
+				<li><a 	id="page5" href="#">5</a></li>
+
+				<li>
+					<a id="pagelast" href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
-</div>
+	<!--分页按钮-->
+
 </div>
 
 <div class="ad rigiht col-lg-3" >
 	<div  id="ad"></div>
+
 </div>
 </body>
-
 <script src="src/js/app.js"></script>
-
+<script>
+    $('#biaoqian .item')
+        .tab()
+    ;
+</script>
 </html>
