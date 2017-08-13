@@ -1,17 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-<script type="text/javascript" src='./index.js'></script>
-<script type="text/javascript" src='./src/semantic.min.js'></script>
-<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-	<title>index</title>
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<title>job</title>
+	<link rel="stylesheet" href="src/css/index.css">
 </head>
 <body>
 
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<img class="img" id="logo" src="picture/logo.png"/>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">getposts</a></li>
+				<li><a href="#">register</a></li>
+				<li><a href="#">login</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+<div class="mid infor col-lg-9 col-md-12">
+	<!--标签页-->
+	<div class="ui top attached tabular menu">
+		<a class="active item" data-tab="first">职位</a>
+		<a class="item" data-tab="second">企业</a>
+	</div>
+
+	<div class="ui bottom attached active tab segment" data-tab="first">
+		<div class="ui action input">
+			<select id="category" class="ui compact selection dropdown">
+				<option value="">职位</option>
+			</select>
+			<select id="jobtype" class="ui compact selection dropdown">
+				<option value="">工作类型</option>
+			</select>
+			<input type="text" id="jobname" placeholder="Search...">
+			<button class="ui button" onclick="searchJobs()">搜索职位</button>
+		</div>
+
+	</div>
+	<div class="ui bottom attached tab segment" data-tab="second">
+		<div class="ui action input">
+			<input type="text" placeholder="Search...">
+			<button class="ui button">搜索企业</button>
+		</div>
+	</div>
+
+	<!--搜索结果显示区域-->
+	<div class="searchresult" >
+	<div>
+		<h1>最新职位</h1>
+		<div class="ui divider" ></div>
+	</div>
+
+	<div class="showposts" id="showjobs" >
+	</div>
+</div>
+</div>
+
+<div class="ad rigiht col-lg-3" >
+	<div  id="ad"></div>
+</div>
 </body>
+
+<script src="src/js/app.js"></script>
+
 </html>
