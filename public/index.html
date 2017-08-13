@@ -7,10 +7,7 @@
 	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
 	<script type="text/javascript" src='./src/semantic.min.js'></script>
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -48,7 +45,22 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
-
+<div class="search-background">
+	<img src="./picture/background.jpg" class="img-responsive" alt="">
+	<div class="search-background-inline">
+		<div class="form-inline">
+			<div class="form-group">
+				<label class="sr-only" for="exampleInputEmail3">Email address</label>
+				<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+			</div>
+			<div class="form-group">
+				<label class="sr-only" for="exampleInputPassword3">Password</label>
+				<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-default">Sign in</button>
+		</div>
+	</div>
+</div>
 <div class="mid infor col-lg-9 col-md-12">
 
 	<!--标签页-->

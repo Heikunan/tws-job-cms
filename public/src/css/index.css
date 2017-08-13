@@ -1,5 +1,6 @@
 .navbar{
     padding: 10px 0;
+    margin: 0;
 }
 
 .myheader-right a{
@@ -10,6 +11,18 @@
 #logo{
     height: 40px;
     margin: 5px 0;
+}
+.search-background{
+    position: relative;
+    height: 213px;
+    width: 100%;
+    overflow: hidden;
+}
+.search-background-inline{
+    z-index: 1;
+    position: absolute;
+    top:40%;
+    left: 30%;
 }
 /*搜索按钮*/
 .ui.action.input:not([class*="left action"])>.button:last-child, .ui.action.input:not([class*="left action"])>.buttons:last-child>.button, .ui.action.input:not([class*="left action"])>.dropdown:last-child
