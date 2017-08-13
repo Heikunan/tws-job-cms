@@ -1,7 +1,7 @@
 function getMyPosts() {
     $.get('/myposts')
         .done(function (data) {
-            console.log(data)
+            console.log(data);
             return data;
         })
         .fail(function (xhr, status) {
@@ -10,11 +10,11 @@ function getMyPosts() {
 }
 
 function getMyPostdetail(event) {
-    let id = event.target.id
-    console.log(id)
+    let id = event.target.id;
+    console.log(id);
     $.get('/postdetial', {id: id})
         .done(function (data) {
-            console.log(data)
+            console.log(data);
             return data;
         })
         .fail(function (xhr, status) {
@@ -63,7 +63,7 @@ $(function () {
 
 /*进入首页得到最新的职位*/
 
-/!*得到page的值*!/
+/*得到page的值*/
 function getpage() {
     let href=window.location.href;
     let pages=href.split('?page=');
@@ -175,7 +175,7 @@ function searchJobs() {
     let jobname=$("#jobname").val();
     $('#showjobs').empty();
     $.post('/searchjobs',{jobtype:jobtype,category:category,jobname:jobname},function (data) {
-        let result=''
+        let result='';
         for(let i=0;i<data.length;i++){
             result+=`
                 <a href="#">
@@ -206,7 +206,7 @@ function searchJobs() {
  * 每过五秒更新推送的内容，循环数据库里的所有内容 *
  ******************************************/
 showTime();
-var t=0;
+let t=0;
 function showTime()
 {
     $("#ad").empty();
