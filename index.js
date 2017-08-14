@@ -84,35 +84,17 @@ app.get('/myinfo',function (req,res) {
 
 
 /*
-显示所有职位
+#1显示所有职位
  */
-
-/*返回一共条数*/
-app.get('/gettotal', function(req, res) {
-    let sql='select * from t_job';
-    connection.query(sql, function(err, result) {
-        if (err) console( err);
-        res.send({length:result.length});
-    });
-});
-
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
-    console.log(req.body.num);
     let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
-    // connection.query(sql, function(err, result) {
-    //     if (err) throw err;
-    //     res.send(result)
-    // });
-    console.log(sql);
-});
-/*app.get('/testjobs', function(req, res) {
-    let sql='SELECT * FROM t_job ';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
     });
-});*/
+});
+
 
 
 /*#2 根据工作职位过滤职位
@@ -255,13 +237,17 @@ app.get('/postdetial', function(req, res) {
  */
 
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    let user = {};
-    user.email = req.session.user.email;
-    user.company = req.session.user.company;
-    user.address = req.session.user.address;
-    user.trade = req.session.user.trade;
-    // console.log('当前用户的信息如下：' + user);
-    res.send(user);
+    if(req.session.user){
+        let user = {};
+        user.email = req.session.user.email;
+        user.company = req.session.user.company;
+        user.address = req.session.user.address;
+        user.trade = req.session.user.trade;
+        res.send(user);
+    }else {
+        res.send('no');
+    }
+
 });
 
 /*
@@ -355,7 +341,41 @@ app.post('/send', function(req, res, next) {
     }
 });
 
-/*#10 注册部分
+//再次发送验证邮件
+app.post('/resend', function(req, res) {
+    /*得到前台的数据*/
+    let email = req.body.email;
+    //在数据库中查找
+    let email_search = cp.hex(email);
+    let addSql = 'select * from t_user where email=?';
+    let addSqlParams = [email_search];
+    connection.query(addSql, addSqlParams, function (err, result) {
+        if (err) throw err;
+        if (result.length === 0) {
+            res.send('null'); //用户不存在,则返回null
+        } else {
+            //邮件中显示的信息
+            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+            let options = {
+                from: 'ysj<thoughtworkersfive@126.com>',
+                to: email,
+                subject: '注册成功，请激活！',
+                text: '欢迎注册',
+                html: html
+            };
+            /*发送邮件*/
+            mailTransport.sendMail(options, function (err, msg) {
+                if (err) {
+                    return console.log(err);
+                } else {
+                    res.send(true);
+                }
+            });
+        }
+    });
+});
+
+/* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
     let url = req.query;
