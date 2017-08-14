@@ -21,16 +21,23 @@ body {
 .dropdown-menu{
     padding: 0;
     margin: 0;
+    left: -15px;
+    border: 0;
+    border-radius: 0;
 }
 @media (min-width: 768px) {
     .dropdown-menu-contain{
-        width: 180px;
+        width: 182px;
+        height: 80px;
+        padding-right: 15px;
+        padding-left: 15px;
     }
+
     .search-background{
         position: relative;
         height: 300px;
         width: 100%;
-        overflow: hidden;
+        background-image:url('../../picture/background.png'); background-repeat:no-repeat; background-size:cover;
     }
     .search-background-inline{
         width: 700px;
@@ -64,7 +71,7 @@ body {
         position: relative;
         height: 300px;
         width: 100%;
-        overflow: hidden;
+        background-image:url('../../picture/background.png'); background-repeat:no-repeat; background-size:cover;
     }
     .search-background-inline{
         width: 80%;

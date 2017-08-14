@@ -2,19 +2,38 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"> </script>
-	<script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src='../src/semantic.min.js'></script>
-	<link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../src/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="../jobInfo.css">
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="./jobInfo.css">
 	<title>JobInfo</title>
 </head>
 <body onload="load()">
+<nav class="navbar navbar-default">
 	<div class="container">
-		<nav class="navbar" style="background-color:rgba(32, 155, 96, 0.21);">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
+		</div>
 
-		</nav>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right myheader-right">
+				<li><a href="./login.html">登陆</a></li>
+				<li><a href="./register.html">注册</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+	<div class="container">
 		<div class="row">
 			<div class="jumbotron gyf_jumbotron" >
 				<div class="ui segment row">

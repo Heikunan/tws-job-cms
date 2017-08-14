@@ -121,7 +121,7 @@ app.get('/getJobDetail/id=:id',function(req,res){
 });
 app.post('/getJobDetail/id=:id', function(req, res) {
     console.log(req.body);
-    let sql = 'SELECT * FROM t_test where id =' + req.body.id;
+    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
