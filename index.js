@@ -360,22 +360,17 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     });
 });
 
-<<<<<<< HEAD
-app.post('/changePsw',urlencodedParser,function (req,res) {
-    let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log(req.body.newPsw)
-    let data = [cp.hex(req.body.newPsw), req.session.user.id,cp.hex(req.body.currentPsw)];
-=======
 /**
  * #9修改用户密码
  * 输入：用户id和当前密码
  * 输出：1或0，表示用户信息是否更新成功
  */
-app.get('changePsw',function (req,res) {
+app.post('/changePsw',urlencodedParser,function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log(req.query.newPsw);
-    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
->>>>>>> a381795462157dc9c1cdce6aad98514bf47b61e5
+    console.log(req.body.newPsw)
+    let data = [cp.hex(req.body.newPsw), req.session.user.id,cp.hex(req.body.currentPsw)];
+
+
     connection.query(sql, data, function(err, reply) {
         if (err) {
             console.log('error!' + err);
