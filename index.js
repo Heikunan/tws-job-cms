@@ -8,7 +8,6 @@ let Crypto = require('node-crypto');
 let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 let cp = new Crypto('you secret code');
 let app = express();
-
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -18,9 +17,9 @@ app.use(session({
 }));
 
 let connection = mysql.createConnection({
-    host: '119.28.63.95',
-    user: 'myuser',
-    password: 'hubuedu',
+    host: '47.94.199.111',
+    user: 'tws',
+    password: '123456',
     port: '3306',
     database: 'twsjob',
 });
@@ -61,7 +60,7 @@ app.get('/getjobtype',function (req,res) {
 app.post('/testjobs', function(req, res) {
     let start=(req.body.page-1)*10;
     console.log(req.body.page);
-    let sql='select * from t_job';
+    let sql='select * from t_job LIMIT 5,10';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         let data=[];
@@ -75,7 +74,7 @@ app.post('/testjobs', function(req, res) {
         }
 
     });
-})
+});
 
 /*返回一共条数*/
 app.get('/gettotal', function(req, res) {
@@ -84,15 +83,15 @@ app.get('/gettotal', function(req, res) {
         if (err) console( err);
         res.send({length:result.length});
     });
-})
+});
 
 app.get('/testjobs', function(req, res) {
-    let sql='select * from t_job';
+    let sql='SELECT * FROM t_job ';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
     });
-})
+});
 
 
 /*2 根据工作职位过滤职位
@@ -109,6 +108,20 @@ app.post('/searchjobs', urlencodedParser, function(req, res) {
     });
 });
 
+/**
+ * 进入用户个人中心
+ */
+app.get('/myinfo',function (req,res) {
+    //测试用
+    req.session.user = {
+        id:'1234',
+        email: '951576941@qq.com',
+        company: 'szx',
+        address: 'wuhan',
+        trade: 'studnet'
+    };
+    res.sendFile( __dirname + "/public/" + "userInfo.html");
+});
 
 /*7 用户查看自己创建的职位Post列表
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -117,8 +130,8 @@ app.get('/myposts', function(req, res) {
     //得到用户的id
     let userid = req.session.user.id;
     //查找用户的post
-    let sql = 'select title,company from t_job where userid = ' + userid
-    console.log(sql)
+    let sql = 'select title,company from t_job where userid = ' + userid;
+    console.log(sql);
     connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -128,10 +141,10 @@ app.get('/myposts', function(req, res) {
             console.log(result);
             console.log('------------------------------------------------------------\n\n');
             //返回自己全部的post的title和company
-            res.send(result)
+            res.send(result);
         })
         // connection.end();
-})
+});
 
 /* 8 用户查看自己创建的职位Post详情
 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
@@ -143,8 +156,8 @@ app.get('/postdetial', function(req, res) {
     }
     //得到工作的id
     let id = req.query.id;
-    let sql = 'select * from t_job where id = ' + id
-    console.log(sql)
+    let sql = 'select * from t_job where id = ' + id;
+    console.log(sql);
     connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -157,7 +170,7 @@ app.get('/postdetial', function(req, res) {
             res.send(result)
         })
         // connection.end();
-})
+});
 
 /*10 注册部分
 发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放
@@ -246,53 +259,94 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
         }
     })
 });
-
-app.get('/getJobDetail', function(req, res) {
-    req.body = JSON.parse(req.body)
-    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
+app.get('/getJobDetail/id=:id',function(req,res){
+    res.sendFile(__dirname + "/public/" + "jobInfo.html");
+});
+app.post('/getJobDetail/id=:id', function(req, res) {
+    console.log(req.body);
+    let sql = 'SELECT * FROM t_test where id =' + req.body.id;
     connection.query(sql, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         }
-        res.send(result);
-
-        connection.end();
+        else{
+            res.send(result);
+        }
+         connection.end();
     });
 });
 
+app.get('/postJob',function(req,res){
+    res.sendFile( __dirname + "/public/" + "jobPost.html");
+});
+/*接收发布招聘的信息
+输入：招聘表单内容
+输出：成功：200添加成功
+     失败：500服务器发生错误
+*/
 
 app.post('/postJob', function(req, res) {
-    let userId = req.session.user.id;
-    let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?)'
+    //  req.body = JSON.parse(req.body);
     console.log(req.body);
-    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryDate, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country];
+    // let userId = req.session.user.id;
+    let userId='1';
+    let likes=0;
+    let releaseTime=new Date(Date.now());
+    console.log(releaseTime);
+    // let addSql='INSERT INTO t_test(userId) VALUES (?)';
+    // let addSqlParams=['1'];
+    req.body.tags=req.body.tags[0]+','+req.body.tags[1];
+    req.body.benefits=req.body.benefits[0]+','+req.body.benefits[1];
+    let addSql = 'INSERT INTO t_test(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes,req.body.companyIntroduce,req.body.salary,req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
+        console.log(result);
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
-        }
-        res.status(200).send('添加成功');
-        connection.end();
+        }else{
+            res.status(200).send('添加成功');  
+        } 
+        console.log('end');
+         connection.end();
     });
 });
+app.post('/getSuggestion',function(req,res){
+    let jobtype = req.body.type;
+    let category = req.body.category;
+    let title = req.body.title;
+    console.log(jobtype, category);
+    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sqlinfor = [category, jobtype,`%${title}%`];
+    connection.query(sql, sqlinfor, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+
+
+});
+
+/**#9获得用户详细信息
+输入：
+输出：req.session.user除密码之外的所有信息
+ */
 
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
     let user = {};
-    req.session.user = {
-        email: '951576941@qq.com',
-        company: 'szx',
-        address: 'wuhan',
-        trade: 'studnet'
-    };
     user.email = req.session.user.email;
     user.company = req.session.user.company;
     user.address = req.session.user.address;
     user.trade = req.session.user.trade;
     // console.log('当前用户的信息如下：' + user);
     res.send(user);
-})
+});
 
+/**
+ * #9修改用户基本信息
+ * 输入：用户id
+ * 输出：1或0，表示用户信息是否更新成功
+ */
 app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
     let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
@@ -304,12 +358,24 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
         res.send(reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
-})
+});
 
+<<<<<<< HEAD
 app.post('/changePsw',urlencodedParser,function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.body.newPsw)
     let data = [cp.hex(req.body.newPsw), req.session.user.id,cp.hex(req.body.currentPsw)];
+=======
+/**
+ * #9修改用户密码
+ * 输入：用户id和当前密码
+ * 输出：1或0，表示用户信息是否更新成功
+ */
+app.get('changePsw',function (req,res) {
+    let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
+    console.log(req.query.newPsw);
+    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
+>>>>>>> a381795462157dc9c1cdce6aad98514bf47b61e5
     connection.query(sql, data, function(err, reply) {
         if (err) {
             console.log('error!' + err);
@@ -319,17 +385,25 @@ app.post('/changePsw',urlencodedParser,function (req,res) {
         res.send(reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
-})
+});
 
+/**
+ * #9注销登陆
+ * 输入：用户user
+ * 输出：用户user（若注销成功已为空值）
+ */
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
     res.send(req.session.user);
-})
+});
 
+/**
+ * 跳转至找回密码页面
+ */
 app.get('/findPassword',urlencodedParser,function (req,res) {
-
-})
+    res.sendFile(__dirname+'/public/changePassword.html');
+});
 
 /*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
 输入：email
@@ -371,7 +445,7 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
             console.log('该邮箱尚未注册，请先注册！');
         }
     })
-})
+});
 
 /*12重置密码后登录，输入验证码和密码，点击登录按钮，若验证通过直接进入主页并将数据库中验证码重新覆盖
 输入：email，passwordCode,password，passwordConfirmation(登录页面填入的)
@@ -390,7 +464,14 @@ app.put('/resettingLogin',function (req,res) {
         console.log(reply);
         res.send(reply);
     });
-})
+    let sql='SELECT * FROM t_user WHERE email = ?';
+    let data=email;
+    connection.query(sql,data,function (err, reply) {
+        if(err) throw  err;
+        console.log(reply);
+        req.session.user=reply[0];
+    });
+});
 
 
 
@@ -417,7 +498,7 @@ app.get('/init',function (req,res) {
         }
         res.send(jobs);
     });
-})
+});
 
 /**************************************************/
 
@@ -430,15 +511,13 @@ app.get('/init',function (req,res) {
  */
  app.get('/test',function (req,res) {
      res.sendFile(__dirname+'/public/changePassword.html');
- })
+ });
 app.get('/',function (req,res) {
     res.sendFile(__dirname+'/public/index.html');
-})
+});
 //////////////cr测试用////////////////////
 
-app.get('/myinfo',function (req,res) {
-    res.sendFile( __dirname + "/public/" + "userInfo.html")
-})
+
 let server = app.listen(8081, function() {
     let host = server.address().address;
     let port = server.address().port;

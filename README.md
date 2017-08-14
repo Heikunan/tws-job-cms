@@ -1,4 +1,4 @@
-_**____`********`**_# tws_job_cms
+# tws_job_cms
 
 ## codeing girl club 内部的招聘模块
 
@@ -188,6 +188,9 @@ app.delete('/somewhere',function(req,res)){
 |ID|职位种类ID主键|
 |---|---|
 |content|职位种类的名称|
+
+
+
 
 
 
