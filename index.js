@@ -275,7 +275,7 @@ app.post('/getJobDetail/id=:id', function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
-            res.send(result);
+            res.status(200).send(result);
         }
          connection.end();
     });
@@ -305,16 +305,19 @@ app.post('/postJob', function(req, res) {
     let addSql = 'INSERT INTO t_test(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes,req.body.companyIntroduce,req.body.salary,req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
-        console.log(result);
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         }else{
-            res.status(200).send('添加成功');  
+            let sql='select max(id) from t_test';
+            connection.query(sql,function(err,reply){
+                console.log(reply[0]['max(id)']);
+            
+                res.status(200).send(reply[0]); 
+            }); 
         } 
-        console.log('end');
-         connection.end();
-    });
+             connection.end();  
+        }); 
 });
 app.post('/getSuggestion',function(req,res){
     let jobtype = req.body.type;
