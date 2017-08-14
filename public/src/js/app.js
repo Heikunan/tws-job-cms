@@ -30,11 +30,10 @@ $(function () {
         $.post('/login',{
             email:email,password:password
         },function (data) {
-            // if (data==='ok') {
-            //     $('.flash_container').append('<div class=alert>登陆成功！</div>')
-            //     //获取session中用户信息，在主页更新用户状态
-            // }else
-                if(data==='wrong'){
+            if (data==='ok') {
+                window.location.assign('/');
+                //获取session中用户信息，在主页更新用户状态
+            }else if(data==='wrong'){
                 $('.flash_container').append('<div class=alert>密码错误！</div>')
             } else if (data==='inactivated') {
                 $('.flash_container').append('<div class=alert>您已注册，请前往邮箱激活账号！</div>')
