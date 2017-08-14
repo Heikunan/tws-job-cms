@@ -166,7 +166,6 @@ $(document).ready(function () {
         $("#changepage").show();
         hiddendimmer();
     });
-
 });
 
 /*点击搜索工作*/
