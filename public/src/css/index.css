@@ -24,7 +24,7 @@ body {
 }
 @media (min-width: 768px) {
     .dropdown-menu-contain{
-        width: ;
+        width: 180px;
     }
     .search-background{
         position: relative;
