@@ -426,14 +426,14 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
                 text           : '验证码',
                 html           :  content
             };
-            mailTransport.sendMail(options, function(err, msg){
+            /*mailTransport.sendMail(options, function(err, msg){
                 if(err){
                     console.log(err);
                 }
                 else {
                     console.log(msg);
                 }
-            });
+            });*/
             let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
             let data=[passwordCode,email];
             connection.query(sql,data,function (err, rep) {

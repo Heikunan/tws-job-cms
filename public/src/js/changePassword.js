@@ -39,10 +39,9 @@ function login() {
         },
         success: function(reply){
             console.log(reply);
-            if(reply.affectedRows==='1'){
+            if(reply.affectedRows===1){
                 alert('重置密码成功！');
-                $.get('/',function (rep) {
-                })
+                window.location.assign('/');//前端跳转可以，用res.redirect等都不行
             }
         },
         error: function (err) {
