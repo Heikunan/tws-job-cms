@@ -259,28 +259,33 @@
 			editor2.customConfig.zIndex = '1';
 			editor3.customConfig.zIndex = '1';
 			editor4.customConfig.zIndex = '1';
-			if()
-			editor2.create();
-			editor3.create();
-			editor4.create();
-			var editor = document.getElementById('editor');
-			var logOut = document.getElementById('logOut');
-			MarkdownIME.Enhance(editor)
-			editor.focus();
-			MarkdownIME.Utils.move_cursor_to_end(editor);
+			$('#gyf_editor_markdown').on('click', function () {
+				$('#gyf_post_description').empty();
+				let addElement=`<div id="editor" spellcheck="false" contenteditable="true"><p><br></p></div>
+ 						 <pre id="logOut"></pre>`;
+				$('#gyf_post_description').append(addElement);
+				var editor = document.getElementById('editor');
+				var logOut = document.getElementById('logOut');
+				MarkdownIME.Enhance(editor)
+				editor.focus();
+				MarkdownIME.Utils.move_cursor_to_end(editor);
 
-			//Load MathAddon.
-			MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+				//Load MathAddon.
+				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
-			function log() {
-				console.log.apply(console, arguments);
-				var str = [].join.call(arguments, "");
-				var text = document.createTextNode(str + "\n");
-				logOut.insertBefore(text, logOut.firstChild);
-			}
-
-			}
-			
+				function log() {
+					console.log.apply(console, arguments);
+					var str = [].join.call(arguments, "");
+					var text = document.createTextNode(str + "\n");
+					logOut.insertBefore(text, logOut.firstChild);
+				}
+			});
+			$('#gyf_editor_wangeditor').on('click',function(){
+				$('#gyf_post_description').empty();
+				editor2.create();
+				editor3.create();
+				editor4.create();
+			});
 			$('#gyf_post_adress').cxSelect({
 				url: './cxSelect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
 				selects: ['country', 'city', 'area'],  // 数组，请注意顺序
@@ -321,7 +326,5 @@
 					console.log('失败: ' + xhr.status + ', 原因: ' + status);
 				})
 			});
-
 </script>
-
 </html>
