@@ -23,7 +23,7 @@ let connection = mysql.createConnection({
     user: 'tws',
     password: '123456',
     port: '3306',
-    database: 'twsjob',
+    database: 'twsjob'
 });
 
 /*连接发送邮件的邮箱*/
@@ -240,7 +240,7 @@ app.get('/confirm', function(req, res, next) {
 /*11 登录部分
 输入对象，返回字符串
 */
-app.post('/sign_in', urlencodedParser, function(req, res) {
+app.post('/login', urlencodedParser, function(req, res) {
     let email=cp.hex(req.body.email);
     let password=cp.hex(req.body.password);
     let addSql = 'select * from t_user where email=?';
@@ -257,12 +257,14 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
                     res.send('inactivated') //用户存在,但账号未激活，返回inactivated
                 } else {
                     req.session.user = result[0];
-                    res.send('ok');
-                } //用户存在,且账号已激活，返回OK
+                    // res.send('ok');
+                    res.redirect('./public/index.html')
+                } //用户存在,且账号已激活，返回首页
             }
         }
     })
 });
+
 app.get('/getJobDetail/id=:id',function(req,res){
     res.sendFile(__dirname + "/public/" + "jobInfo.html");
 });
