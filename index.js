@@ -22,7 +22,7 @@ let connection = mysql.createConnection({
     password: '123456',
     port: '3306',
     database: 'twsjob',
-}
+};
 
 /*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
