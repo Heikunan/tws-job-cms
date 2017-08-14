@@ -69,9 +69,17 @@ form p > * {
     text-decoration: none;
     position: relative;
     float: right;
+    margin-right: 0;
     top: 5px;
+}
 
-    margin-right: 65px;
+#separate{
+    color:  #209b60;
+    text-decoration: none;
+    position:relative;
+    float: right;
+    margin-right: 3px;
+    top: 5px;
 }
 
 #sign_in{
@@ -80,9 +88,8 @@ form p > * {
     text-decoration: none;
     position: relative;
     float: right;
+    margin-right: 55px;
     top: 5px;
-
-    margin-right: 0px;
 }
 
 #no_email:hover{
