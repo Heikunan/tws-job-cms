@@ -80,8 +80,8 @@ app.get('/myinfo',function (req,res) {
 });
 
 app.post('/testjobs', function(req, res) {
-    let mynum = parseInt(req.body.num);
-    let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
+    //let mynum = parseInt(req.body.num);
+    let sql=`SELECT * FROM t_job LIMIT 0,6`;
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
@@ -236,6 +236,9 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
         user.company = req.session.user.company;
         user.address = req.session.user.address;
         user.trade = req.session.user.trade;
+        user.id = req.session.user.id;
+        user.status = req.session.user.status;
+        user.identity = req.session.user.identity;
         res.send(user);
     }else {
         res.send('no');
@@ -266,7 +269,7 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
  * 输入：用户id和当前密码
  * 输出：1或0，表示用户信息是否更新成功
  */
-app.get('changePsw',function (req,res) {
+app.get('/changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.query.newPsw);
     let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
@@ -288,7 +291,7 @@ app.get('changePsw',function (req,res) {
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
-    res.send(req.session.user);
+    res.send('OK');
 });
 
 /*10 注册部分

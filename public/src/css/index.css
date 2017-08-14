@@ -18,12 +18,17 @@ body {
     height: 40px;
     margin: 5px 0;
 }
+.zwlb{
+    left: -15px;
+}
 .dropdown-menu{
     padding: 0;
     margin: 0;
-    left: -15px;
     border: 0;
     border-radius: 0;
+}
+.search-background-icon{
+    cursor: pointer;
 }
 @media (min-width: 768px) {
     .dropdown-menu-contain{
@@ -37,7 +42,6 @@ body {
         background: #e2e2e2;
     }
     .dropdown-menu-text{
-        margin: 5px 0 0 9px;
         text-align: center;
         line-height: 67px;
         font-size: 20px;
@@ -57,7 +61,7 @@ body {
         transform: translateY(-50%) translateX(-50%);
     }
     .my-dropdown-search{
-        margin: 5px 0 0 9px;
+        margin: 5px 0 0 0;
         text-align: center;
         line-height: 67px;
         font-size: 20px;

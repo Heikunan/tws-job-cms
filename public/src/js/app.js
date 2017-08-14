@@ -1,13 +1,3 @@
-
-$.get('/getUserInfo',function (ans) {
-    if(ans !== 'no'){
-        console.log(ans);
-        let str=`<li><a href="#">getposts</a></li>`;
-        str += `<li><a href="#">${ans.email}</a></li>`;
-        $('.myheader-right').empty().append(str);
-    }
-});
-
 $.post('/testjobs',{num:1},function (ans) {
     let str = '';
     for(let i = 0;i<ans.length;i++){
@@ -50,3 +40,28 @@ $.post('/testjobs',{num:1},function (ans) {
     }
     $('#myjobcontain').empty().append(str);
 });
+
+$(document).ready(function () {
+    let zwlb = '';
+    let zwzl = '';
+    $('.dropdown-menu-zwlb').on('click',function () {
+        zwlb = $(this).children().text().replace(/[\r\n]/g,"");
+        $('#zwlb-title').html(zwlb);
+    });
+    $('.dropdown-menu-zwzl').on('click',function () {
+        zwzl = $(this).children().text().replace(/[\r\n]/g,"");
+        $('#zwzl-title').html(zwzl);
+    });
+    $('.search-background-icon').on('click',function () {
+        let mydata = {
+            category:zwlb,
+            jobtype:zwzl,
+            jobname:$('#my-seach-input').val()
+        };
+       $.post('/searchjobs',mydata,function (ans) {
+           console.log(ans);
+       }) 
+    });
+});
+
+
