@@ -1,3 +1,4 @@
+/****得到现在登录用户的所有的posts*******/
 function getMyPosts() {
     $.get('/myposts')
         .done(function (data) {
@@ -9,6 +10,7 @@ function getMyPosts() {
         })
 }
 
+/*得到当前的posts的详情*/
 function getMyPostdetail(event) {
     let id = event.target.id;
     console.log(id);
@@ -22,6 +24,7 @@ function getMyPostdetail(event) {
         })
 }
 
+/*登录注册的按钮*/
 $(function () {
     //点击登陆按钮，进行登陆操作
     $('#login').click(function () {
@@ -30,10 +33,11 @@ $(function () {
         $.post('/login',{
             email:email,password:password
         },function (data) {
-            // if (data==='ok') {
-            //     $('.flash_container').append('<div class=alert>登陆成功！</div>')
-            //     //获取session中用户信息，在主页更新用户状态
-            // }else
+             if (data==='ok') {
+                 $('.flash_container').append('<div class=alert>登陆成功！</div>')
+                 window.location.assign('/');
+                 //获取session中用户信息，在主页更新用户状态
+             }else
                 if(data==='wrong'){
                 $('.flash_container').append('<div class=alert>密码错误！</div>')
             } else if (data==='inactivated') {
@@ -53,6 +57,7 @@ $(function () {
         },function (data) {
             if (data===true) {
                 $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>')
+                window.location.assign('/');
             }else if(data===false){
                 $('.flash_container').append('<div class=alert>账号已注册！</div>')
             }else if(data==='wrong'){
@@ -77,7 +82,7 @@ function getpage() {
     }
     return parseInt(page);
 }
-
+/*改变分页按钮上的数字*/
 function changepagenumber(page) {
     $.get('/gettotal',function (data) {
         let totalpage=parseInt(data.length/10)+1;
@@ -116,10 +121,8 @@ function sethref() {
     $("#page3").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page3").html() );
     $("#page4").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page4").html() );
     $("#page5").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page5").html() );
-    console.log( window.location.href.split("?page=")[0]+"?page="+$("#page1").html()+"  hhhhh  ");
 }
-$(document).ready(function () {
-    showdimmer();
+function init() {
     $("#changepage").hide();
     let page=getpage();
     changepagenumber(page);
@@ -164,10 +167,8 @@ $(document).ready(function () {
         }
         $('#showjobs').append(result);
         $("#changepage").show();
-        hiddendimmer();
     });
-
-});
+}
 
 /*点击搜索工作*/
 function searchJobs() {
@@ -198,7 +199,6 @@ function searchJobs() {
 		</div>
         </a>`
         }
-        console.log(result);
         $('#showjobs').append(result);
     });
 }
@@ -250,12 +250,3 @@ function showTime()
 /******************************************
  * 每过五秒更新推送的内容，循环数据库里的所有内容 *
  ******************************************/
-
-
-
-function showdimmer() {
-    $('#dimmerall').show();
-}
-function hiddendimmer() {
-    $('#dimmerall').hide();
-}
