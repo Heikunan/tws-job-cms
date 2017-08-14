@@ -60,7 +60,7 @@ form p > * {
     border: 0;
 }
 
-#sign_in {
+#login {
     font-size: 14px;
 
     width: 120px;
@@ -77,6 +77,10 @@ form p > * {
     margin-left: 45px;
 }
 
+#login:hover{
+    background-color: #777777;
+}
+
 #remember_me {
     position: relative;
     margin-left: 250px;
@@ -89,7 +93,16 @@ form p > * {
     text-decoration: none;
     position: relative;
     float: right;
-    margin-right: 45px;
+    margin-right: 0px;
+    top: 5px;
+}
+
+#separate{
+    color:  #209b60;
+    text-decoration: none;
+    position:relative;
+    float: right;
+    margin-right: 3px;
     top: 5px;
 }
 
@@ -99,7 +112,7 @@ form p > * {
     text-decoration: none;
     position: relative;
     float: right;
-    margin-right: 5px;
+    margin-right: 45px;
     top: 5px;
 }
 
