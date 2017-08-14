@@ -13,10 +13,20 @@
             background: #209b60;
             margin-bottom: 30px;
         }
+
         #right {
             border: solid 1px;
             height: 800px;
         }
+
+        #right .tab-pane {
+            margin-top: 20px;
+        }
+
+        .row-click-able {
+            cursor: pointer;
+        }
+
     </style>
     <title>userInfo</title>
 </head>
@@ -27,21 +37,22 @@
         <!--左边-->
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="#myinfo" data-toggle="pill" ><span>我的资料</span></a></li>
-                <li><a href="#myposts" data-toggle="pill" ><span>我的发布</span></a></li>
+                <li class="active"><a href="#myinfo" data-toggle="pill"><span>我的资料</span></a></li>
+                <li><a href="#myposts" data-toggle="pill"><span>我的发布</span></a></li>
                 <li><a href="#changepassword" data-toggle="pill"><span>修改密码</span></a></li>
             </ul>
         </div>
         <!--右边-->
         <div class="col-md-10" id="right">
             <div class="tab-content">
+                <!--我的信息页面-->
                 <div role="tabpanel" class="tab-pane fade in active " id="myinfo">
                     <!--个人资料-->
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail" disabled >
+                                <input type="email" class="form-control" id="inputEmail" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -70,29 +81,38 @@
                         </div>
                     </form>
                 </div>
+                <!--我的发布页面-->
                 <div role="tabpanel" class="tab-pane fade" id="myposts">
-                    <table class="table table-grade" id="table-grade">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>title</th>
+                            <th>description</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
                     </table>
                 </div>
+                <!--修改密码页面-->
                 <div role="tabpanel" class="tab-pane fade" id="changepassword">
-                    <!--修改密码页面-->
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="currentPsw" class="col-sm-2 col-xs-2 control-label">原密码</label>
                             <div class="col-sm-5 col-xs-5">
-                                <input type="password" class="form-control" id="currentPsw" >
+                                <input type="password" class="form-control" id="currentPsw">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="newPsw" class="col-sm-2 col-xs-2 control-label">新密码</label>
                             <div class="col-sm-5 col-xs-5">
-                                <input type="password" class="form-control" id="newPsw" >
+                                <input type="password" class="form-control" id="newPsw">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="confirmNewPsw" class="col-sm-2 col-xs-2 control-label">确认密码</label>
                             <div class="col-sm-5 col-xs-5">
-                                <input type="password" class="form-control" id="confirmNewPsw" >
+                                <input type="password" class="form-control" id="confirmNewPsw">
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,8 +127,11 @@
     </div>
 
 </div>
+
+
 <script>
     getUserInfo();
+
     //获得用户详细信息,填入表单
     function getUserInfo() {
         $.get('/getUserInfo', function (data) {
@@ -119,12 +142,12 @@
         });
         //监听我的资料中的编辑按钮
         $('#myinfo button').click(function () {
-            if ($('#myinfo button').html()==='编辑') {
+            if ($('#myinfo button').html() === '编辑') {
                 $('#myinfo .form-control').attr('readonly', false);
                 $('#myinfo button').html('完成')
-            }else {
+            } else {
                 //调用修改信息的函数
-                changeInfo($('#inputCompany').val(),$('#inputAddress').val(),$('#inputTrade').val());
+                changeInfo($('#inputCompany').val(), $('#inputAddress').val(), $('#inputTrade').val());
                 $('#myinfo button').html('编辑')
                 $('#myinfo .form-control').attr('readonly', true);
 //                alert('修改成功！')
@@ -134,7 +157,7 @@
     }
 
     //修改信息
-    function changeInfo(com,add,tra) {
+    function changeInfo(com, add, tra) {
         $.ajax({
             url: '/changeUserInfo',
             method: 'post',
@@ -144,23 +167,35 @@
                 trade: tra
             }
         }).done(function (date) {
-            alert('修改成功！ '+JSON.stringify(date));
+            if (date === '0') {
+                alert('修改失敗')
+            } else {
+                alert('修改成功！ ' + JSON.stringify(date));
+            }
         }).fail(function (err) {
-            alert('失敗：'+err.status)
-            
+            alert('失敗：' + err.status)
+
         });
 
     }
+
     //得到我的發佈
     function getMyPosts() {
-        let str='';
+        let str = '';
         $.get('/myposts', function (data) {
-           for(let i=0;i<data.length;i++){
-               str += `<tr><td>${data[i].title}</td><td>${data[i].company}</td></tr>`;
-           }
+            console.log('data: ' + JSON.stringify(data))
+            for (let i = 0; i < data.length; i++) {
+                str += `<tr class="row-click-able" data-href="/getJobDetail/id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].description}</td></tr>`;
+                if (i === data.length - 1) {
+                    console.log('str: ' + str)
+                    $(`#table-body`).html(str);
+                    $(".row-click-able").click(function () {
+                        window.document.location = $(this).data("href");
+                    });
+                }
+            }
         });
-        $(`#table-grade`).empty();
-        $(`#table-grade`).append(str);
+
     }
 
     //修改密碼
@@ -168,15 +203,15 @@
         let currentPsw = $('#currentPsw').val();
         let newPsw = $('#newPsw').val();
         let confimeNewPsw = $('#confirmNewPsw').val();
-        if (newPsw!==confimeNewPsw) {
+        if (newPsw !== confimeNewPsw) {
             return alert('两次密码不一致！')
         }
         //监听修改密码的按钮
         $('#pswbutton').click(function () {
-            $.get('/changePsw', {
+            $.post('/changePsw', {
                 data: {
                     newPsw: newPsw,
-                    currentPsw:currentPsw
+                    currentPsw: currentPsw
                 }
             }).done(function (data) {
                 alert('修改成功：' + data)
