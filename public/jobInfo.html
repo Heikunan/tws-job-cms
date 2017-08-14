@@ -202,12 +202,13 @@
 		 </div>
 		</body>
 		<script type="text/javascript">
-			let myurl=window.location.href.split("id=");
-				let datas={};
-				datas.id=myurl[1];
+
 			function load() {
-				$.post('/getJobDetail/id=:id',datas).done(function (data) {
-					console.log(data);
+                let myurl=window.location.href.split("id=");
+                let datas={};
+                datas.id=myurl[1];
+				$.post('/getJobDetail',datas).done(function (data) {
+				    console.log(data);
 					data=data[0];
 					$('#gyf_postInfo_image').attr('src',data.Logo);
 					$('#gyf_title').text(data.title);
@@ -229,13 +230,11 @@
 					$('gyf_apply_content').text(data.applyApproach);
 					let language_tags=data.tags.split(',');
 					let benefits_tags=data.benefits.split(',');
-					console.log('benefits:'+benefits_tags);
 					$("#gyf_jobInfo_tag1").text(language_tags[0]);
 					$('#gyf_jobInfo_tag2').text(language_tags[1]);
 					$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
 					$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 					$("#gyf_jobInfo_Education").text(data.education);
-					console.log('num:'+data.num);
 					$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
 				}).fail(function (xhr,status) {
 					console.log('失败: ' + xhr.status + ', 原因: ' + status);
