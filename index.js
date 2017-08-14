@@ -108,6 +108,20 @@ app.post('/searchjobs', urlencodedParser, function(req, res) {
     });
 });
 
+/**
+ * 进入用户个人中心
+ */
+app.get('/myinfo',function (req,res) {
+    //测试用
+    req.session.user = {
+        id:'1234',
+        email: '951576941@qq.com',
+        company: 'szx',
+        address: 'wuhan',
+        trade: 'studnet'
+    };
+    res.sendFile( __dirname + "/public/" + "userInfo.html");
+});
 
 /*7 用户查看自己创建的职位Post列表
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -127,7 +141,7 @@ app.get('/myposts', function(req, res) {
             console.log(result);
             console.log('------------------------------------------------------------\n\n');
             //返回自己全部的post的title和company
-            res.send(result)
+            res.send(result);
         })
         // connection.end();
 });
@@ -312,19 +326,14 @@ app.post('/getSuggestion',function(req,res){
 
 
 });
-/*9获得用户详细信息
+
+/**#9获得用户详细信息
 输入：
 输出：req.session.user除密码之外的所有信息
  */
 
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
     let user = {};
-    req.session.user = {
-        email: '951576941@qq.com',
-        company: 'szx',
-        address: 'wuhan',
-        trade: 'studnet'
-    };
     user.email = req.session.user.email;
     user.company = req.session.user.company;
     user.address = req.session.user.address;
@@ -333,6 +342,11 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
     res.send(user);
 });
 
+/**
+ * #9修改用户基本信息
+ * 输入：用户id
+ * 输出：1或0，表示用户信息是否更新成功
+ */
 app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
     let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
@@ -346,6 +360,11 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     });
 });
 
+/**
+ * #9修改用户密码
+ * 输入：用户id和当前密码
+ * 输出：1或0，表示用户信息是否更新成功
+ */
 app.get('changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.query.newPsw);
@@ -360,14 +379,22 @@ app.get('changePsw',function (req,res) {
     });
 });
 
+/**
+ * #9注销登陆
+ * 输入：用户user
+ * 输出：用户user（若注销成功已为空值）
+ */
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
     res.send(req.session.user);
 });
 
+/**
+ * 跳转至找回密码页面
+ */
 app.get('/findPassword',urlencodedParser,function (req,res) {
-
+    res.sendFile(__dirname+'/public/changePassword.html');
 });
 
 /*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
@@ -429,6 +456,13 @@ app.put('/resettingLogin',function (req,res) {
         console.log(reply);
         res.send(reply);
     });
+    let sql='SELECT * FROM t_user WHERE email = ?';
+    let data=email;
+    connection.query(sql,data,function (err, reply) {
+        if(err) throw  err;
+        console.log(reply);
+        req.session.user=reply[0];
+    });
 });
 
 
@@ -475,9 +509,7 @@ app.get('/',function (req,res) {
 });
 //////////////cr测试用////////////////////
 
-app.get('/myinfo',function (req,res) {
-    res.sendFile( __dirname + "/public/" + "userInfo.html")
-});
+
 let server = app.listen(8081, function() {
     let host = server.address().address;
     let port = server.address().port;
