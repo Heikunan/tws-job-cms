@@ -148,7 +148,6 @@ app.post('/getJobDetail/id=:id', function(req, res) {
         else{
             res.send(result);
         }
-        connection.end();
     });
 });
 
@@ -196,7 +195,6 @@ app.post('/postJob', function(req, res) {
             res.status(200).send('添加成功');
         }
         console.log('end');
-        connection.end();
     });
 });
 app.get('/postJob',function(req,res){
@@ -224,7 +222,6 @@ app.get('/myposts', function(req, res) {
             //返回自己全部的post的title和company
             res.send(result);
         })
-        // connection.end();
 });
 
 /* #8 用户查看自己创建的职位Post详情
@@ -400,11 +397,7 @@ app.post('/login', urlencodedParser, function(req, res) {
     })
 });
 
-<<<<<<< HEAD
-app.get('/getJobDetail/id=:id',function(req,res){
-    res.sendFile(__dirname + "/public/" + "jobInfo.html");
-});
-app.post('/getJobDetail/id=:id', function(req, res) {
+app.post('/getJobDetail',urlencodedParser, function(req, res) {
     console.log(req.body);
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function(err, result) {
@@ -413,6 +406,7 @@ app.post('/getJobDetail/id=:id', function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
+            console.log(result);
             res.send(result);
         }
     });
@@ -533,7 +527,6 @@ app.get('/loginout', urlencodedParser, function(req, res) {
 
 /**
  * 跳转至找回密码页面
-=======
 /*
  * #12跳转至找回密码页面
 >>>>>>> c3ddc3558ea89e8e517504aeb61330af1842e9dc
@@ -607,11 +600,7 @@ app.put('/resettingLogin',function (req,res) {
         if(err) throw  err;
         console.log(reply);
         req.session.user=reply[0];
-<<<<<<< HEAD
         res.redirect('../')
-=======
-        req.session.user.email=req.query.email;
->>>>>>> c3ddc3558ea89e8e517504aeb61330af1842e9dc
     });
 });
 
@@ -623,18 +612,19 @@ app.get('/init',function (req,res) {
     let sql='select * from t_job';
     let categorys=['development','designer','marketing','prodectManager'];
     let jobtypes=['volunteer','permanent','freelance','contract'];
+    let logo='https://i.stack.imgur.com/Nppgg.jpg';
+    let companyType='IT';
+    let companySize='10000+';
+    let benefits='there had no now';
+    let num='15';
+    let likes=9;
+    let method=['phone','email','facetoface','QQ']
     connection.query(sql,function (err, jobs) {
         if(err) throw  err;
         for(let i=0;i<jobs.length;i++) {
-            let j = jobs[i].city.indexOf('-');
-            let city = jobs[i].city.substring(0, j);
-            let country = jobs[i].city.substring(j + 2);
-            let id = parseInt(jobs[i].id);
-            let category = categorys[id % 4];
-            let jobtype = jobtypes[id % 4];
-            let sql2 = "update t_job set category='" + category + "',jobtype='" + jobtype + "',country='" + country + "',city='"
-                + city + "'where id='" + jobs[i].id+"'";
-            connection.query(sql2, function (err, jobs) {
+            let sql2='update t_job set company=?,applyApproach=?,tags=?,Logo=?,likes=?,benefits=?,companySize=?,companyType=?,num=?,education=? where id=?'
+            let sqlinfo=['thoughtworkers\'child',method[i%4],'java,C/C++',logo,likes,benefits,companySize,companyType,'1000+','undergraduate student', jobs[i].id];
+            connection.query(sql2,sqlinfo, function (err, jobs) {
                 if (err) throw  err;
             });
         }
