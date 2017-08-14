@@ -45,7 +45,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <img class="img" id="logo" src="picture/logo.png"/>
+            <a href="index.html"><img class="img" id="logo" src="picture/logo.png" alt="logo"/></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -157,6 +157,16 @@
 
 
 <script>
+    //判断是否登录
+    $.get('/getUserInfo',function (ans) {
+        if(ans !== 'no'){
+            console.log(ans);
+            let str=`<li><a href="#">getposts</a></li>`;
+            str += `<li><a href="#">${ans.email}</a></li>`;
+            $('.myheader-right').empty().append(str);
+        }
+    });
+
     getUserInfo();
 
     //获得用户详细信息,填入表单
