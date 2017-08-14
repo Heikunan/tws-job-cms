@@ -394,7 +394,7 @@ app.get('/loginout', urlencodedParser, function(req, res) {
  * 跳转至找回密码页面
  */
 app.get('/findPassword',urlencodedParser,function (req,res) {
-    res.sendFile(__dirname+'/public/changePassword.html');
+    res.redirect('/changePassword.html');
 });
 
 /*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
@@ -501,11 +501,9 @@ app.get('/init',function (req,res) {
  * cr测试用
  * @type {http.Server}
  */
- app.get('/test',function (req,res) {
-     res.sendFile(__dirname+'/public/changePassword.html');
- });
+
 app.get('/',function (req,res) {
-    res.sendFile(__dirname+'/public/index.html');
+    res.redirect('/index.html');
 });
 //////////////cr测试用////////////////////
 

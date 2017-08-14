@@ -37,19 +37,13 @@ function login() {
             password:password,
             passwordConfirmation:passwordConfirmation
         },
-        success: function(res){
-            alert('重置密码成功！');
-            //以下代码没执行，不知道为什么发送了跳转请求没有跳转页面？？？
-            $.ajax({
-                url:'/',
-                type:'GET',
-                success:function (res) {
-                    console.log(res);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            })
+        success: function(reply){
+            console.log(reply);
+            if(reply.affectedRows==='1'){
+                alert('重置密码成功！');
+                $.get('/',function (rep) {
+                })
+            }
         },
         error: function (err) {
             console.log(err);
