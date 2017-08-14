@@ -1,3 +1,10 @@
+#logo{
+	height: 40px;
+	margin: 5px 0;
+}
+.navbar{
+	padding: 10px 0;
+}
 .gyf_button{
 	float: right;
 }

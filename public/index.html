@@ -11,7 +11,7 @@
 	<title>job</title>
 	<link rel="stylesheet" href="src/css/index.css">
 </head>
-<body>
+<body onload="init()">
 <!--遮罩层-->
 <!--<div class="ui blurring segment" id="dimmerall" style="display: inline;position: fixed;z-index: 10000000;height: 100%;width: 100%;opacity: 0.8">
 <div class="ui active inverted dimmer" id="dimmerall">
@@ -42,7 +42,6 @@
 	</div><!-- /.container-fluid -->
 </nav>
 <div class="search-background">
-	<img src="./picture/background.png" id="background-img"  alt="">
 	<div class="search-background-inline">
 			<div class="search-background-contain row ">
 				<div class="search-background-contain search-background-contain-left hover-div search-one col-lg-3 col-md-3 col-sm-3 col-xs-3" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,10 +54,14 @@
 				</div>
 				<div class="dropdown-menu" aria-labelledby="zwlb">
 					<div class="dropdown-menu-contain">
-						1
+						<div class="dropdown-menu-text">
+							development
+						</div>
 					</div>
 					<div class="dropdown-menu-contain">
-						2
+						<div class="dropdown-menu-text">
+							development
+						</div>
 					</div>
 				</div>
 				<div class="search-background-contain search-background-contain-left hover-div search-two col-lg-3 col-md-3 col-sm-3 col-xs-3">
