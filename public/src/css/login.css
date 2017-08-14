@@ -1,22 +1,21 @@
 body {
-    background-image: url("../../picture/sign_in.jpg");;
+    background-image: url("../../picture/background.png");;
     background-repeat: no-repeat;
     background-size: cover;
 }
-
+.login-contain{
+    height: 100%;
+    position: relative;
+}
 #login_frame {
     width: 500px;
     height: 350px;
     padding: 13px;
-
-    position: relative;
-    left: 50%;
+    position: absolute;
     top: 50%;
-    margin-left: -260px;
-    margin-top: -280px;
-
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
     background-color: rgba(240, 255, 255, 0.5);
-
     border-radius: 10px;
     text-align: center;
 }
