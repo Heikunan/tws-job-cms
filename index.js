@@ -10,15 +10,13 @@ let cp = new Crypto('you secret code');
 let app = express();
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
-app.use(cookieParser('recommand 128 bytes random string'));
-app.use(session({    auth: {
 
-    name:'twsjob',
-    resave: true,
+app.use(cookieParser());
+app.use(session({
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
-    cookie: { maxAge: 60 * 1000 },
-    saveUninitialized: true
-}}));
+    cookie: { maxAge: 60 * 1000 }
+}));
+
 let connection = mysql.createConnection({
     host: '47.94.199.111',
     user: 'tws',
@@ -39,9 +37,7 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
-app.post('/dadad',function (req,res) {
-   res.redirect('../');
-});
+
 /*查找所有的工作性质*/
 app.get('/getcategory',function (req,res) {
     let sql='select * from t_category';
@@ -181,10 +177,6 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-// //发送注册界面[测试用]
-// app.get('/test',function (req,res) {
-//     res.sendFile(__dirname+'/public/register.html')
-// })
 
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
@@ -220,9 +212,8 @@ app.post('/login', urlencodedParser, function(req, res) {
                     res.send('inactivated') //用户存在,但账号未激活，返回inactivated
                 } else {
                     req.session.user = result[0];
-                    // res.send('ok');
-                    res.redirect('./public/index.html')
-                } //用户存在,且账号已激活，返回首页
+                    res.send('ok');
+                } //用户存在,且账号已激活，返回OK
             }
         }
     })
@@ -240,7 +231,7 @@ app.post('/getJobDetail/id=:id', function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
-            res.status(200).send(result);
+            res.send(result);
         }
     });
 });
@@ -269,18 +260,16 @@ app.post('/postJob', function(req, res) {
     let addSql = 'INSERT INTO t_test(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes,req.body.companyIntroduce,req.body.salary,req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
+        console.log(result);
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         }else{
-            let sql='select max(id) from t_test';
-            connection.query(sql,function(err,reply){
-                console.log(reply[0]['max(id)']);
-            
-                res.status(200).send(reply[0]); 
-            }); 
-        } 
-        });
+
+            res.status(200).send('添加成功');
+        }
+        console.log('end');
+    });
 });
 app.post('/getSuggestion',function(req,res){
     let jobtype = req.body.type;
@@ -402,7 +391,7 @@ app.get('/loginout', urlencodedParser, function(req, res) {
  * 跳转至找回密码页面
  */
 app.get('/findPassword',urlencodedParser,function (req,res) {
-    res.sendFile(__dirname+'/public/changePassword.html');
+    res.redirect('/changePassword.html');
 });
 
 /*12重置密码，点击重置按钮，发送验证码到邮箱,并跳转到填写验证码和密码界面
@@ -411,7 +400,7 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
  */
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let passwordCode=parseInt(Math.random()*1000000);
-    let email=req.query.email;
+    let email=cp.hex(req.query.email);
     let sql='SELECT isactive FROM t_user WHERE email = ?';
     let data=[email];
     connection.query(sql,data,function (err,reply) {
@@ -453,11 +442,11 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
  */
 
 app.put('/resettingLogin',function (req,res) {
-    let email=req.query.email;
+    let email=cp.hex(req.query.email);
     let passwordCode=req.body.passwordCode;
-    let password=req.body.password;
+    let password=cp.hex(req.body.password);
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode=parseInt(Math.random()*10000000);
+    let rePasswordCode=parseInt(Math.random()*1000000);
     let dataCode=[password,rePasswordCode,email,passwordCode];
     connection.query(sqlCode,dataCode,function (err, reply) {
         if(err) throw  err;
@@ -509,11 +498,9 @@ app.get('/init',function (req,res) {
  * cr测试用
  * @type {http.Server}
  */
- app.get('/test',function (req,res) {
-     res.sendFile(__dirname+'/public/changePassword.html');
- });
+
 app.get('/',function (req,res) {
-    res.sendFile(__dirname+'/public/index.html');
+    res.redirect('/index.html');
 });
 //////////////cr测试用////////////////////
 

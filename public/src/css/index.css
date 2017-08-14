@@ -1,3 +1,6 @@
+body {
+    font-family: 'Microsoft YaHei',Tahoma;
+}
 .navbar{
     padding: 10px 0;
     margin: 0;
@@ -28,6 +31,24 @@
         left: 50%;
         transform: translateY(-50%) translateX(-50%);
     }
+    .my-dropdown-search{
+        margin: 5px 0 0 9px;
+        text-align: center;
+        line-height: 67px;
+        font-size: 20px;
+    }
+    .search-background-icon{
+        margin: 5px 0 0 0;
+        text-align: center;
+        line-height: 67px;
+        font-size: 25px;
+    }
+    .search-three input{
+        border: 1px solid rgba(204, 204, 204, 0);
+        border-radius: 0;
+        padding: 39px 12px;
+        font-size: 18px;
+    }
 }
 @media (max-width: 768px) {
     .search-background{
@@ -44,198 +65,101 @@
         left: 50%;
         transform: translateY(-50%) translateX(-50%);
     }
+    .my-dropdown-search{
+        margin: 30px 0 0 0;
+        text-align: center;
+        line-height: 12px;
+        font-size: 12px;
+    }
+    .search-background-icon{
+        margin: 30px 0 0 0;
+        text-align: center;
+        line-height: 12px;
+        font-size: 15px;
+    }
+    .search-three input{
+        border: 1px solid rgba(204, 204, 204, 0);
+        border-radius: 0;
+        padding: 39px 12px;
+        font-size: 15px;
+    }
+}
+.search-three{
+    padding: 0;
+}
+
+.my-dropdown-search a{
+    text-decoration: none;
+    color: black;
+}
+.my-dropdown-search{
+    cursor: pointer;
 }
 .search-background-contain{
     background: white;
     height: 80px;
 }
-/*搜索按钮*/
-.ui.action.input:not([class*="left action"])>.button:last-child, .ui.action.input:not([class*="left action"])>.buttons:last-child>.button, .ui.action.input:not([class*="left action"])>.dropdown:last-child
-{
-    border-radius: 0;
+.search-background-contain-left{
+    border-right: 2px solid #ececec;
 }
-/*搜索栏*/
-.ui.action.input{
-    padding: 0!important;
-    border: 1px solid!important;
-    width: 90%;
-    height: 4em;
+.mysection{
+    margin-top: 20px;
 }
-/*光标在输入框里的时候*/
-.ui.input input:focus{
-    transition:border linear .2s,box-shadow linear .5s;
-    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
-    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
-    outline:none;border-color:#209b60;
-    box-shadow:0 0 8px #209b60;
-    -moz-box-shadow:0 0 8px #209b60;
-    -webkit-box-shadow:0 0 8px #209b60;
-}
-/*点击下拉框发光*/
-.ui.selection.dropdown:focus{
-    transition:border linear .2s,box-shadow linear .5s;
-    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
-    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
-    outline:none;border-color:#209b60;
-    box-shadow:0 0 8px #209b60;
-    -moz-box-shadow:0 0 8px #209b60;
-    -webkit-box-shadow:0 0 8px #209b60;
-}
-
-.ui.action.input:not([class*="left action"]) input:focus {
-    border-right-color: #209b60!important;
-}
-
-.ui.input{
-    color:rgb(221, 221, 221);
-    border-radius: 0.285714rem 0.285714rem 0.285714rem  0.28571429rem;
-}
-
-/*下拉框*/
-.ui.selection.dropdown{
-    color: #209b60;
-    border-radius: 0;
-    /* border-radius: 0.285714rem 0 0 .28571429rem; */
-    border: 1px solid #dddddd;
-    height: initial;
+.mysectionright .panel-body{
     padding: 0;
-    width: 10em;
-    font-size: medium;
-
 }
-option{
-    font-size: 1.5em;
-    color: #dddddd;
+.mysectionright .panel-body .list-group{
+    margin-bottom: 0;
 }
-/*搜索框*/
-.ui.input input{
-    border-radius: 0;
+.mybox{
+    width: 276px;
+    height: 316px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    overflow: hidden;
 }
-
-.ui.segment{
-    vertical-align: middle;
-    padding: 3em 0;
-    text-align: center;
+.mybox .panel-body{
+    padding: 0;
 }
-
-/* 搜索按钮*/
-.ui.button{
-    background-color: #209b60 ;
-    font-size: inherit;
+.img-box{
+    height: 96px;
+    overflow: hidden;
 }
-
-
-.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
-    opacity: 1.8;
-}
-.dimmer{
+.img-box img{
     width: 100%;
 }
-.ui.inverted.dimmer .ui.loader, .ui.loader {
-    font-size: 3em;
+.job-box{
+    padding: 22px 24px;
 }
-
-/***ad的css*******************************/
-#ad.panel-body{
-    height: 500px;
-    width: 100%;
-    padding: 2em 2em 0em 2em
+.job-title span{
+    font-size: 16px;
+    line-height: 28px;
 }
-
-.ad.rigiht{
-    position: fixed;
-    right: 1%;
-    top: 6em;
-    vertical-align: middle;
-    z-index: 999;
-    width: 30%;
+.job-description{
+    height: 70px;
+    overflow: hidden;
+    margin-top: 8px;
 }
-
-
-
-/*************************************/
-
-
-
-.ui.center.aligned.header, .ui.centered.header {
-    text-align: center;
-    font-size: 25px;
+.job-description span{
+    font-size: 12px;
+    line-height: 24px;
+    color: #93999f;
 }
-
-.searchresult{
-    padding-top: 70px;
-    text-align: center;
-}
-
-.panel-body{
-    padding: 2em 2em 0em 2em;
- }
-a:hover{
-    color: #0e8c8c;
-    text-decoration:none;
-}
-
-.mid.infor{
-   text-align: inherit;
-    padding: 8%;
-    padding-top: inherit;
-}
-
-
-.panel-body:hover .job-description{
+.job-company{
+    margin: 15px 0;
     font-size: 15px;
-    display: inherit;
-    color: rgba(133, 145, 141, 0.4);
 }
-.panel-body:hover{
+.job-bottom{
+    position: absolute;
+    bottom: 25px;
 }
-
-p.job-description{
-    padding-left: 70px;
-    margin: 0 0 1em;
-    line-height: 1.4285em;
-    padding-right: 70px;
-    font-size: 27px;
-    display: none;
-}
-.yhx-ef {
+.job-city{
     font-size: 15px;
-    color: #75c19d;
+}
+.job-bottom-right{
+    margin-left: 40px;
 }
 .job-time{
-    padding: 0em 3em;
     font-size: 15px;
-    color: #75c19d;
-    float: right;
 }
-.job-company {
-    padding: 0em 2em;
-    font-size: 15px;
-    float: left;
-}
-
-#page123{
-    text-align: center;
-}
-
-
-
-
-
-
-/*********css动画******************/
-.ad.rigiht
-{
-    transition: linear;
-    -webkit-animation:myfirst 16s infinite; /* Safari and Chrome */
-}
-
-@-webkit-keyframes myfirst /* Safari and Chrome */
-{
-    0%   {top: 6em}
-    50% {  top: 18em;}
-    100%{ top: 5em;}
-
-}
-/***************************/
-
