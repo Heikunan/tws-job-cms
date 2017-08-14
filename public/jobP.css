@@ -15,3 +15,10 @@
 	width: 35px;
 
 }
+.w-e-text{
+max-height: 200px;
+overflow-y:scroll;
+}
+.w-e-text-container{
+	max-height: 200px;
+}

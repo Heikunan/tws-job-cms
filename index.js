@@ -10,19 +10,21 @@ let cp = new Crypto('you secret code');
 let app = express();
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
+    name:'twsjob',
+    resave: true,
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
-    cookie: { maxAge: 60 * 1000 }
+    cookie: { maxAge: 60 * 1000 },
+    saveUninitialized: true
 }));
-
 let connection = mysql.createConnection({
     host: '47.94.199.111',
     user: 'tws',
     password: '123456',
     port: '3306',
-    database: 'twsjob',
-};
+    database: 'twsjob'
+});
 
 /*连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
@@ -37,7 +39,9 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
-
+app.post('/dadad',function (req,res) {
+   res.redirect('../');
+});
 /*查找所有的工作性质*/
 app.get('/getcategory',function (req,res) {
     let sql='select * from t_category';
@@ -236,7 +240,7 @@ app.get('/confirm', function(req, res, next) {
 /*11 登录部分
 输入对象，返回字符串
 */
-app.post('/sign_in', urlencodedParser, function(req, res) {
+app.post('/login', urlencodedParser, function(req, res) {
     let email=cp.hex(req.body.email);
     let password=cp.hex(req.body.password);
     let addSql = 'select * from t_user where email=?';
@@ -253,12 +257,14 @@ app.post('/sign_in', urlencodedParser, function(req, res) {
                     res.send('inactivated') //用户存在,但账号未激活，返回inactivated
                 } else {
                     req.session.user = result[0];
-                    res.send('ok');
-                } //用户存在,且账号已激活，返回OK
+                    // res.send('ok');
+                    res.redirect('./public/index.html')
+                } //用户存在,且账号已激活，返回首页
             }
         }
     })
 });
+
 app.get('/getJobDetail/id=:id',function(req,res){
     res.sendFile(__dirname + "/public/" + "jobInfo.html");
 });
@@ -271,7 +277,7 @@ app.post('/getJobDetail/id=:id', function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
-            res.send(result);
+            res.status(200).send(result);
         }
          connection.end();
     });
@@ -301,16 +307,19 @@ app.post('/postJob', function(req, res) {
     let addSql = 'INSERT INTO t_test(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes,req.body.companyIntroduce,req.body.salary,req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
-        console.log(result);
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         }else{
-            res.status(200).send('添加成功');  
+            let sql='select max(id) from t_test';
+            connection.query(sql,function(err,reply){
+                console.log(reply[0]['max(id)']);
+            
+                res.status(200).send(reply[0]); 
+            }); 
         } 
-        console.log('end');
-         connection.end();
-    });
+             connection.end();  
+        }); 
 });
 app.post('/getSuggestion',function(req,res){
     let jobtype = req.body.type;
