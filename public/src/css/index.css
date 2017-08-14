@@ -18,8 +18,14 @@ body {
     height: 40px;
     margin: 5px 0;
 }
-
+.dropdown-menu{
+    padding: 0;
+    margin: 0;
+}
 @media (min-width: 768px) {
+    .dropdown-menu-contain{
+        width: ;
+    }
     .search-background{
         position: relative;
         height: 300px;
