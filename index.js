@@ -98,21 +98,13 @@ app.get('/gettotal', function(req, res) {
 
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
-    console.log(req.body.num);
     let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
-    // connection.query(sql, function(err, result) {
-    //     if (err) throw err;
-    //     res.send(result)
-    // });
-    console.log(sql);
-});
-/*app.get('/testjobs', function(req, res) {
-    let sql='SELECT * FROM t_job ';
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
     });
-});*/
+});
+
 
 
 /*#2 根据工作职位过滤职位
@@ -258,13 +250,17 @@ app.get('/postdetial', function(req, res) {
  */
 
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    let user = {};
-    user.email = req.session.user.email;
-    user.company = req.session.user.company;
-    user.address = req.session.user.address;
-    user.trade = req.session.user.trade;
-    // console.log('当前用户的信息如下：' + user);
-    res.send(user);
+    if(req.session.user){
+        let user = {};
+        user.email = req.session.user.email;
+        user.company = req.session.user.company;
+        user.address = req.session.user.address;
+        user.trade = req.session.user.trade;
+        res.send(user);
+    }else {
+        res.send('no');
+    }
+
 });
 
 /*
