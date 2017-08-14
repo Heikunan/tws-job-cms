@@ -214,10 +214,6 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-// //发送注册界面[测试用]
-// app.get('/test',function (req,res) {
-//     res.sendFile(__dirname+'/public/register.html')
-// })
 
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
