@@ -6,3 +6,7 @@ $.get('/getUserInfo',function (ans) {
         $('.myheader-right').empty().append(str);
     }
 });
+
+$.post('/testjobs',{num:1},function (ans) {
+    console.log(ans);
+});

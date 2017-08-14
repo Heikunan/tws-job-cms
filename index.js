@@ -56,7 +56,6 @@ app.get('/getjobtype',function (req,res) {
 });
 /*
 显示所有职位
- */
 app.post('/testjobs', function(req, res) {
     let start=(req.body.page-1)*10;
     console.log(req.body.page);
@@ -75,6 +74,8 @@ app.post('/testjobs', function(req, res) {
 
     });
 });
+ */
+
 
 /*返回一共条数*/
 app.get('/gettotal', function(req, res) {
@@ -85,12 +86,15 @@ app.get('/gettotal', function(req, res) {
     });
 });
 
-app.get('/testjobs', function(req, res) {
-    let sql='SELECT * FROM t_job ';
-    connection.query(sql, function(err, result) {
-        if (err) throw err;
-        res.send(result)
-    });
+app.post('/testjobs', function(req, res) {
+    let mynum = parseInt(req.body.num);
+    console.log(req.body.num);
+    let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
+    // connection.query(sql, function(err, result) {
+    //     if (err) throw err;
+    //     res.send(result)
+    // });
+    console.log(sql);
 });
 
 
