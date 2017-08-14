@@ -10,10 +10,13 @@ $(function () {
                 window.location.assign('/');
                 //获取session中用户信息，在主页更新用户状态
             }else if(data==='wrong'){
+                $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>密码错误！</div>')
             } else if (data==='inactivated') {
+                $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>您已注册，请前往邮箱激活账号！</div>')
             }else if(data==='null'){
+                $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>账号不存在，请注册后登陆！</div>')
             }
         });
@@ -27,12 +30,16 @@ $(function () {
             email:email_register,password:password_register,password_conf:password_conf
         },function (data) {
             if (data===true) {
-                $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>');
                 window.location.assign('/');
             }else if(data===false){
+                $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>账号已注册！</div>')
-            }else if(data==='wrong'){
-                $('.flash_container').append('<div class=alert>两次输入的密码不一致！</div>')
+            }else if(data==='wrong_em'){
+                $('.flash_container').empty();
+                $('.flash_container').append('<div class=alert>邮箱格式错误！</div>')
+            }else if(data==="wrong_ps"){
+                $('.flash_container').empty();
+                $('.flash_container').append('<div class=alert>两次密码不一致！</div>')
             }
         });
     });
