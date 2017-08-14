@@ -306,15 +306,16 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     });
 })
 
-app.get('changePsw',function (req,res) {
+app.post('/changePsw',urlencodedParser,function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log(req.query.newPsw)
-    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
+    console.log(req.body.newPsw)
+    let data = [cp.hex(req.body.newPsw), req.session.user.id,cp.hex(req.body.currentPsw)];
     connection.query(sql, data, function(err, reply) {
         if (err) {
             console.log('error!' + err);
             res.send('error');
         }
+        console.log(reply);
         res.send(reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });

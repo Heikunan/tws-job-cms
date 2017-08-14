@@ -70,7 +70,10 @@
                         </div>
                     </form>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="myposts">.2..</div>
+                <div role="tabpanel" class="tab-pane fade" id="myposts">
+                    <!--我的发布页面-->
+
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="changepassword">
                     <!--修改密码页面-->
                     <form class="form-horizontal">
@@ -104,6 +107,8 @@
     </div>
 
 </div>
+
+
 <script>
     getUserInfo();
     //获得用户详细信息,填入表单
@@ -165,7 +170,7 @@
         }
         //监听修改密码的按钮
         $('#pswbutton').click(function () {
-            $.get('/changePsw', {
+            $.post('/changePsw', {
                 data: {
                     newPsw: newPsw,
                     currentPsw:currentPsw
