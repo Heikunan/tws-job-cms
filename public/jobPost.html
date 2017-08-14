@@ -1,40 +1,44 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
 	<metahttp-equiv="content-type" content="text/html" charset="utf-8">
-	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
-	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src='./src/semantic.min.js'></script>
-	<script type="text/javascript" src="./wangEditor/release/wangEditor.min.js"></script>
-	<script type="text/javascript" src="./cxSelect/js/jquery.cxselect.js"></script>
-	<script type="text/javascript" src="./datepicker/js/jquery-ui-datepicker.js"></script>
-	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="./jobP.css">
-	<link rel="stylesheet" type="text/css" href="./datepicker/css/jquery-ui.css" />
-	<script type="text/javascript">
-		$.cxSelect.defaults.url = './cxSelect/js/globalData.min.json';
-		$.cxSelect.defaults.emptyStyle = 'none';
-		jQuery.browser = {};
-		(function () {
-		jQuery.browser.msie = false;
-		jQuery.browser.version = 0;
-		if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-			jQuery.browser.msie = true;
-			jQuery.browser.version = RegExp.$1;
-		}
-	})();
-	</script>
-	<title>jobPost</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src='./src/semantic.min.js'></script>
+		<script type="text/javascript" src="./wangEditor/release/wangEditor.min.js"></script>
+		<script type="text/javascript" src="./cxSelect/js/jquery.cxselect.js"></script>
+		<script type="text/javascript" src="./datepicker/js/jquery-ui-datepicker.js"></script>
+		<script src="./MarkdownIME/dist/MarkdownIME.js"></script>
+		<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="./jobP.css">
+		<link rel="stylesheet" type="text/css" href="./datepicker/css/jquery-ui.css" />
+		<link rel="stylesheet" href="./MarkdownIME/test/style.css">
+		<script type="text/javascript">
+			$.cxSelect.defaults.url = './cxSelect/js/globalData.min.json';
+			$.cxSelect.defaults.emptyStyle = 'none';
+			jQuery.browser = {};
+			(function () {
+				jQuery.browser.msie = false;
+				jQuery.browser.version = 0;
+				if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+					jQuery.browser.msie = true;
+					jQuery.browser.version = RegExp.$1;
+				}
+			})();
+		</script>
+		<title>jobPost</title>
 </head>
+
 <body>
 	<div class="container">
 		<nav class="navbar" style="background-color:green; ">
 
 		</nav>
 		<div class="center-block gyf">
-			<form class="form-horizontal" id="gyf_myform" >
+			<form class="form-horizontal" id="gyf_myform">
 				<div class="form-group">
 					<label for="gyf_post_title" class="col-sm-2 control-label">标<i class = 'space2'></i>题</label>
 					<div class="col-sm-5">
@@ -133,7 +137,7 @@
 						<input type="text" class="form-control" id="gyf_post_companyType" name="companyType" placeholder="国营">
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="gyf_post_companySize" class="col-sm-2 control-label">公司规模</label>
 					<div class="col-sm-5">
@@ -155,25 +159,53 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-success" id="gyf_editor_markdown">markdown编辑器</button>
+					<button type="button" class="btn btn-primary btn-success" id="gyf_editor_wangeditor">富文本编辑器</button>
+				</div>
+				<div class="form-group" id="gyf_description_all">
 					<label for="gyf_post_description" class="col-sm-2 control-label">职位详情</label>
-					<div class="col-sm-8"  id='gyf_post_description' >
-					
+					<div class="col-sm-8" id='gyf_post_description'>
+						<!-- <div id="editor" spellcheck="false" contenteditable="true"><p><br></p></div>
+ 						 <pre id="logOut"></pre> -->
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="gyf_post_companyIntroduce" class="col-sm-2 control-label">公司介绍</label>
-					<div class="col-sm-8"  id='gyf_post_companyIntroduce' >
-					
-					</div>
-				</div>
-				<div class="form-group">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button">预览</button>
+					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content" id="gyf_description_view">
 
-					<label for="gyf_post_applyApproach" class="col-sm-2 control-label" >申请方式</label>
-					<div class="col-sm-8" id="gyf_post_applyApproach" >
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="gyf_companyIntroduce_all">
+					<label for="gyf_post_companyIntroduce" class="col-sm-2 control-label">公司介绍</label>
+					<div class="col-sm-8" id='gyf_post_companyIntroduce'>
+
+					</div>
+					<button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
+					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_companyIntroduce_modal">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content" id="gyf_companyIntroduce_view">
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label for="gyf_post_applyApproach" class="col-sm-2 control-label">申请方式</label>
+					<div class="col-sm-8" id="gyf_post_applyApproach">
 						<!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
 					</div>
-				</div>
+					<button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
+					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content" id="gyf_applyApproach_view">
 
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-5">
 						<button type="button" class="btn btn-default positive ui button" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
@@ -184,74 +216,112 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var E = window.wangEditor;
-	let editor2 = new E('#gyf_post_description');
-	let editor3= new E('#gyf_post_applyApproach');
-	let editor4 = new E('#gyf_post_companyIntroduce');
-	editor2.customConfig.menus = [
-        'head',
-        'bold',
-        'italic',
-		'underline',
-		'link',
-		'list',
-		'justify',
-		'table',
-		'undo',
-		'redo'
-	];
-	editor3.customConfig.menus = [
-        'head',
-        'bold',
-        'italic',
-		'underline',
-		'link',
-		'list',
-		'justify',
-		'table',
-		'undo',
-		'redo'
-	];
-	editor4.customConfig.menus = [
-        'head',
-        'bold',
-        'italic',
-		'underline',
-		'link',
-		'list',
-		'justify',
-		'table',
-		'undo',
-		'redo'
-    ];
-	editor2.create();
-	editor3.create();
-	editor4.create();
-	$('#gyf_post_adress').cxSelect({
-  		url: './cxSelect/js/globalData.min.json',               // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
-  		selects: ['country', 'city', 'area'],  // 数组，请注意顺序
-  		emptyStyle: 'none'
-  	});
-	$(function(){ 
-		$("#gyf_post_expiryTime").datepicker(); 
-	}); 
-	$('#gyf_post_button').click(function(e){
-		let description=$('#gyf_post_description>div:last-child>*').html();
-		let applyApproach=$('#gyf_post_applyApproach>div:last-child>*').html();
-		let companyIntroduce=$('#gyf_post_companyIntroduce>div:last-child>*').html();
-		let datas=$('#gyf_myform').serialize();
-		console.log(datas);
-		datas=datas+'&description='+description+'&applyApproach='+applyApproach+'&companyIntroduce='+companyIntroduce;
-		// datas=JSON.stringify(datas);
-	    // console.log(datas);
-		$.post('/postJob',datas).done(function(data){
-		 console.log('inner'+data);
-		  data=data['max(id)'];
-		let confi=alert("提交成功");
-		window.location.href=`/getJobDetail/id=${data}`;
-		}).fail(function(xhr,status){
-			console.log('失败: ' + xhr.status + ', 原因: ' + status);
-		})
-	});
+			var E = window.wangEditor;
+			let editor2 = new E('#gyf_post_description');
+			let editor3 = new E('#gyf_post_applyApproach');
+			let editor4 = new E('#gyf_post_companyIntroduce');
+			editor2.customConfig.menus = [
+				'head',
+				'bold',
+				'italic',
+				'underline',
+				'link',
+				'list',
+				'justify',
+				'table',
+				'undo',
+				'redo'
+			];
+			editor3.customConfig.menus = [
+				'head',
+				'bold',
+				'italic',
+				'underline',
+				'link',
+				'list',
+				'justify',
+				'table',
+				'undo',
+				'redo'
+			];
+			editor4.customConfig.menus = [
+				'head',
+				'bold',
+				'italic',
+				'underline',
+				'link',
+				'list',
+				'justify',
+				'table',
+				'undo',
+				'redo'
+			];
+			editor2.customConfig.zIndex = '1';
+			editor3.customConfig.zIndex = '1';
+			editor4.customConfig.zIndex = '1';
+			if()
+			editor2.create();
+			editor3.create();
+			editor4.create();
+			var editor = document.getElementById('editor');
+			var logOut = document.getElementById('logOut');
+			MarkdownIME.Enhance(editor)
+			editor.focus();
+			MarkdownIME.Utils.move_cursor_to_end(editor);
+
+			//Load MathAddon.
+			MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+
+			function log() {
+				console.log.apply(console, arguments);
+				var str = [].join.call(arguments, "");
+				var text = document.createTextNode(str + "\n");
+				logOut.insertBefore(text, logOut.firstChild);
+			}
+
+			}
+			
+			$('#gyf_post_adress').cxSelect({
+				url: './cxSelect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+				selects: ['country', 'city', 'area'],  // 数组，请注意顺序
+				emptyStyle: 'none'
+			});
+			$(function () {
+				$("#gyf_post_expiryTime").datepicker();
+			});
+			$('#gyf_description_view_button').on('click', function () {
+				let description_view = editor2.txt.html();
+				$('#gyf_description_view').html(description_view);
+			});
+			$('#gyf_companyIntroduce_view_button').on('click', function () {
+				let companyIntroduce_view = editor3.txt.html();
+				//$('#gyf_post_companyIntroduce>div:last-child>*').html()
+				$('#gyf_companyIntroduce_view').html(companyIntroduce_view);
+			});
+			$('#gyf_applyApproach_view_button').click(function () {
+				let description_view = editor4.txt.html();
+				$('#gyf_applyApproach_view').html(description_view);
+			});
+			$('#gyf_post_button').click(function (e) {
+				let description = editor2.txt.html();
+				let applyApproach = editor3.txt.html();
+				let companyIntroduce = editor4.txt.html();;
+				// $('#gyf_post_companyIntroduce>div:last-child>*').html()
+				let datas = $('#gyf_myform').serialize();
+				console.log(datas);
+				datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
+				// datas=JSON.stringify(datas);
+				// console.log(datas);
+				$.post('/postJob', datas).done(function (data) {
+					console.log('inner' + data);
+					data = data['max(id)'];
+					let confi = alert("提交成功");
+					window.location.href = `/getJobDetail/id=${data}`;
+				}).fail(function (xhr, status) {
+					console.log('失败: ' + xhr.status + ', 原因: ' + status);
+				})
+			});
+
 </script>
+
 </html>
