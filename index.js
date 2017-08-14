@@ -354,7 +354,41 @@ app.post('/send', function(req, res, next) {
     }
 });
 
-/*#10 注册部分
+//再次发送验证邮件
+app.post('/resend', function(req, res) {
+    /*得到前台的数据*/
+    let email = req.body.email;
+    //在数据库中查找
+    let email_search = cp.hex(email);
+    let addSql = 'select * from t_user where email=?';
+    let addSqlParams = [email_search];
+    connection.query(addSql, addSqlParams, function (err, result) {
+        if (err) throw err;
+        if (result.length === 0) {
+            res.send('null'); //用户不存在,则返回null
+        } else {
+            //邮件中显示的信息
+            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+            let options = {
+                from: 'ysj<thoughtworkersfive@126.com>',
+                to: email,
+                subject: '注册成功，请激活！',
+                text: '欢迎注册',
+                html: html
+            };
+            /*发送邮件*/
+            mailTransport.sendMail(options, function (err, msg) {
+                if (err) {
+                    return console.log(err);
+                } else {
+                    res.send(true);
+                }
+            });
+        }
+    });
+});
+
+/* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
     let url = req.query;
