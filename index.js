@@ -39,7 +39,9 @@ let mailTransport = nodemailer.createTransport({
 
 connection.connect();
 
-
+app.post('/dadad',function (req,res) {
+   res.redirect('../');
+});
 /*查找所有的工作性质*/
 app.get('/getcategory',function (req,res) {
     let sql='select * from t_category';
