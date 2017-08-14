@@ -263,7 +263,7 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
             console.log('error!' + err);
             res.send('error');
         }
-        res.send(reply.affectedRows);
+        res.send(''+reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
 });
@@ -282,7 +282,7 @@ app.get('changePsw',function (req,res) {
             console.log('error!' + err);
             res.send('error');
         }
-        res.send(reply.affectedRows);
+        res.send(''+reply.affectedRows);
         console.log('数据库有' + reply.affectedRows + '条数据修改成功');
     });
 });
