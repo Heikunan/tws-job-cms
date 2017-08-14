@@ -1,6 +1,9 @@
 body {
     font-family: 'Microsoft YaHei',Tahoma;
 }
+#background-img{
+    width: 100%;
+}
 .navbar{
     padding: 10px 0;
     margin: 0;
