@@ -27,18 +27,13 @@ let connection = mysql.createConnection({
 connection.connect();
 
 
-/**跳转至首页*/
-app.get('/',function (req,res) {
-    res.redirect('/index.html');
-});
-
 /**连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host: 'smtp.126.com',
     port: 25,
     secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
-        user: 'thoughtworkersfive@126.com',
-        pass: 'dalaodaifei555'
+    user: 'thoughtworkersfive@126.com',
+    pass: 'dalaodaifei55555'
 
 });
 
@@ -304,6 +299,7 @@ app.get('/loginout', urlencodedParser, function(req, res) {
 app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
     let email = req.body.email;
+    console.log(email);
     let password = req.body.password;
     let password_conf=req.body.password_conf;
     if (password!==password_conf) {
@@ -357,7 +353,7 @@ app.post('/resend', function(req, res) {
             //邮件中显示的信息
             let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
             let options = {
-                from: 'ysj<thoughtworkersfive@126.com>',
+                from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: email,
                 subject: '注册成功，请激活！',
                 text: '欢迎注册',
@@ -464,7 +460,6 @@ app.post('/postJob', function(req, res) {
             res.status(200).send('添加成功');
         }
         console.log('end');
-         connection.end();
     });
 });
 app.post('/getSuggestion',function(req,res){
