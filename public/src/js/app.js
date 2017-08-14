@@ -118,56 +118,56 @@ function sethref() {
     $("#page5").attr('href',window.location.href.split("?page=")[0]+"?page="+$("#page5").html() );
     console.log( window.location.href.split("?page=")[0]+"?page="+$("#page1").html()+"  hhhhh  ");
 }
-// $(document).ready(function () {
-//     showdimmer();
-//     $("#changepage").hide();
-//     let page=getpage();
-//     changepagenumber(page);
-//     let pageshoeline=10;
-//     /*刷新最新的内容*/
-//     $.get('/getjobtype',function (data) {
-//         let result='';
-//         for(let i=0;i<data.length;i++){
-//             result+=`<option value="${data[i].content}">${data[i].content}</option>`
-//         }
-//         $("#jobtype").append(result);
-//     });
-//     $.get('/getcategory',function (data) {
-//         let result='';
-//         for(let i=0;i<data.length;i++){
-//             result+=`<option value="${data[i].content}">${data[i].content}</option>`
-//         }
-//         $("#category").append(result);
-//     });
-//     $.post('/testjobs',{page:page},function (data) {
-//         let result = '';
-//         for (let i = 0; i < data.length; i++) {
-//             result += `
-//                 <a href="#">
-//                 <div class="panel-body col-lg-12 col-md-12" >
-// 			<div class="sixteen wide mobile eight wide tablet four wide computer column">
-// 				<div class="equal height row">
-// 					<div class="ui teal piled segment">
-// 						<p class="ui center aligned dividing header">${data[i].title}</p>
-//
-// 						<p class="job-description center">${data[i].description}
-// 						</p>
-// 						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
-//
-// 						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
-// 					</div>
-// 				</div>
-// 			</div>
-// 			<div class="ui divider" ></div>
-// 		</div>
-//         </a>`;
-//         }
-//         $('#showjobs').append(result);
-//         $("#changepage").show();
-//         hiddendimmer();
-//     });
-//
-// });
+$(document).ready(function () {
+    showdimmer();
+    $("#changepage").hide();
+    let page=getpage();
+    changepagenumber(page);
+    let pageshoeline=10;
+    /*刷新最新的内容*/
+    $.get('/getjobtype',function (data) {
+        let result='';
+        for(let i=0;i<data.length;i++){
+            result+=`<option value="${data[i].content}">${data[i].content}</option>`
+        }
+        $("#jobtype").append(result);
+    });
+    $.get('/getcategory',function (data) {
+        let result='';
+        for(let i=0;i<data.length;i++){
+            result+=`<option value="${data[i].content}">${data[i].content}</option>`
+        }
+        $("#category").append(result);
+    });
+    $.post('/testjobs',{page:page},function (data) {
+        let result = '';
+        for (let i = 0; i < data.length; i++) {
+            result += `
+                <a href="#">
+                <div class="panel-body col-lg-12 col-md-12" >
+			<div class="sixteen wide mobile eight wide tablet four wide computer column">
+				<div class="equal height row">
+					<div class="ui teal piled segment">
+						<p class="ui center aligned dividing header">${data[i].title}</p>
+
+						<p class="job-description center">${data[i].description}
+						</p>
+						<p class="job-company"><i class="map marker icon"></i><span class="yhx-ef">${data[i].city}/${data[i].country}/${data[i].salary}</span></p>
+
+						<p class="job-time"><i class="time icon"></i><span class="yhx-eh">${data[i].expiryDate}</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="ui divider" ></div>
+		</div>
+        </a>`;
+        }
+        $('#showjobs').append(result);
+        $("#changepage").show();
+        hiddendimmer();
+    });
+
+});
 
 /*点击搜索工作*/
 function searchJobs() {
