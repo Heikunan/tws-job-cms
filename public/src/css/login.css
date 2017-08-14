@@ -77,6 +77,10 @@ form p > * {
     margin-left: 45px;
 }
 
+#login:hover{
+    background-color: #777777;
+}
+
 #remember_me {
     position: relative;
     margin-left: 250px;

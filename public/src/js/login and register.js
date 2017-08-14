@@ -27,7 +27,8 @@ $(function () {
             email:email_register,password:password_register,password_conf:password_conf
         },function (data) {
             if (data===true) {
-                $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>')
+                $('.flash_container').append('<div class=alert>注册成功，请前往邮箱验证！</div>');
+                window.location.assign('/');
             }else if(data===false){
                 $('.flash_container').append('<div class=alert>账号已注册！</div>')
             }else if(data==='wrong'){
