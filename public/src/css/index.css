@@ -31,8 +31,17 @@ body {
         height: 80px;
         padding-right: 15px;
         padding-left: 15px;
+        cursor: pointer;
     }
-
+    .dropdown-menu-contain:hover{
+        background: #e2e2e2;
+    }
+    .dropdown-menu-text{
+        margin: 5px 0 0 9px;
+        text-align: center;
+        line-height: 67px;
+        font-size: 20px;
+    }
     .search-background{
         position: relative;
         height: 300px;
