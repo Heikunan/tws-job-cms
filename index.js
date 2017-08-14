@@ -84,8 +84,18 @@ app.get('/myinfo',function (req,res) {
 
 
 /*
-#1显示所有职位
+显示所有职位
  */
+
+/*返回一共条数*/
+app.get('/gettotal', function(req, res) {
+    let sql='select * from t_job';
+    connection.query(sql, function(err, result) {
+        if (err) console( err);
+        res.send({length:result.length});
+    });
+});
+
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
     let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
@@ -309,8 +319,11 @@ app.post('/send', function(req, res, next) {
     let email = req.body.email;
     let password = req.body.password;
     let password_conf=req.body.password_conf;
-    if (password!==password_conf) {
-        res.send('wrong')//用户两次填写的密码不一样，返回wrong
+    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if(!myreg.test(email)){
+        res.send('wrong_em')//邮箱格式错误，返回wrong_em
+    } else if (password!==password_conf){
+        res.send('wrong_ps')//两次密码不一致，返回wrong_pw
     }else{
     //邮件中显示的信息
     let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
