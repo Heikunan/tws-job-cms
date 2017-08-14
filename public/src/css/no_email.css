@@ -3,7 +3,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.login-contain{
+.resend-contain{
     height: 100%;
     position: relative;
 }
@@ -44,7 +44,7 @@ form p > * {
     line-height: 28px;
     text-align: center;
     color: white;
-    background-color: #209b60;
+    background-color: #333333;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -68,7 +68,7 @@ form p > * {
     width: 270px;
     height: 32px;
     color: white;
-    background-color: #209b60;
+    background-color: #333333;
     border-radius: 4px;
     margin-top: 14px;
     outline-color: #777777;

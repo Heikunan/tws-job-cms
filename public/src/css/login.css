@@ -45,7 +45,7 @@ form p > * {
     text-align: center;
 
     color: white;
-    background-color: #209b60;
+    background-color: #333333;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -68,7 +68,7 @@ form p > * {
     text-align: center;
 
     color: white;
-    background-color:  #209b60;
+    background-color:  #333333;
     border-radius: 6px;
     border: 0;
 
@@ -83,12 +83,12 @@ form p > * {
 #remember_me {
     position: relative;
     margin-left: 250px;
-    color: #209b60;
+    color: black;
 }
 
 #forget_pwd {
     font-size: 13px;
-    color:  #209b60;
+    color:  black;
     text-decoration: none;
     position: relative;
     float: right;
@@ -97,7 +97,7 @@ form p > * {
 }
 
 #separate{
-    color:  #209b60;
+    color:  black;
     text-decoration: none;
     position:relative;
     float: right;
@@ -107,7 +107,7 @@ form p > * {
 
 #register{
     font-size: 13px;
-    color:  #209b60;
+    color:  black;
     text-decoration: none;
     position: relative;
     float: right;
@@ -116,12 +116,12 @@ form p > * {
 }
 
 #forget_pwd:hover {
-    color:  #209b60;
+    color:  white;
     text-decoration: underline;
 }
 
 #register:hover {
-    color:  #209b60;
+    color:  white;
     text-decoration: underline;
 }
 
