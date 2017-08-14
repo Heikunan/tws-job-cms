@@ -105,8 +105,12 @@ body {
 .mysection{
     margin-top: 20px;
 }
-
-
+.mysectionright .panel-body{
+    padding: 0;
+}
+.mysectionright .panel-body .list-group{
+    margin-bottom: 0;
+}
 .mybox{
     width: 276px;
     height: 316px;

@@ -10,6 +10,7 @@ let cp = new Crypto('you secret code');
 let app = express();
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(session({
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
@@ -36,10 +37,9 @@ let mailTransport = nodemailer.createTransport({
     host: 'smtp.126.com',
     port: 25,
     secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
-    auth: {
         user: 'thoughtworkersfive@126.com',
         pass: 'dalaodaifei555'
-    },
+
 });
 
 
@@ -128,6 +128,7 @@ app.post('/searchjobs', urlencodedParser, function(req, res) {
         res.send(result);
     });
 });
+
 
 /*
 #5查看职位详情
@@ -248,7 +249,6 @@ app.get('/postdetial', function(req, res) {
             //返回自己全部的post
             res.send(result)
         })
-        // connection.end();
 });
 
 /*#9获得用户详细信息
@@ -356,10 +356,6 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-// //发送注册界面[测试用]
-// app.get('/test',function (req,res) {
-//     res.sendFile(__dirname+'/public/register.html')
-// })
 
 /*#10 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
@@ -394,6 +390,7 @@ app.post('/login', urlencodedParser, function(req, res) {
                 if (result[0].isactive === 0) {
                     res.send('inactivated') //用户存在,但账号未激活，返回inactivated
                 } else {
+                    result[0].email = req.body.email;
                     req.session.user = result[0];
                     res.send('ok');
                 } //用户存在,且账号已激活，返回OK
