@@ -82,20 +82,6 @@ app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html");
 });
 
-
-/*
-显示所有职位
- */
-
-/*返回一共条数*/
-app.get('/gettotal', function(req, res) {
-    let sql='select * from t_job';
-    connection.query(sql, function(err, result) {
-        if (err) console( err);
-        res.send({length:result.length});
-    });
-});
-
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
     let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
