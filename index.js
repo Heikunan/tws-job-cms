@@ -620,7 +620,6 @@ app.put('/resettingLogin',function (req,res) {
         if(err) throw  err;
         console.log(reply);
         req.session.user=reply[0];
-        res.redirect('../')
     });
 });
 

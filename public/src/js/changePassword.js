@@ -7,11 +7,14 @@ function resetPassword() {
         type:'POST',
         success: function(res){
             if(res!=='fail'){
-                alert('验证码已发送至您的邮箱，请注意查收');
+                $('.flash_container').empty();
+                $('.flash_container').append('<div class=alert>验证码已发送至您的邮箱，请注意查收</div>');
                 $('#resetPassword_frame').hide();
                 $('#login_frame').show();
             }else {
-                alert('该邮箱尚未被激活，请先注册激活！');
+                $('.flash_container').empty();
+                $('.flash_container').append('<div class=alert>该邮箱尚未被激活，请先注册激活！</div>');
+
             }
         },
         error: function (err) {
@@ -26,27 +29,27 @@ function login() {
     let password=$('.login_password').val();
     let passwordConfirmation=$('.login_passwordConfirm').val();
     if(password!==passwordConfirmation){
-        alert('密码输入不一致,请重新输入');
-        return;
-    }
-    $.ajax({
-        url: `/resettingLogin?email=${email}`,
-        type:'PUT',
-        data:{
-            passwordCode:passwordCode,
-            password:password,
-            passwordConfirmation:passwordConfirmation
-        },
-        success: function(reply){
-            console.log(reply);
-            if(reply.affectedRows===1){
-                alert('重置密码成功！');
-                window.location.assign('/');//前端跳转可以，用res.redirect等都不行
+        $('.flash_container').empty();
+        $('.flash_container').append('<div class=alert>密码输入不一致,请重新输入！</div>');
+    }else {
+        $.ajax({
+            url: `/resettingLogin?email=${email}`,
+            type: 'PUT',
+            data: {
+                passwordCode: passwordCode,
+                password: password,
+                passwordConfirmation: passwordConfirmation
+            },
+            success: function (reply) {
+                console.log(reply);
+                if (reply.affectedRows === 1) {
+                    window.location.assign('/');//前端跳转可以，用res.redirect等都不行
+                }
+            },
+            error: function (err) {
+                console.log(err);
             }
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
+        });
+    }
 }
 
