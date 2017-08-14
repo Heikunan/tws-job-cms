@@ -248,6 +248,7 @@ app.post('/login', urlencodedParser, function(req, res) {
                 if (result[0].isactive === 0) {
                     res.send('inactivated') //用户存在,但账号未激活，返回inactivated
                 } else {
+                    result[0].email = req.body.email;
                     req.session.user = result[0];
                     res.send('ok');
                 } //用户存在,且账号已激活，返回OK
@@ -330,13 +331,18 @@ app.post('/getSuggestion',function(req,res){
  */
 
 app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    let user = {};
-    user.email = req.session.user.email;
-    user.company = req.session.user.company;
-    user.address = req.session.user.address;
-    user.trade = req.session.user.trade;
-    // console.log('当前用户的信息如下：' + user);
-    res.send(user);
+    if(req.session.user){
+        let user = {};
+        user.email = req.session.user.email;
+        user.company = req.session.user.company;
+        user.address = req.session.user.address;
+        user.trade = req.session.user.trade;
+        // console.log('当前用户的信息如下：' + user);
+        res.send(user);
+    }else {
+        res.send("no");
+    }
+
 });
 
 /**
