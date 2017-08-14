@@ -70,7 +70,10 @@
                         </div>
                     </form>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="myposts">.2..</div>
+                <div role="tabpanel" class="tab-pane fade" id="myposts">
+                    <table class="table table-grade" id="table-grade">
+                    </table>
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="changepassword">
                     <!--修改密码页面-->
                     <form class="form-horizontal">
@@ -150,9 +153,14 @@
     }
     //得到我的發佈
     function getMyPosts() {
+        let str='';
         $.get('/myposts', function (data) {
-
+           for(let i=0;i<data.length;i++){
+               str += `<tr><td>${data[i].title}</td><td>${data[i].company}</td></tr>`;
+           }
         });
+        $(`#table-grade`).empty();
+        $(`#table-grade`).append(str);
     }
 
     //修改密碼
@@ -190,7 +198,7 @@
                 getMyPosts();
                 break;
             case 'changepassword':
-                changePassWord()
+                changePassWord();
                 break;
         } // newly activated tab
 
