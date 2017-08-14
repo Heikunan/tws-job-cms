@@ -7,6 +7,7 @@
     <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="src/js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <title>myinfo</title>
     <link rel="stylesheet" href="src/css/index.css">
     <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
@@ -156,16 +157,18 @@
 </div>
 
 
+<script src="js/common.js"></script>
 <script>
     //判断是否登录
-    $.get('/getUserInfo',function (ans) {
-        if(ans !== 'no'){
-            console.log(ans);
-            let str=`<li><a href="#">getposts</a></li>`;
-            str += `<li><a href="#">${ans.email}</a></li>`;
-            $('.myheader-right').empty().append(str);
-        }
-    });
+//    $.get('/getUserInfo',function (ans) {
+//        if(ans !== 'no'){
+//            console.log(ans);
+//            let str=`<li><a href="#">getposts</a></li>`;
+//            str += `<li><a href="#">${ans.email}</a></li>`;
+//            $('.myheader-right').empty().append(str);
+//        }
+//    });
+    common();
 
     getUserInfo();
 
