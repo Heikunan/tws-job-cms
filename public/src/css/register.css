@@ -63,6 +63,10 @@ form p > * {
     margin-left: 75px;
 }
 
+#register:hover{
+    background-color: #777777;
+}
+
 #no_email {
     font-size: 13px;
     color:  #209b60;
