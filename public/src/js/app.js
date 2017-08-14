@@ -1,3 +1,4 @@
+
 $.get('/getUserInfo',function (ans) {
     if(ans !== 'no'){
         console.log(ans);
