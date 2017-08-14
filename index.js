@@ -412,7 +412,7 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
  */
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let passwordCode=parseInt(Math.random()*1000000);
-    let email=req.query.email;
+    let email=cp.hex(req.query.email);
     let sql='SELECT isactive FROM t_user WHERE email = ?';
     let data=[email];
     connection.query(sql,data,function (err,reply) {
@@ -426,14 +426,14 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
                 text           : '验证码',
                 html           :  content
             };
-            /*mailTransport.sendMail(options, function(err, msg){
+            mailTransport.sendMail(options, function(err, msg){
                 if(err){
                     console.log(err);
                 }
                 else {
                     console.log(msg);
                 }
-            });*/
+            });
             let sql='UPDATE t_user SET passwordCode = ? WHERE email = ? ';
             let data=[passwordCode,email];
             connection.query(sql,data,function (err, rep) {
@@ -454,11 +454,11 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
  */
 
 app.put('/resettingLogin',function (req,res) {
-    let email=req.query.email;
+    let email=cp.hex(req.query.email);
     let passwordCode=req.body.passwordCode;
-    let password=req.body.password;
+    let password=cp.hex(req.body.password);
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode=parseInt(Math.random()*10000000);
+    let rePasswordCode=parseInt(Math.random()*1000000);
     let dataCode=[password,rePasswordCode,email,passwordCode];
     connection.query(sqlCode,dataCode,function (err, reply) {
         if(err) throw  err;
