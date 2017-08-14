@@ -32,9 +32,10 @@ let mailTransport = nodemailer.createTransport({
     host: 'smtp.126.com',
     port: 25,
     secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
-    user: 'thoughtworkersfive@126.com',
-    pass: 'dalaodaifei55555'
-
+    auth:{
+        user: "thoughtworkersfive@126.com",
+        pass: "111aaa"
+    }
 });
 
 
@@ -393,7 +394,7 @@ app.get('/confirm', function(req, res, next) {
     connection.query(sql, function(err, result) {
         if (err) throw err;
         else { //如果没有直接对数据库进行操作，不会返回error
-            res.send("注册成功！");
+            res.redirect('/');
         }
     });
 });
@@ -572,13 +573,14 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let email=cp.hex(req.query.email);
     let sql='SELECT isactive FROM t_user WHERE email = ?';
     let data=[email];
+    console.log(req.query.email);
     connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
         if(reply.length===1&&reply[0].isactive===1){
             let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
             let options = {
                 from           : 'cr<thoughtworkersfive@126.com>',
-                to             :  email,
+                to             :  req.query.email,
                 subject        : '重置密码',
                 text           : '验证码',
                 html           :  content
@@ -614,6 +616,14 @@ app.put('/resettingLogin',function (req,res) {
     let email=cp.hex(req.query.email);
     let passwordCode=req.body.passwordCode;
     let password=cp.hex(req.body.password);
+    let sql='SELECT * FROM t_user WHERE email = ?';
+    let data=email;
+    connection.query(sql,data,function (err, reply) {
+        if(err) throw  err;
+        console.log(reply);
+        reply[0].email=req.query.email;
+        req.session.user=reply[0];
+    });
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
     let rePasswordCode=parseInt(Math.random()*1000000);
     let dataCode=[password,rePasswordCode,email,passwordCode];
@@ -621,13 +631,6 @@ app.put('/resettingLogin',function (req,res) {
         if(err) throw  err;
         console.log(reply);
         res.send(reply);
-    });
-    let sql='SELECT * FROM t_user WHERE email = ?';
-    let data=email;
-    connection.query(sql,data,function (err, reply) {
-        if(err) throw  err;
-        console.log(reply);
-        req.session.user=reply[0];
     });
 });
 
