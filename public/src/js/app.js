@@ -250,3 +250,15 @@ function showTime()
 /******************************************
  * 每过五秒更新推送的内容，循环数据库里的所有内容 *
  ******************************************/
+$.get('/getUserInfo',function (ans) {
+    if(ans !== 'no'){
+        console.log(ans);
+        let str=`<li><a href="#">getposts</a></li>`;
+        str += `<li><a href="#">${ans.email}</a></li>`;
+        $('.myheader-right').empty().append(str);
+    }
+});
+
+$.post('/testjobs',{num:1},function (ans) {
+    console.log(ans);
+});
