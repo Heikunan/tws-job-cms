@@ -226,45 +226,10 @@ app.get('/postdetial', function(req, res) {
         })
 });
 
-/*#9获得用户详细信息
- 输入：
- 输出：req.session.user除密码之外的所有信息
- */
 
-app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    if(req.session.user){
-        let user = {};
-        user.email = req.session.user.email;
-        user.company = req.session.user.company;
-        user.address = req.session.user.address;
-        user.trade = req.session.user.trade;
-        user.id = req.session.user.id;
-        user.status = req.session.user.status;
-        user.identity = req.session.user.identity;
-        res.send(user);
-    }else {
-        res.send('no');
-    }
-
-});
 
 /*
- * #9修改用户基本信息
- * 输入：用户id
- * 输出：1或0，表示用户信息是否更新成功
- */
-app.post('/changeUserInfo', urlencodedParser, function(req, res) {
-    let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
-    let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
-    connection.query(sql, data, function(err, reply) {
-        if (err) {
-            console.log('error!' + err);
-            res.send('error');
-        }
-        res.send(''+reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
-    });
-});
+
 
 /*
  * #9修改用户密码
@@ -499,16 +464,37 @@ app.post('/getSuggestion',function(req,res){
 输入：
 输出：req.session.user除密码之外的所有信息
  */
+app.get('/getUserInfo', function(req, res) {
+    if(req.session.user){
+        let user = {};
+        user.email = req.session.user.email;
+        user.company = req.session.user.company;
+        user.address = req.session.user.address;
+        user.trade = req.session.user.trade;
+        user.id = req.session.user.id;
+        user.status = req.session.user.status;
+        user.identity = req.session.user.identity;
+        res.send(user);
+    }else {
+        res.send('no');
+    }
 
-app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    let user = {};
-    user.email = req.session.user.email;
-    user.company = req.session.user.company;
-    user.address = req.session.user.address;
-    user.trade = req.session.user.trade;
-    // console.log('当前用户的信息如下：' + user);
-    res.send(user);
 });
+
+app.get('/getuserinfofromsql',function (req,res) {
+    let sql = 'select * from t_user where id =' + req.session.user.id;
+    console.log(req.session)
+    console.log(sql)
+    connection.query(sql,function (err,data) {
+        if (err) {
+            console.log('error!' + err);
+            res.send('error');
+        }
+        console.log(data);
+        req.session.user=data[0]
+    })
+})
+
 
 /**
  * #9修改用户基本信息
@@ -523,8 +509,16 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
             console.log('error!' + err);
             res.send('error');
         }
-        res.send(reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
+        let sql = 'select * from t_user where id =' + req.session.user.id;
+        connection.query(sql,function (err,data) {
+            if (err) {
+                console.log('error!' + err);
+                res.send('error');
+            }
+            req.session.user=data[0]
+            res.send('ok')
+        })
+        console.log('数据库有' + reply.affectedRows + '条数据修改成功 ');
     });
 });
 
