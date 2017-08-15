@@ -26,7 +26,12 @@ a {
 .panel-body{
     padding: 0;
 }
-.panel:hover{
+.mypageinit{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+.job-contain:hover{
     background-color: #f8f9fb;
     transition: all linear .2s;
 }
@@ -116,7 +121,14 @@ a {
     padding: 10px 0;
     margin: 0;
 }
-
+.changeyemian {
+    border: 0;
+    border-radius: 0;
+    padding: 22px 40px;
+    border-bottom: 1px #f2f2f5 solid;
+    overflow: hidden;
+    margin-bottom: 0;
+}
 .myheader-right a{
     font-size: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -257,13 +269,47 @@ a {
     overflow: hidden;
 }
 .myfoot{
-    background-color: #222;
+
+    background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
+
+
 }
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+#my-footdiv{
+    background-color: #222;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.ui:hover{
+    color:#00B83F;
+}
+.ui{
+    margin-bottom: 35px;
+}
+.myspan{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    padding-top: 40px;
+}
+.myie{
+    padding-left: 20px;
+
+}
+.uii{
+    padding-bottom: 30px;
+}
+.uii:hover{
+    color:#00B83F;
+}
+
 
 .job_suggest{
     width: 320px;
@@ -288,4 +334,5 @@ a {
 .job_suggest p:hover{
     color: #209b60;
     text-decoration: underline;
+
 }
