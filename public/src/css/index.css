@@ -237,7 +237,6 @@ a {
 .search-three{
     padding: 0;
 }
-
 .my-dropdown-search a{
     text-decoration: none;
     color: black;
@@ -276,6 +275,15 @@ a {
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
+}
+.myconta ul{
+    list-style: none;
+}
+.myconta a{
+    color: white;
+}
+.myconta a:hover{
+    color:  #00B83F;;
 }
 #my-footdiv{
     background-color: #222;
@@ -335,18 +343,15 @@ a {
     width:280px;
     text-align: center;
     background-color: rgba(240, 255, 255, 0.5);
-
     margin-bottom: 80px;
 }
 
 .suggest_contain span{
     font-size: 14px;
-
     width: 280px;
     height: 28px;
     line-height: 28px;
     text-align: center;
-
     color: white;
     background-color:#c0bcbc;
     float: left;
