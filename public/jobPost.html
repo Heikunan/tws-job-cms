@@ -19,7 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="./datepicker/css/jquery-ui.css" />
 		<!-- <link rel="stylesheet" href="./MarkdownIME/test/style.css"> -->
 		<script type="text/javascript">
-			$.cxSelect.defaults.url = '../node_modules/cxselect/js/globalData.min.json';
+			$.cxSelect.defaults.url ='../node_modules/cxselect/js/globalData.min.json';
 			$.cxSelect.defaults.emptyStyle = 'none';
 			jQuery.browser = {};
 			(function () {
@@ -347,7 +347,7 @@
 				 editor4.create();
 			});
 			$('#gyf_post_adress').cxSelect({
-				url: './cxSelect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+				url: '../node_modules/cxselect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
 				selects: ['country', 'city', 'area'],  // 数组，请注意顺序
 				emptyStyle: 'none'
 			});
