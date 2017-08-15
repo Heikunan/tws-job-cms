@@ -348,6 +348,7 @@ a {
     margin-bottom: 80px;
 }
 
+
 .suggest_contain span{
     font-size: 14px;
     width: 280px;
@@ -358,3 +359,27 @@ a {
     background-color:#c0bcbc;
     float: left;
 }
+
+
+
+.job_suggest p:hover {
+    color: #209b60;
+    text-decoration: underline;
+}
+.myfoot{
+
+    background-color: rgba(60, 60, 60, 0.87);
+    color: #fff;
+
+
+}
+.myconta{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#my-footdiv{
+    background-color: #222;
+    color: #fff;
+
+}
+
