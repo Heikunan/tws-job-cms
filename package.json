@@ -19,12 +19,14 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "cxselect": "^1.4.0",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "mysql": "^2.14.1",
     "n-crypto": "^0.2.2",
     "node-crypto": "^1.0.0",
     "node-mandrill": "^1.0.1",
-    "nodemailer": "^4.0.1"
+    "nodemailer": "^4.0.1",
+    "wangeditor": "^3.0.8"
   }
 }
