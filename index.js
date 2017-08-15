@@ -303,7 +303,7 @@ app.post('/send', function(req, res, next) {
     console.log(email);
     let password = req.body.password;
     let password_conf=req.body.password_conf;
-    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if(!myreg.test(email)){
         res.send('wrong_em')//邮箱格式错误，返回wrong_em
     } else if (password!==password_conf){
@@ -314,7 +314,7 @@ app.post('/send', function(req, res, next) {
     //sql语句插入语句
     let sql = 'insert into t_user (password,email,activeToken,status,identity) values (?,?,?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
-    let sqlinfor = [password, email, cp.base(email)];
+    let sqlinfor = [password, email, cp.base(email),'待审核','职位发布者'];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) {
             //插入失败，返回false，就是用户已经存在
