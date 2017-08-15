@@ -82,7 +82,6 @@ app.get('/myinfo',function (req,res) {
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum-1)*10;
-    console.log(mynum);
     let sql=`SELECT * FROM t_job LIMIT ${mynum},10`;
     connection.query(sql, function(err, result) {
         if (err) throw err;
