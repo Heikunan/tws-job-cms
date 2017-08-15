@@ -49,6 +49,10 @@
     //    //获得用户详细信息,填入表单
     //    function getUserInfo() {
     $.get('/getUserInfo', function (data) {
+        if (data==='no') {
+            alert('登陆过期，请重新登录！')
+            top.location='../index.html'
+        }
         $('#inputEmail').val(data.email)
         $('#inputCompany').val(data.company)
         $('#inputAddress').val(data.address)

@@ -2,6 +2,13 @@
 	margin: 0;
 	padding: 0;
 }
+#logo{
+	height: 40px;
+	margin: 5px 0;
+}
+.navbar{
+	padding: 10px 0;
+}
 
 .space2{
 	display: inline-block;
@@ -36,4 +43,11 @@ overflow-y:scroll;
 }
 #ui-datepicker-div{
 	display: none;
+}
+.gyf_choice_btn{
+	background-color:#212121; 
+	color:white;
+}
+.gyf_view_btn{
+	background-color:#BDBDBD;
 }

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
-	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js">
+
+	</script>
 	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src='./src/semantic.min.js'></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
@@ -10,224 +13,243 @@
 	<link rel="stylesheet" type="text/css" href="./jobInfo.css">
 	<title>JobInfo</title>
 </head>
-<body onload="load()">
-<nav class="navbar navbar-default">
-	<div class="container">
 
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+<body onload="load()">
+	<nav class="navbar navbar-default">
+		<div class="container">
+
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				 aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
+				<a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
+			</div>
+
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right myheader-right">
+					<li><a href="./login.html">登陆</a></li>
+					<li><a href="./register.html">注册</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
 		</div>
-
-
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right myheader-right">
-				<li><a href="./login.html">登陆</a></li>
-				<li><a href="./register.html">注册</a></li>
-			</ul>
-		</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
-</nav>
+		<!-- /.container-fluid -->
+	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="jumbotron gyf_jumbotron" >
+			<div class="jumbotron gyf_jumbotron">
 				<div class="ui segment row gyf_jobInfo_head ">
-					<img class="ui small left floated image col-md-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'> 
+					<img class="ui small left floated image col-md-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'>
 					<div class="gyf_jumbotron_content col-md-6">
 						<h2 id="gyf_title">DevOps Engineer</h2>
 						<div class="row gyf_company_name">
 							<div class="col-md-3" id="gyf_inner_company_name">TenXun</div>
 							<div class="col-md-3" id="gyf_inner_company_country">中国</div>
 						</div>
-						 <h3 id="gyf_salary">￥30k-50k </h3> 
+						<h3 id="gyf_salary">￥30k-50k </h3>
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:green;"><i class="heart icon"></i> Like </div>
-							<a class="ui basic  left pointing label" style=" border-color:green" id="gyf_like_number">
+							<div class="ui red button" style="background-color:black;"><i class="heart icon"></i> Like </div>
+							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
 								1,048
 							</a>
 						</div>
 						<div class="share_icon" style="margin-top:1em;">
-							<i class="users icon "></i>
-							招聘人数：<strong id="gyf_jobInfo_num"></strong>
-							
+							<i class="users icon "></i> 招聘人数：
+							<strong id="gyf_jobInfo_num"></strong>
+
 						</div>
 						<div class="share_icon" style="margin-top:1em;">
-							<i class="marker icon"></i>
-							公司地址：
+							<i class="marker icon"></i> 公司地址：
 							<strong id="gyf_inner_company_area">深圳市</strong>
-							<strong  id="gyf_inner_company_city">广东省</strong> 
+							<strong id="gyf_inner_company_city">广东省</strong>
 						</div>
-						
+
+					</div>
 				</div>
-			</div>
-		<!-- <ul class="nav nav-tabs nav-justified">
+				<!-- <ul class="nav nav-tabs nav-justified">
 		 			<li>Overview</li>
 		 			<li>Company</li>
 		 			<li>Developer Culture</li>
 		 			<li>More Job</li>
 		 		</ul> -->
-		 		<div class="gyf_all_left col-xs-8">
-		 			<div class="ui divider gyf_divider"></div>
-		 			<div class="row gyf_About">
-		 				<h2 style="padding-left: 0.5em"> About this job</h2>
-		 				<div class="row col-md-8 gyf_about_row">
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong id="gyf_job_type">Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Job category:<strong id="gyf_job_category">Permanent</strong></div>
-		 				</div>
-		 				<div class="row col-md-8 gyf_about_row">
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Company size:<strong id="gyf_company_size">Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Company type: <strong id="gyf_company_type">Permanent</strong></div>
-		 				</div>
-		 				<div class="row col-md-8 gyf_about_row">
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Release time:<strong id="gyf_release_time">Permanent</strong></div>
-		 					<div class="col-xs-5 col-md-5 gyf_about_content">Expiry time: <strong id="gyf_expiry_time">Permanent</strong></div>
-		 				</div>
-		 			</div>
-		 			<div class="ui divider gyf_divider"></div>
-		 			<div class="Tags gyf_tags" style="clear: both;">
-						 <h2>Tags</h2>
+				<div class="gyf_all_left col-xs-8">
+					<div class="ui divider gyf_divider"></div>
+					<div class="row gyf_About">
+						<h2 style="padding-left: 0.5em"> About this job</h2>
+						<div class="row col-md-8 gyf_about_row">
+							<div class="col-xs-5 col-md-5 gyf_about_content">Job type:<strong id="gyf_job_type">Permanent</strong></div>
+							<div class="col-xs-5 col-md-5 gyf_about_content">Job category:<strong id="gyf_job_category">Permanent</strong></div>
+						</div>
+						<div class="row col-md-8 gyf_about_row">
+							<div class="col-xs-5 col-md-5 gyf_about_content">Company size:<strong id="gyf_company_size">Permanent</strong></div>
+							<div class="col-xs-5 col-md-5 gyf_about_content">Company type: <strong id="gyf_company_type">Permanent</strong></div>
+						</div>
+						<div class="row col-md-8 gyf_about_row">
+							<div class="col-xs-5 col-md-5 gyf_about_content">Release time:<strong id="gyf_release_time">Permanent</strong></div>
+							<div class="col-xs-5 col-md-5 gyf_about_content">Expiry time: <strong id="gyf_expiry_time">Permanent</strong></div>
+						</div>
+					</div>
+					<div class="ui divider gyf_divider"></div>
+					<div class="Tags gyf_tags" style="clear: both;">
+						<h2>Tags</h2>
 						<span class="label label-warning gyf_label" id="gyf_jobInfo_Education">Warning</span>
-		 				<span class="label label-default gyf_label" id="gyf_jobInfo_tag1">Default</span>
-		 				<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2">Primary</span>
-		 				<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1">Success</span>
-		 				<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2">Info</span>
-		 			</div>
-		 			<div class="ui divider gyf_divider"></div>
-		 			<div class="gyf_descript">
-		 				<h2>Job description</h2>
-		 				<div class="description_content" id="gyf_descript_content">
+						<span class="label label-default gyf_label" id="gyf_jobInfo_tag1">Default</span>
+						<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2">Primary</span>
+						<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1">Success</span>
+						<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2">Info</span>
+					</div>
+					<div class="ui divider gyf_divider"></div>
+					<div class="gyf_descript">
+						<h2>Job description</h2>
+						<div class="description_content" id="gyf_descript_content">
 
 
-		 				</div>
-		 			</div>
-		 			<div class="ui divider gyf_divider"></div>
-		 			<div class="company_introduce">
-		 				<h2>Company introduce</h2>
-		 				<div class="company_introduce_content" id="gyf_company_introduce_content">The DevOps  Engineer will create a vision for software delivery automation and engineering tooling and drive the team to deliver to that vision. You will also work across the Organization to drive and support continuous integration and delivery. You will work with the Agile Teams to improve software delivery and configuration management, and will be responsible for maintaining the development environment which comprises of myriad of platforms including Unix and Windows based systems..
-		 				</div>
-		 			</div>
-		 			<div class="ui divider gyf_divider"></div>
-		 			<div class="gyf_apply_Approach">
-		 				<h2>How to Apply</h2>
-		 				<div class="gyf_apply_content" id="gyf_apply_content">
-		 					Email:xxxxxxx@163.com
-		 					Phone:xxxxxxxx
-		 				</div>
+						</div>
+					</div>
+					<div class="ui divider gyf_divider"></div>
+					<div class="company_introduce">
+						<h2>Company introduce</h2>
+						<div class="company_introduce_content" id="gyf_company_introduce_content">The DevOps Engineer will create a vision for software delivery automation and engineering tooling and drive the team
+							to deliver to that vision. You will also work across the Organization to drive and support continuous integration
+							and delivery. You will work with the Agile Teams to improve software delivery and configuration management, and will
+							be responsible for maintaining the development environment which comprises of myriad of platforms including Unix and
+							Windows based systems..
+						</div>
+					</div>
+					<div class="ui divider gyf_divider"></div>
+					<div class="gyf_apply_Approach">
+						<h2>How to Apply</h2>
+						<div class="gyf_apply_content" id="gyf_apply_content">
+							Email:xxxxxxx@163.com Phone:xxxxxxxx
+						</div>
 
-		 			</div>
-		 		</div>
-		 		<div class="gyf_all_right col-xs-4">
-		 			<div class="gyf_panel panel panel-success">
-		 				<div class="panel-heading">
-		 					<h3 class="panel-title">Are you looking for a job?</h3>
-		 				</div>
-		 				<div class="panel-body">
-		 					When you create a Developer Story, we’ll accelerate your matches and get you in front of employers ASAP.
-		 				</div>
-		 				<button class="gyf_panel_button ">Create a Developter Story</button>
-		 			</div>
-		 			<div class="panel post-job gyf_panel">
-		 				<div class="post-job-header panel-heading">
-		 					<div class="header-img"></div>
-		 				</div>
-		 				<div class="post-job-content">
-		 					<h2>hiring developers</h2>
-		 					<button class="post_job_button" id="gyf_jobInfo_post">
+					</div>
+				</div>
+				<div class="gyf_all_right col-xs-4">
+					<div class="panel post-job gyf_panel">
+						<div class="post-job-header panel-heading">
+							<div class="header-img"></div>
+						</div>
+						<div class="post-job-content">
+							<h2>hiring developers</h2>
+							<button class=" btn post_job_button " id="gyf_jobInfo_post">
 		 						<span class="glyphicon glyphicon-new-window gyf_icon" aria-hidden="true"></span>post a job
 		 					</button>
-		 				</div>
-		 			</div>
-		 			<div class="gyf_more_jobs">
-		 				<h2>Jobs you might like</h2>
-		 				<div id="gyf_list">
+						</div>
 					</div>
-		 			</div>
+					<div class="gyf_panel panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Are you looking for a job?</h3>
+						</div>
+						<div class="panel-body">
+							When you create a Developer Story, we’ll accelerate your matches and get you in front of employers ASAP.
+						</div>
+						<button class="gyf_panel_button ">Create a Developter Story</button>
+					</div>
+					<div class="gyf_more_jobs">
+						<h2>Jobs you might like</h2>
+						<div id="gyf_list">
+						</div>
+					</div>
 
-		 		</div>
-		 	</div>
+				</div>
+			</div>
 
-		 </div>
-		</body>
-		<script type="text/javascript">
+		</div>
+</body>
+<script type="text/javascript">
+	function load() {
+		let myurl = window.location.href.split("id=");
+		let datas = {};
+		datas.id = myurl[1];
+		$.post('/getJobDetail', datas).done(function (data) {
+			data = data[0];
+			$('#gyf_postInfo_image').attr('src', data.Logo);
+			$('#gyf_title').text(data.title);
+			$('#gyf_inner_company_name').text(data.company);
+			$('#gyf_inner_company_area').text(data.area);
+			$('#gyf_inner_company_city').text(data.city);
+			$('#gyf_inner_company_country').text(data.country);
+			$('#gyf_salary').text(data.salary);
+			$('#gyf_job_type').text(data.jobType);
+			$('#gyf_job_category').text(data.category);
+			let releaseTime = data.releaseTime.split('T');
+			$('#gyf_release_time').text(releaseTime[0]);
+			$('#gyf_like_number').text(data.likes);
+			$('#gyf_expiry_time').text(data.expiryDate);
+			$('#gyf_company_type').text(data.companyType);
+			$('#gyf_company_size').text(data.companySize);
+			$('#gyf_descript_content').html(data.description);/*html问题*/
+			$('#gyf_company_introduce_content').html(data.companyIntroduce);
+			$('gyf_apply_content').text(data.applyApproach);
+			let language_tags = data.tags.split(',');
+			let benefits_tags = data.benefits.split(',');
+			$("#gyf_jobInfo_tag1").text(language_tags[0]);
+			$('#gyf_jobInfo_tag2').text(language_tags[1]);
+			$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
+			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
+			$("#gyf_jobInfo_Education").text(data.education);
+			$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
+		}).fail(function (xhr, status) {
+			console.log('失败: ' + xhr.status + ', 原因: ' + status);
+		});
 
-			function load() {
-                let myurl=window.location.href.split("id=");
-                let datas={};
-                datas.id=myurl[1];
-				$.post('/getJobDetail',datas).done(function (data) {
-					data=data[0];
-					$('#gyf_postInfo_image').attr('src',data.Logo);
-					$('#gyf_title').text(data.title);
-					$('#gyf_inner_company_name').text(data.company);
-					$('#gyf_inner_company_area').text(data.area);
-					$('#gyf_inner_company_city').text(data.city);
-					$('#gyf_inner_company_country').text(data.country);
-					$('#gyf_salary').text(data.salary);
-					$('#gyf_job_type').text(data.jobType);
-					$('#gyf_job_category').text(data.category);
-					let releaseTime=data.releaseTime.split('T');
-					$('#gyf_release_time').text(releaseTime[0]);
-					$('#gyf_like_number').text(data.likes);
-					$('#gyf_expiry_time').text(data.expiryDate);
-					$('#gyf_company_type').text(data.companyType);
-					$('#gyf_company_size').text(data.companySize);
-					$('#gyf_descript_content').html(data.description);/*html问题*/
-					$('#gyf_company_introduce_content').html(data.companyIntroduce);
-					$('gyf_apply_content').text(data.applyApproach);
-					let language_tags=data.tags.split(',');
-					let benefits_tags=data.benefits.split(',');
-					$("#gyf_jobInfo_tag1").text(language_tags[0]);
-					$('#gyf_jobInfo_tag2').text(language_tags[1]);
-					$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
-					$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
-					$("#gyf_jobInfo_Education").text(data.education);
-					$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
-				}).fail(function (xhr,status) {
-					console.log('失败: ' + xhr.status + ', 原因: ' + status);
-				});
-			
-				let category=$('#gyf_job_category').text();
-				let type=$('#gyf_job_type').text();
-				let title=$('#gyf_title').text();
-				datas.category=category;
-				datas.type=type;
-				datas.title=title;
-				/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
-				/*返回给我的是[{},{},{},{}]*/
-				/*缺陷：list里的tag 还没做*/
-				$.post('/getSuggestion',datas).done(
-					function(data){
-						console.log(data);
-						let suggestion='';
-						for(let object of data){
-							suggestion=suggestion+
-							`<div class="list-group">
+		let category = $('#gyf_job_category').text();
+		let type = $('#gyf_job_type').text();
+		let title = $('#gyf_title').text();
+		datas.category = category;
+		datas.type = type;
+		datas.title = title;
+		/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
+		/*返回给我的是[{},{},{},{}]*/
+		/*缺陷：list里的tag 还没做*/
+
+		$.post('/getSuggestion', datas).done(
+			function (data) {
+				let suggestion = '';
+				for (let object of data) {
+					let tags=object.tags.split(',');
+					suggestion = suggestion +
+						`<div class="list-group">
 								<a href="/jobInfo.html?id=${object.id}" class="list-group-item success">
 									<h3 class="list-group-item-heading"> ${object.title} </h3>
-									<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
-									<span class="label label-success gyf_label">Default</span>
-									<span class="label label-success gyf_label">Primary</span>
+									<p class="list-group-item-text"><strong> ${object.company + object.city + object.country}</strong></p>
+									<span class="label label-success gyf_label">${tags[0]}</span>
+									<span class="label label-success gyf_label">${tags[1]}</span>
 								</a>
 							</div>`;
-						}
-						$('#gyf_list').append(suggestion);
-					}).fail(function(xhr,status){
-						console.log('失败: ' + xhr.status + ', 原因: ' + status);
-					})
 				}
-			$('#gyf_jobInfo_post').on('click',function(){
-				window.location.href='/postJob';
-			});
-			
-		</script>
-		<script src="./js/common.js"></script>
-		</html> 
+				$('#gyf_list').append(suggestion);
+			}).fail(function (xhr, status) {
+				console.log('失败: ' + xhr.status + ', 原因: ' + status);
+			})
+	}
+	$('#gyf_jobInfo_post').on('click', function () {
+		$.get('/getUserInfo', function (ans) {
+			console.log('ans:'+ans);
+			if (ans !== 'no') {
+				if (ans.identity === "职位发布者" && ans.status==="已审核") {
+					window.location.href = '/postJob';
+				} else if (ans.identity === "管理员") {
+					window.location.href = '/postJob';
+				}else if(ans.identity === "职位发布者" && ans.status==="待审核"){
+						alert("不好意思，你没有发布权限,请联系微信客服");
+				}
+			} else{
+				alert('请先登录');
+			}
+		});	
+	});
+</script>
+<script src="./js/common.js"></script>
+
+</html>
