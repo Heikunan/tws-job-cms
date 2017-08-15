@@ -116,6 +116,18 @@ $(document).ready(function () {
         $('#zwzl-title').html(zwzl);
     });
     $('.search-background-icon').on('click',function () {
+        let mylu = `<li>全部职位</li>`;
+        if(zwlb === ''){
+            mylu += `<li>全部类别</li>`;
+        }else {
+            mylu += `<li>${zwlb}</li>`;
+        }
+        if(zwzl === ''){
+            mylu += `<li class="active">全部种类</li>`;
+        }else {
+            mylu += `<li class="active">${zwzl}</li>`;
+        }
+        $('.breadcrumb').empty().append(mylu);
         if(zwlb === '全部类别'){
             zwlb = '';
         }
@@ -134,8 +146,6 @@ $(document).ready(function () {
            }else {
                mynum = parseInt(mynum/10)+1;
            }
-           console.log(mynum);
-           console.log(ans.length);
            $('#fenye').jqPaginator({
                totalPages: mynum,
                visiblePages: 10,
