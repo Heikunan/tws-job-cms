@@ -11,14 +11,12 @@ let app = express();
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
 app.use(Bodyparser.urlencoded({ extended: true }));
-
 app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
     name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
     cookie: { maxAge: 600 * 1000 }
 }));
-
 let connection = mysql.createConnection({
     host: '47.94.199.111',
     user: 'tws',
@@ -187,8 +185,7 @@ app.get('/myposts', function(req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select title,company from t_job where userid = ' + userid;
-        console.log(sql);
+        let sql = 'select id,title,description from t_job where userid = ' + userid;
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -396,7 +393,7 @@ app.post('/login', urlencodedParser, function(req, res) {
 });
 
 app.post('/getJobDetail',urlencodedParser, function(req, res) {
-    console.log(req.body);
+   // console.log(req.body);
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function(err, result) {
         if (err) {
@@ -404,7 +401,7 @@ app.post('/getJobDetail',urlencodedParser, function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
-            console.log(result);
+         //   console.log(result);
             res.send(result);
         }
     });
@@ -421,12 +418,12 @@ app.get('/postJob',function(req,res){
 
 app.post('/postJob', function(req, res) {
     //  req.body = JSON.parse(req.body);
-    console.log(req.body);
+   // console.log(req.body);
     // let userId = req.session.user.id;
     let userId='1';
     let likes=0;
     let releaseTime=new Date(Date.now());
-    console.log(releaseTime);
+   // console.log(releaseTime);
     // let addSql='INSERT INTO t_test(userId) VALUES (?)';
     // let addSqlParams=['1'];
     req.body.tags=req.body.tags[0]+','+req.body.tags[1];
@@ -459,7 +456,64 @@ app.post('/getSuggestion',function(req,res){
 
 
 });
+app.get('/isLike',function(req,res){
+    let jobId=req.body.id;
+    if(req.session.user===undefined){
+        res.send('first_notlog');
+    }else{
+         let userId=req.session.user.id;
+         let sql='select * from t_like where userId =? and jobId = ?';
+         let addsql=[userId,jobId]
+         connection.query(sql,addsql,function(err,result){
+        if(err){
+            throw err;
+        }
+        if(result.length!==0){
+            res.send('true');
+        }else{
+            res.send('false');
+        }
+    })
 
+    }
+   
+})
+app.post('/addOneLike',function(req,res){
+    if(req.session.user===undefined){
+        res.send('notlog');
+    }else{
+    let jobId=req.body.id;
+    let num=req.body.num;
+    let sql='update t_job  set likes = ? where id ='+ jobId;
+    let addparams=[num];
+    connection.query(sql,addparams,function(err,result){
+        if(err){
+            throw err;
+        }else{
+             res.send('ok');
+        console.log(result);
+        }   
+     })
+    }
+})
+app.post('/addOneUser',function(req,res){
+    if(req.session.user===undefined){
+        res.send('notlog');
+    }else{
+    let jobId=req.body.id;
+    let userId=req.session.user.id;
+    let sql='insert into t_like (userId,jobId) values (?,?)'
+    let addSqlParams=[userId,jobId];
+    connection.query(sql,addSqlParams,function(err,result){
+        if(err){
+            throw err;
+        }else{
+             res.send('ok');
+        console.log(result);
+        }
+    });
+    }
+})
 /**#9获得用户详细信息
 输入：
 输出：req.session.user除密码之外的所有信息
