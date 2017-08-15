@@ -183,12 +183,12 @@ app.get('/postJob',function(req,res){
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 */
 app.get('/myposts', function(req, res) {
-    //得到用户的id
-    let userid = req.session.user.id;
-    //查找用户的post
-    let sql = 'select title,company from t_job where userid = ' + userid;
-    console.log(sql);
-    connection.query(sql, function(err, result) {
+    if (req.session.user) {
+        //得到用户的id
+        let userid = req.session.user.id;
+        //查找用户的post
+        let sql = 'select id,title,description from t_job where userid = ' + userid;
+        connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
@@ -199,6 +199,10 @@ app.get('/myposts', function(req, res) {
             //返回自己全部的post的title和company
             res.send(result);
         })
+    }else {
+        res.send('no')
+    }
+
 });
 
 /* #8 用户查看自己创建的职位Post详情
@@ -512,18 +516,22 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
  * 输出：1或0，表示用户信息是否更新成功
  */
 app.post('/changePsw',urlencodedParser,function (req,res) {
-    let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log('newPsw: '+req.body.newPsw);
-    console.log('currentPsw: '+req.body.currentPsw);
-    let data = [req.body.newPsw, req.session.user.id,req.body.currentPsw];
-    connection.query(sql, data, function(err, reply) {
-        if (err) {
-            console.log('error!' + err);
-            res.send('error');
-        }
-        reply.affectedRows!==0?res.send('ok'):res.send('error');
-        console.log('密码修改成功'+reply.affectedRows+'条');
-    });
+    if (req.session.user) {
+        let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
+        console.log('newPsw: '+req.body.newPsw);
+        console.log('currentPsw: '+req.body.currentPsw);
+        let data = [req.body.newPsw, req.session.user.id,req.body.currentPsw];
+        connection.query(sql, data, function(err, reply) {
+            if (err) {
+                console.log('error!' + err);
+                res.send('error');
+            }
+            reply.affectedRows!==0?res.send('ok'):res.send('error');
+            console.log('密码修改成功'+reply.affectedRows+'条');
+        });
+    }else {
+        res.send('no')
+    }
 });
 
 /**
