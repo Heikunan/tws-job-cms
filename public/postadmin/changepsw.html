@@ -50,9 +50,14 @@
                 newPsw: newPsw,
                 currentPsw: currentPsw
             }).done(function (data) {
+                console.log(data)
                 if (data === 'error') {
                     alert('失败！' + data)
-                } else {
+                }else if (data==='no') {
+                    alert('登陆过期，请重新登陆！')
+                    top.location='../index.html'
+                }
+                else {
                     alert('修改成功：' + data)
                 }
             }).fail(function (err) {
