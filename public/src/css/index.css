@@ -319,9 +319,7 @@ a {
 
 .title_suggest .job_suggest{
     text-align: center;
-<<<<<<< HEAD
     background: #fff;
-=======
     color: #333333;
 }
 
@@ -329,6 +327,4 @@ a {
 .job_suggest p:hover{
     color: #209b60;
     text-decoration: underline;
-
->>>>>>> ef812f464654341cfef4b619e16bea3f67a5f227
 }
