@@ -545,10 +545,7 @@ app.get('/loginout', urlencodedParser, function(req, res) {
 });
 
 /**
- * 跳转至找回密码页面
-/*
  * #12跳转至找回密码页面
->>>>>>> c3ddc3558ea89e8e517504aeb61330af1842e9dc
  */
 app.get('/findPassword',urlencodedParser,function (req,res) {
     res.redirect('/changePassword.html');
