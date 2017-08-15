@@ -26,7 +26,12 @@ a {
 .panel-body{
     padding: 0;
 }
-.panel:hover{
+.mypageinit{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+.job-contain:hover{
     background-color: #f8f9fb;
     transition: all linear .2s;
 }
@@ -116,7 +121,14 @@ a {
     padding: 10px 0;
     margin: 0;
 }
-
+.changeyemian {
+    border: 0;
+    border-radius: 0;
+    padding: 22px 40px;
+    border-bottom: 1px #f2f2f5 solid;
+    overflow: hidden;
+    margin-bottom: 0;
+}
 .myheader-right a{
     font-size: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -296,4 +308,16 @@ a {
 }
 .uii:hover{
     color:#00B83F;
+}
+
+.job_suggest{
+    width: 300px;
+    height: 150px;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 2px dashed #e3e3e3;
+    text-align: center;
+    background: #fff;
+
 }

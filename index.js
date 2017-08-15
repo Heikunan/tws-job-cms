@@ -11,7 +11,7 @@ let app = express();
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 
-app.use(cookieParser());
+app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
     name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
@@ -80,8 +80,10 @@ app.get('/myinfo',function (req,res) {
 });
 
 app.post('/testjobs', function(req, res) {
-    //let mynum = parseInt(req.body.num);
-    let sql=`SELECT * FROM t_job LIMIT 0,6`;
+    let mynum = parseInt(req.body.num);
+    mynum = (mynum-1)*10;
+    console.log(mynum);
+    let sql=`SELECT * FROM t_job LIMIT ${mynum},10`;
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
@@ -133,7 +135,7 @@ app.post('/getSuggestion',function(req,res){
     let category = req.body.category;
     let title = req.body.title;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sql = 'select * from t_job where category=? or jobType=? or title like ? limit 0,4';
     let sqlinfor = [category, jobtype,`%${title}%`];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) throw err;
@@ -224,45 +226,10 @@ app.get('/postdetial', function(req, res) {
         })
 });
 
-/*#9获得用户详细信息
- 输入：
- 输出：req.session.user除密码之外的所有信息
- */
 
-app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    if(req.session.user){
-        let user = {};
-        user.email = req.session.user.email;
-        user.company = req.session.user.company;
-        user.address = req.session.user.address;
-        user.trade = req.session.user.trade;
-        user.id = req.session.user.id;
-        user.status = req.session.user.status;
-        user.identity = req.session.user.identity;
-        res.send(user);
-    }else {
-        res.send('no');
-    }
-
-});
 
 /*
- * #9修改用户基本信息
- * 输入：用户id
- * 输出：1或0，表示用户信息是否更新成功
- */
-app.post('/changeUserInfo', urlencodedParser, function(req, res) {
-    let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
-    let data = [req.body.company, req.body.address, req.body.trade,req.session.user.id];
-    connection.query(sql, data, function(err, reply) {
-        if (err) {
-            console.log('error!' + err);
-            res.send('error');
-        }
-        res.send(''+reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
-    });
-});
+
 
 /*
  * #9修改用户密码
@@ -294,6 +261,8 @@ app.get('/loginout', urlencodedParser, function(req, res) {
     res.send('OK');
 });
 
+
+
 /*10 注册部分
 发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放
 */
@@ -310,7 +279,7 @@ app.post('/send', function(req, res, next) {
         res.send('wrong_ps')//两次密码不一致，返回wrong_pw
     }else{
     //邮件中显示的信息
-    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
     //sql语句插入语句
     let sql = 'insert into t_user (password,email,activeToken,status,identity) values (?,?,?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
@@ -333,6 +302,7 @@ app.post('/send', function(req, res, next) {
                 if (err) {
                     return console.log(err);
                 } else {
+                    console.log(true);
                     res.send(true);
                 }
             });
@@ -340,7 +310,16 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-
+app.get('/tjobcount',function (req,res) {
+    let sql = 'select count(*) from t_job';
+    connection.query(sql,function (err,result) {
+        if(err){
+            throw err;
+        }else {
+            res.send(result[0]);
+        }
+    })
+});
 //再次发送验证邮件
 app.post('/resend', function(req, res) {
     /*得到前台的数据*/
@@ -354,7 +333,7 @@ app.post('/resend', function(req, res) {
             res.send('null'); //用户不存在,则返回null
         } else {
             //邮件中显示的信息
-            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
             let options = {
                 from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: email,
@@ -485,16 +464,37 @@ app.post('/getSuggestion',function(req,res){
 输入：
 输出：req.session.user除密码之外的所有信息
  */
+app.get('/getUserInfo', function(req, res) {
+    if(req.session.user){
+        let user = {};
+        user.email = req.session.user.email;
+        user.company = req.session.user.company;
+        user.address = req.session.user.address;
+        user.trade = req.session.user.trade;
+        user.id = req.session.user.id;
+        user.status = req.session.user.status;
+        user.identity = req.session.user.identity;
+        res.send(user);
+    }else {
+        res.send('no');
+    }
 
-app.get('/getUserInfo', urlencodedParser, function(req, res) {
-    let user = {};
-    user.email = req.session.user.email;
-    user.company = req.session.user.company;
-    user.address = req.session.user.address;
-    user.trade = req.session.user.trade;
-    // console.log('当前用户的信息如下：' + user);
-    res.send(user);
 });
+
+app.get('/getuserinfofromsql',function (req,res) {
+    let sql = 'select * from t_user where id =' + req.session.user.id;
+    console.log(req.session)
+    console.log(sql)
+    connection.query(sql,function (err,data) {
+        if (err) {
+            console.log('error!' + err);
+            res.send('error');
+        }
+        console.log(data);
+        req.session.user=data[0]
+    })
+})
+
 
 /**
  * #9修改用户基本信息
@@ -509,8 +509,16 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
             console.log('error!' + err);
             res.send('error');
         }
-        res.send(reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
+        let sql = 'select * from t_user where id =' + req.session.user.id;
+        connection.query(sql,function (err,data) {
+            if (err) {
+                console.log('error!' + err);
+                res.send('error');
+            }
+            req.session.user=data[0]
+            res.send('ok')
+        })
+        console.log('数据库有' + reply.affectedRows + '条数据修改成功 ');
     });
 });
 
