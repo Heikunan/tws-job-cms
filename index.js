@@ -310,7 +310,7 @@ app.post('/send', function(req, res, next) {
         res.send('wrong_ps')//两次密码不一致，返回wrong_pw
     }else{
     //邮件中显示的信息
-    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
     //sql语句插入语句
     let sql = 'insert into t_user (password,email,activeToken,status,identity) values (?,?,?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
@@ -333,6 +333,7 @@ app.post('/send', function(req, res, next) {
                 if (err) {
                     return console.log(err);
                 } else {
+                    console.log(true);
                     res.send(true);
                 }
             });
@@ -354,7 +355,7 @@ app.post('/resend', function(req, res) {
             res.send('null'); //用户不存在,则返回null
         } else {
             //邮件中显示的信息
-            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
             let options = {
                 from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: email,
