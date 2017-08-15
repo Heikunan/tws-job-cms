@@ -58,7 +58,7 @@
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:black;"><i class="heart icon"></i> Like </div>
+							<div class="ui red button" style="background-color:black;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
 							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
 								1,048
 							</a>
@@ -200,10 +200,39 @@
 			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 			$("#gyf_jobInfo_Education").text(data.education);
 			$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
+			let jobId=data.id;
+			let num=Number(data.num)+1;
+			$.get('/isLike',{'id':jobId}).done(function(reply){
+				if(reply==='false'){
+					$('#gyf_like_button').on('click',function(){
+						$.post('/addOneUser',{'id':jobId}).done(function(good){
+							if(good!=='notlog'){
+								$('#gyf_like_number').text(num);
+								console.log('addOneUser'+good);
+								$.post('/addOneLike',{'id':jobId,'num':num}).done(function(result){
+							// console.log('addOneLike'+result);
+									}).fail(function(xhr,status){
+										console.log('500服务器出错');
+									});
+							}else{
+								alert("请先登录");
+							}
+						}).fail(function(xhr,status){
+								console.log('500服务器出错');
+						})
+					});
+				}else if(reply==='true'){
+					$('#gyf_like_button').on('click',function(){
+						alert('你已经收藏过了');
+					});	
+				}
+			}).fail(function(xhr,status){
+				console.log('500服务器出错');
+			})
 		}).fail(function (xhr, status) {
 			console.log('失败: ' + xhr.status + ', 原因: ' + status);
 		});
-
+		
 		let category = $('#gyf_job_category').text();
 		let type = $('#gyf_job_type').text();
 		let title = $('#gyf_title').text();
@@ -233,6 +262,7 @@
 			}).fail(function (xhr, status) {
 				console.log('失败: ' + xhr.status + ', 原因: ' + status);
 			})
+			
 	}
 	$('#gyf_jobInfo_post').on('click', function () {
 		$.get('/getUserInfo', function (ans) {
