@@ -9,6 +9,7 @@ let urlencodedParser = Bodyparser.urlencoded({ extended: true });
 let cp = new Crypto('you secret code');
 let app = express();
 app.use(express.static('public'));
+app.use('/node_modules',express.static('node_modules'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 
 app.use(cookieParser('recommand 128 bytes random string'));
