@@ -187,8 +187,7 @@ app.get('/myposts', function(req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select title,company from t_job where userid = ' + userid;
-        console.log(sql);
+        let sql = 'select id,title,description from t_job where userid = ' + userid;
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
