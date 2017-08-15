@@ -80,6 +80,7 @@ app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html");
 });
 
+
 app.post('/testjobs', function(req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum-1)*10;
