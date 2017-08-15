@@ -339,6 +339,17 @@ app.post('/resend', function(req, res) {
     });
 });
 
+//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
+app.get('/job_suggest',function(req,res) {
+    var sql = 'select * from t_job order by likes desc limit 0,5';
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+        }else{
+            res.send(result);
+        }
+    });
+});
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
@@ -686,6 +697,62 @@ app.put('/resettingLogin',function (req,res) {
     });
 });
 
+/************************************后台api*****************************************************************/
+
+
+///************得到待审核的用户************////
+app.get('/notcheck',function (req,res) {
+    let sql="select * from t_user where status='待审核'";
+    connection.query(sql,function (err,users) {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(users);
+        }
+    });
+})
+
+//****************使用户可以发布职位**********************//
+app.post('/tochecked',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   let sql="update t_user set status='已审核' where id=?"
+    for(let i=0;i<usersid.length;i++){
+        connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+           if(err){
+               console.log(err);
+           }
+        });
+    }
+    res.send(true);
+});
+///*****************删除用户****************///
+app.post('/deleteuser',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   console.log(usersid);
+   let sql="delete from t_user where id =?";
+   for(let i=0;i<usersid.length;i++){
+       connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+          if(err){
+              console.log(err);
+          }
+       });
+   }
+    res.send(true);
+});
+
+app.post('/deletejobs',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    console.log(jobsid);
+    let sql="delete from t_job where id =?";
+    for(let i=0;i<jobsid.length;i++){
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if(err){
+                console.log(err);
+            }
+        });
+    }
+    res.send(true);
+});
 
 
 
@@ -714,6 +781,19 @@ app.get('/init',function (req,res) {
     });
 });
 
+app.get('/cretateusers',function (req,res) {
+    console.log("aaaa");
+    let sql = "insert into t_user (password,email,status) values (?,?,?);";
+    for(let i=0;i<20;i++) {
+        console.log(i.toString());
+        let sqlinfor=[i.toString(), i.toString(),'待审核'];
+        console.log(sqlinfor);
+        connection.query(sql,sqlinfor , function (err, reply) {
+            if (err) console.log(err);
+        })
+    }
+    res.send(true);
+});
 /**************************************************/
 
 /*接收发布招聘的信息
@@ -722,17 +802,7 @@ app.get('/init',function (req,res) {
      失败：500服务器发生错误
 */
 
-//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
-app.get('/job_suggest',function(req,res) {
-    var sql = 'select * from t_job order by likes desc limit 0,5';
-    connection.query(sql, function (err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-        }else{
-            res.send(result);
-        }
-    });
-});
+
 
 let server = app.listen(8081, function() {
     let host = server.address().address;
