@@ -624,6 +624,45 @@ app.put('/resettingLogin',function (req,res) {
 });
 
 
+///************得到待审核的用户************////
+app.get('/notcheck',function (req,res) {
+    let sql="select * from t_user where status='待审核'";
+    connection.query(sql,function (err,users) {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(users);
+        }
+    });
+})
+
+//****************使用户可以发布职位**********************//
+app.post('/tochecked',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   let sql="update t_user set status='已审核' where id=?"
+    for(let i=0;i<usersid.length;i++){
+        connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+           if(err){
+               console.log(err);
+           }
+           res.send(true);
+        });
+    }
+});
+///*****************删除用户****************///
+app.post('/deleteuser',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   console.log(usersid);
+   let sql="delete from t_user where id =?";
+   for(let i=0;i<usersid.length;i++){
+       connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+          if(err){
+              console.log(err);
+          }
+       });
+   }
+    res.send(true);
+});
 
 
 ////////////////**进入首页时处理数据/////////////////////////////////
@@ -651,6 +690,19 @@ app.get('/init',function (req,res) {
     });
 });
 
+app.get('/cretateusers',function (req,res) {
+    console.log("aaaa");
+    let sql = "insert into t_user (password,email,status) values (?,?,?);";
+    for(let i=0;i<20;i++) {
+        console.log(i.toString());
+        let sqlinfor=[i.toString(), i.toString(),'待审核'];
+        console.log(sqlinfor);
+        connection.query(sql,sqlinfor , function (err, reply) {
+            if (err) console.log(err);
+        })
+    }
+    res.send(true);
+});
 /**************************************************/
 
 /*接收发布招聘的信息
