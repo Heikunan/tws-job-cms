@@ -26,7 +26,11 @@ a {
 .panel-body{
     padding: 0;
 }
-
+.mypageinit{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
 .job-contain:hover{
     background-color: #f8f9fb;
     transition: all linear .2s;
