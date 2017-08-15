@@ -219,10 +219,10 @@ $(document).ready(function () {
 $.get('/job_suggest',function (ans) {
     let str='';
     for (let i=0;i<ans.length;i++) {
-        str+=`<div class="job_suggest">
+        str+=`<div class="suggest_contain center-block">
                 <a href="#">
                     <img src="${ans[i].Logo}" alt="${ans[i].company}" class="img_suggest center-block">
-                    <p class="title_suggest">${ans[i].title}</p>
+                    <span>${ans[i].title}</span>
                 </a>
               </div>`
     }
