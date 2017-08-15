@@ -303,7 +303,7 @@ app.post('/send', function(req, res, next) {
     console.log(email);
     let password = req.body.password;
     let password_conf=req.body.password_conf;
-    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if(!myreg.test(email)){
         res.send('wrong_em')//邮箱格式错误，返回wrong_em
     } else if (password!==password_conf){
@@ -312,9 +312,9 @@ app.post('/send', function(req, res, next) {
     //邮件中显示的信息
     let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
     //sql语句插入语句
-    let sql = 'insert into t_user (password,email,activeToken) values (?,?,?);';
+    let sql = 'insert into t_user (password,email,activeToken,status,identity) values (?,?,?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
-    let sqlinfor = [cp.hex(password), cp.hex(email), cp.base(email)];
+    let sqlinfor = [password, email, cp.base(email),'待审核','职位发布者'];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) {
             //插入失败，返回false，就是用户已经存在
@@ -346,9 +346,8 @@ app.post('/resend', function(req, res) {
     /*得到前台的数据*/
     let email = req.body.email;
     //在数据库中查找
-    let email_search = cp.hex(email);
     let addSql = 'select * from t_user where email=?';
-    let addSqlParams = [email_search];
+    let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function (err, result) {
         if (err) throw err;
         if (result.length === 0) {
@@ -393,8 +392,8 @@ app.get('/confirm', function(req, res, next) {
 输入对象，返回字符串
 */
 app.post('/login', urlencodedParser, function(req, res) {
-    let email=cp.hex(req.body.email);
-    let password=cp.hex(req.body.password);
+    let email=req.body.email;
+    let password=req.body.password;
     let addSql = 'select * from t_user where email=?';
     let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function(err, result) {
@@ -471,9 +470,10 @@ app.post('/getSuggestion',function(req,res){
     let category = req.body.category;
     let title = req.body.title;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sql = 'select * from t_job limit 0,4 where category=? or jobType=? or title like ?';
     let sqlinfor = [category, jobtype,`%${title}%`];
     connection.query(sql, sqlinfor, function(err, result) {
+        console.log(result);
         if (err) throw err;
         res.send(result);
     });
@@ -557,7 +557,7 @@ app.get('/findPassword',urlencodedParser,function (req,res) {
  */
 app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let passwordCode=parseInt(Math.random()*1000000);
-    let email=cp.hex(req.query.email);
+    let email=req.query.email;
     let sql='SELECT isactive FROM t_user WHERE email = ?';
     let data=[email];
     console.log(req.query.email);
@@ -600,9 +600,9 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
  */
 
 app.put('/resettingLogin',function (req,res) {
-    let email=cp.hex(req.query.email);
+    let email=req.query.email;
     let passwordCode=req.body.passwordCode;
-    let password=cp.hex(req.body.password);
+    let password=req.body.password;
     let sql='SELECT * FROM t_user WHERE email = ?';
     let data=email;
     connection.query(sql,data,function (err, reply) {

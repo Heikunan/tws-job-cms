@@ -46,6 +46,8 @@ $(document).ready(function () {
     let zwzl = '';
     $('.dropdown-menu-zwlb').on('click',function () {
         zwlb = $(this).children().text().replace(/[\r\n]/g,"");
+        let last = $('#zwlb-title').html();
+        $(this).children().text(last);
         $('#zwlb-title').html(zwlb);
     });
     $('.dropdown-menu-zwzl').on('click',function () {
