@@ -46,6 +46,25 @@ function admin_role_check(obj,id){
 }
 
 /***删除这个用户**/
+function admin_role_del(obj,id){
+    layer.confirm('角色删除须谨慎，确认要删除吗？',function(index) {
+        $.ajax({
+            type: 'post',
+            url: '/deleteuser',
+            dataType: 'json',
+            data: {usersid:[id]},
+            success: function (data) {
+                $("#sum").html($('tbody tr').length-1);
+                $(obj).parents("tr").remove();
+                layer.msg('已删除!', {icon: 1, time: 1000});
+            },
+            error: function (data) {
+                console.log(data.msg);
+            },
+        });
+    });
+}
+
 
 function delchosen() {
     let usersid=[];
@@ -56,28 +75,31 @@ function delchosen() {
             usersid.push(a);
         }
     });
-
-    layer.confirm('角色删除须谨慎，确认要删除吗？',function(index) {
-        $.ajax({
-            type: 'post',
-            url: '/deleteuser',
-            dataType: 'json',
-            data: {usersid:usersid},
-            success: function (data) {
-                $("#sum").html($('tbody tr').length-usersid.length);
-                $('tbody tr').each(function (i) {
-                    let b=$(this).find(':checkbox').get(0).checked;
-                    if(b){
-                        $(this).remove();
-                    }
-                });
-                layer.msg('已删除!', {icon: 1, time: 1000});
-            },
-            error: function (data) {
-                console.log(data.msg);
-            },
+    if (usersid.length===0){
+        layer.alert("无角色可操作！");
+    }else {
+        layer.confirm('角色删除须谨慎，确认要删除吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/deleteuser',
+                dataType: 'json',
+                data: {usersid:usersid},
+                success: function (data) {
+                    $("#sum").html($('tbody tr').length-usersid.length);
+                    $('tbody tr').each(function (i) {
+                        let b=$(this).find(':checkbox').get(0).checked;
+                        if(b){
+                            $(this).remove();
+                        }
+                    });
+                    layer.msg('已删除!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
         });
-    });
+    }
 }
 /*一键审核选中的数据*/
 function checkchosen() {
