@@ -11,7 +11,7 @@ let app = express();
 app.use(express.static('public'));
 app.use(Bodyparser.urlencoded({ extended: true }));
 
-app.use(cookieParser());
+app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
     name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
