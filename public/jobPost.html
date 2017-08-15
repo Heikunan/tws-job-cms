@@ -10,7 +10,8 @@
 		<script type="text/javascript" src="./wangEditor/release/wangEditor.min.js"></script>
 		<script type="text/javascript" src="./cxSelect/js/jquery.cxselect.js"></script>
 		<script type="text/javascript" src="./datepicker/js/jquery-ui-datepicker.js"></script>
-		<script src="./MarkdownIME/dist/MarkdownIME.js"></script>
+		<!-- <script src="./MarkdownIME/dist/MarkdownIME.js"></script> -->
+		<script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
 		<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 		<link rel="stylesheet" type="text/css" href="./jobP.css">
@@ -33,8 +34,8 @@
 </head>
 
 <body>
-	<div class="container">
-		<nav class="navbar navbar-default">
+	 
+<nav class="navbar navbar-default">
 	<div class="container">
 
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -50,14 +51,15 @@
 
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right myheader-right">
 				<li><a href="./login.html">登陆</a></li>
 				<li><a href="./register.html">注册</a></li>
 			</ul>
-		</div><!-- /.navbar-collapse -->
+		</div> <!--/.navbar-collapse   -->
 	</div><!-- /.container-fluid -->
 </nav>
+<div class="container"> 
 		<div class="center-block gyf">
 			<form class="form-horizontal" id="gyf_myform">
 				<div class="form-group">
@@ -136,13 +138,14 @@
 					<label for="gyf_post_salary" class="col-sm-2 control-label">月<i class = 'space2'></i>薪</label>
 					<div class="col-sm-5">
 						<select class="form-control" id="gyf_post_salary" name="salary">
-							<option value="3000元以下">3000元以下</option>
-							<option value='3000-5000元'>3000-5000元</option>
-							<option value="5000-8000元">5000-8000元</option>
-							<option value="8000-12000元">8000-12000元</option>
-							<option value="12000-20000元">12000-20000元</option>
-							<option value="20000-50000元">20000-50000元</option>
-							<option value="50000元以上">50000元以上</option>
+							<option value="￥0~￥3K">￥0~￥3K</option>
+							<option value='￥3k~￥5k'>￥3k~￥5k</option>
+							<option value="￥5k~￥8k">￥5k~￥8k</option>
+							<option value="￥8k~￥12k">￥8k~￥12k</option>
+							<option value="￥12~￥16k">￥12~￥16k</option>
+							<option value="￥16~￥20k">￥16~￥20k</option>
+							<option value="￥20~￥50k">￥20~￥50k</option>
+							<option value="￥50~">￥50~</option>
 						</select>
 					</div>
 				</div>
@@ -181,8 +184,8 @@
 				</div>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label"></label>
-					<button type="button" class="btn btn-primary btn-success" id="gyf_editor_markdown">markdown编辑器</button>
-					<button type="button" class="btn btn-primary btn-success" id="gyf_editor_wangeditor">富文本编辑器</button>
+					<button type="button" class="btn gyf_choice_btn"  id="gyf_editor_markdown">markdown编辑器</button>
+					<button type="button" class="btn gyf_choice_btn" id="gyf_editor_wangeditor">富文本编辑器</button>
 				</div>
 				<div class="form-group" id="gyf_description_all">
 					<label for="gyf_post_description" class="col-sm-2 control-label">职位详情</label>
@@ -190,7 +193,7 @@
 						<!-- <div id="editor" spellcheck="false" contenteditable="true"><p><br></p></div>
  						 <pre id="logOut"></pre> -->
 					</div>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button">预览</button>
+					<button type="button" class="btn gyf_view_btn" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button" >预览</button>
 					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
 						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content" id="gyf_description_view">
@@ -204,7 +207,7 @@
 					<div class="col-sm-8" id='gyf_post_companyIntroduce'>
 
 					</div>
-					<button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
+					<button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
 					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_companyIntroduce_modal">
 						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content" id="gyf_companyIntroduce_view">
@@ -219,7 +222,7 @@
 					<div class="col-sm-8" id="gyf_post_applyApproach">
 						<!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
 					</div>
-					<button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
+					<button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
 					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
 						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content" id="gyf_applyApproach_view">
@@ -230,12 +233,12 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-5">
-						<button type="button" class="btn btn-default positive ui button" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
+						<button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
 					</div>
 				</div>
 			</form>
 		</div>
-	</div>
+	 </div> 
 </body>
 <script type="text/javascript">
 			var E = window.wangEditor;
@@ -405,4 +408,5 @@
 				})
 			});
 </script>
+<script src="./js/common.js"></script>
 </html>
