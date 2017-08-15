@@ -45,7 +45,7 @@ $.get('/tjobcount',function (ans) {
                let str = '';
                for(let i =1;i<ans.length;i++){
                    str += `<div class="panel job-contain panel-default">
-					<a href="">
+					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
 								<div class="job-primary">
