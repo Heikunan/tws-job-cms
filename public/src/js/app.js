@@ -133,4 +133,16 @@ $(document).ready(function () {
     });
 });
 
+$.get('/job_suggest',function (ans) {
+    let str='';
+    for (var i=0;i<ans.length;i++) {
+        str+=`<div class="job_suggest">
+                <a href="#">
+                    <img src="${ans[i].Logo}" alt="${ans[i].company}" class="img_suggest center-block">
+                    <p class="title_suggest">${ans[i].title}</p>
+                </a>
+              </div>`
+    }
+    $('#job_suggest').append(str);
+});
 
