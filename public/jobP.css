@@ -19,3 +19,21 @@ overflow-y:scroll;
 .w-e-text-container{
 	max-height: 200px;
 }
+#editor1{
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+#editor2{
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+#editor3{
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+#ui-datepicker-div{
+	display: none;
+}

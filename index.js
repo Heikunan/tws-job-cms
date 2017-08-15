@@ -13,8 +13,9 @@ app.use(Bodyparser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 app.use(session({
+    name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
-    cookie: { maxAge: 60 * 1000 }
+    cookie: { maxAge: 600 * 1000 }
 }));
 
 let connection = mysql.createConnection({
@@ -27,19 +28,15 @@ let connection = mysql.createConnection({
 connection.connect();
 
 
-/**跳转至首页*/
-app.get('/',function (req,res) {
-    res.redirect('/index.html');
-});
-
 /**连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
     host: 'smtp.126.com',
     port: 25,
     secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
-        user: 'thoughtworkersfive@126.com',
-        pass: 'dalaodaifei555'
-
+    auth:{
+        user: "thoughtworkersfive@126.com",
+        pass: "111aaa"
+    }
 });
 
 
@@ -82,23 +79,9 @@ app.get('/myinfo',function (req,res) {
     res.sendFile( __dirname + "/public/" + "userInfo.html");
 });
 
-
-/*
-显示所有职位
- */
-
-/*返回一共条数*/
-app.get('/gettotal', function(req, res) {
-    let sql='select * from t_job';
-    connection.query(sql, function(err, result) {
-        if (err) console( err);
-        res.send({length:result.length});
-    });
-});
-
 app.post('/testjobs', function(req, res) {
-    let mynum = parseInt(req.body.num);
-    let sql=`SELECT * FROM t_job LIMIT ${(mynum-1)*6},6`;
+    //let mynum = parseInt(req.body.num);
+    let sql=`SELECT * FROM t_job LIMIT 0,6`;
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
@@ -253,6 +236,9 @@ app.get('/getUserInfo', urlencodedParser, function(req, res) {
         user.company = req.session.user.company;
         user.address = req.session.user.address;
         user.trade = req.session.user.trade;
+        user.id = req.session.user.id;
+        user.status = req.session.user.status;
+        user.identity = req.session.user.identity;
         res.send(user);
     }else {
         res.send('no');
@@ -283,7 +269,7 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
  * 输入：用户id和当前密码
  * 输出：1或0，表示用户信息是否更新成功
  */
-app.get('changePsw',function (req,res) {
+app.get('/changePsw',function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
     console.log(req.query.newPsw);
     let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
@@ -305,7 +291,7 @@ app.get('changePsw',function (req,res) {
 app.get('/loginout', urlencodedParser, function(req, res) {
     req.session.user = null;
     console.log('已注销');
-    res.send(req.session.user);
+    res.send('OK');
 });
 
 /*10 注册部分
@@ -314,6 +300,7 @@ app.get('/loginout', urlencodedParser, function(req, res) {
 app.post('/send', function(req, res, next) {
     /*得到前台的数据*/
     let email = req.body.email;
+    console.log(email);
     let password = req.body.password;
     let password_conf=req.body.password_conf;
     var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -370,7 +357,7 @@ app.post('/resend', function(req, res) {
             //邮件中显示的信息
             let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
             let options = {
-                from: 'ysj<thoughtworkersfive@126.com>',
+                from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: email,
                 subject: '注册成功，请激活！',
                 text: '欢迎注册',
@@ -397,7 +384,7 @@ app.get('/confirm', function(req, res, next) {
     connection.query(sql, function(err, result) {
         if (err) throw err;
         else { //如果没有直接对数据库进行操作，不会返回error
-            res.send("注册成功！");
+            res.redirect('/');
         }
     });
 });
@@ -477,7 +464,6 @@ app.post('/postJob', function(req, res) {
             res.status(200).send('添加成功');
         }
         console.log('end');
-         connection.end();
     });
 });
 app.post('/getSuggestion',function(req,res){
@@ -577,13 +563,14 @@ app.post('/resettingPassword',urlencodedParser,function (req,res) {
     let email=cp.hex(req.query.email);
     let sql='SELECT isactive FROM t_user WHERE email = ?';
     let data=[email];
+    console.log(req.query.email);
     connection.query(sql,data,function (err,reply) {
         if(err) throw  err;
         if(reply.length===1&&reply[0].isactive===1){
             let content= "您的验证码是："+passwordCode+" 如非本人操作，请忽略此邮件";
             let options = {
                 from           : 'cr<thoughtworkersfive@126.com>',
-                to             :  email,
+                to             :  req.query.email,
                 subject        : '重置密码',
                 text           : '验证码',
                 html           :  content
@@ -619,6 +606,14 @@ app.put('/resettingLogin',function (req,res) {
     let email=cp.hex(req.query.email);
     let passwordCode=req.body.passwordCode;
     let password=cp.hex(req.body.password);
+    let sql='SELECT * FROM t_user WHERE email = ?';
+    let data=email;
+    connection.query(sql,data,function (err, reply) {
+        if(err) throw  err;
+        console.log(reply);
+        reply[0].email=req.query.email;
+        req.session.user=reply[0];
+    });
     let sqlCode='UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
     let rePasswordCode=parseInt(Math.random()*1000000);
     let dataCode=[password,rePasswordCode,email,passwordCode];
@@ -626,13 +621,6 @@ app.put('/resettingLogin',function (req,res) {
         if(err) throw  err;
         console.log(reply);
         res.send(reply);
-    });
-    let sql='SELECT * FROM t_user WHERE email = ?';
-    let data=email;
-    connection.query(sql,data,function (err, reply) {
-        if(err) throw  err;
-        console.log(reply);
-        req.session.user=reply[0];
     });
 });
 
