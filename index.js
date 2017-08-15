@@ -80,8 +80,10 @@ app.get('/myinfo',function (req,res) {
 });
 
 app.post('/testjobs', function(req, res) {
-    //let mynum = parseInt(req.body.num);
-    let sql=`SELECT * FROM t_job LIMIT 0,6`;
+    let mynum = parseInt(req.body.num);
+    mynum = (mynum-1)*10;
+    console.log(mynum);
+    let sql=`SELECT * FROM t_job LIMIT ${mynum},10`;
     connection.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result)
@@ -133,7 +135,7 @@ app.post('/getSuggestion',function(req,res){
     let category = req.body.category;
     let title = req.body.title;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sql = 'select * from t_job where category=? or jobType=? or title like ? limit 0,4';
     let sqlinfor = [category, jobtype,`%${title}%`];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) throw err;
@@ -259,6 +261,8 @@ app.get('/loginout', urlencodedParser, function(req, res) {
     res.send('OK');
 });
 
+
+
 /*10 注册部分
 发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放
 */
@@ -275,7 +279,7 @@ app.post('/send', function(req, res, next) {
         res.send('wrong_ps')//两次密码不一致，返回wrong_pw
     }else{
     //邮件中显示的信息
-    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+    let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
     //sql语句插入语句
     let sql = 'insert into t_user (password,email,activeToken,status,identity) values (?,?,?,?,?);';
     /*数据库中存hex数据,除了激活码是email 的base数据*/
@@ -298,6 +302,7 @@ app.post('/send', function(req, res, next) {
                 if (err) {
                     return console.log(err);
                 } else {
+                    console.log(true);
                     res.send(true);
                 }
             });
@@ -305,7 +310,16 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-
+app.get('/tjobcount',function (req,res) {
+    let sql = 'select count(*) from t_job';
+    connection.query(sql,function (err,result) {
+        if(err){
+            throw err;
+        }else {
+            res.send(result[0]);
+        }
+    })
+});
 //再次发送验证邮件
 app.post('/resend', function(req, res) {
     /*得到前台的数据*/
@@ -319,7 +333,7 @@ app.post('/resend', function(req, res) {
             res.send('null'); //用户不存在,则返回null
         } else {
             //邮件中显示的信息
-            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>确认注册!";
+            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
             let options = {
                 from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: email,

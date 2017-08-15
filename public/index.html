@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="src/css/font-awesome.min.css">
 	<link rel="stylesheet" href="src/css/index.css">
 </head>
-<body onload="init()">
+<body>
 <!--遮罩层-->
 <!--<div class="ui blurring segment" id="dimmerall" style="display: inline;position: fixed;z-index: 10000000;height: 100%;width: 100%;opacity: 0.8">
 <div class="ui active inverted dimmer" id="dimmerall">
@@ -124,74 +124,55 @@
 <div class="container-fluid mysection">
 	<div class="row">
 		<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 mysectionleft">
-				<ol class="breadcrumb">
-					<li>Home</li>
-					<li>Library</li>
-					<li class="active">Data</li>
-				</ol>
-				<div class="myjob-card">
-					<div class="row">
-						<div id="myjobcontain"></div>
-					</div>
+			<ol class="breadcrumb">
+				<li class="active">全部职位</li>
+			</ol>
+			<div id="myleft-job-all">
+				<div class="panel job-contain panel-default">
+					<a href="">
+						<div class="panel-body">
+							<div class="job-card">
+								<div class="job-primary">
+									<div class="info-primary">
+										<h3 class="name">技术总监 <span class="red">10K-15K</span></h3>
+										<p>武汉<em class="vline"></em>5-10年<em class="vline"></em>大专</p>
+									</div>
+									<div class="info-company">
+										<div class="company-text">
+											<h3 class="name">兆讯移动</h3>
+											<p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>20-99人</p>
+										</div>
+									</div>
+								</div>
+								<div class="job-tags">
+									<div class="job-author">
+										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20161013/2438e95364d793dd5f0edc6f6b4f08718c7dd922ad47494fc02c388e12c00eac_s.jpg"></p>
+									</div>
+									<span>系统架构</span><span>高级技术管理</span><span>APP开发</span>
+								</div>
+								<div class="job-time">
+									<div class="time">发布于06月06日</div>
+								</div>
+							</div>
+						</div>
+					</a>
 				</div>
 			</div>
-		<div class="col-lg-3 3 col-sm-3 col-xs-12 mysectionright">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">职位推荐</h3>
-				</div>
-				<div class="panel-body">
-					<div class="list-group">
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-						<h4 class="list-group-item-heading">List group item heading</h4>
-						<p class="list-group-item-text">123</p>
-					</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-						<a href="#" class="list-group-item">
-							<h4 class="list-group-item-heading">List group item heading</h4>
-							<p class="list-group-item-text">123</p>
-						</a>
-					</div>
+				<div class="panel-body ">
+					<div id="fenye" class="pagination mypageinit" ></div>
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-3 3 col-sm-3 col-xs-12 mysectionright">
+			<h3>热门职位推荐</h3>
+			<div class="job_suggest">
+				<a href="#">
+					<p>×××公司</p>
+				</a>
+			</div>
+		</div>
 	</div>
-</div>
 </section>
 <footer class="myfoot">
 	<div class="container">
@@ -218,6 +199,7 @@
 	</div>
 </footer>
 </body>
+<script src="src/js/jqPaginator.min.js"></script>
 <script src="src/js/app.js"></script>
 <script src="js/common.js"></script>
 </html>
