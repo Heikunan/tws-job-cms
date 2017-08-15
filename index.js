@@ -677,6 +677,21 @@ app.post('/deleteuser',urlencodedParser,function (req,res) {
     res.send(true);
 });
 
+app.post('/deletejobs',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    console.log(jobsid);
+    let sql="delete from t_job where id =?";
+    for(let i=0;i<jobsid.length;i++){
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if(err){
+                console.log(err);
+            }
+        });
+    }
+    res.send(true);
+});
+
+
 
 ////////////////**进入首页时处理数据/////////////////////////////////
 app.get('/init',function (req,res) {
