@@ -445,20 +445,27 @@ app.post('/getSuggestion',function(req,res){
 
 
 });
-app.get('/isLike',function(req,res){
+app.post('/isLike',function(req,res){
+    // console.log('into /islike');
+    // console.log(req.body);
     let jobId=req.body.id;
     if(req.session.user===undefined){
         res.send('first_notlog');
     }else{
          let userId=req.session.user.id;
-         let sql='select * from t_like where userId =? and jobId = ?';
-         let addsql=[userId,jobId]
+         let sql='select * from t_like where userId = ? and jobId = ?';
+        //  console.log('userId:'+userId);
+        //  console.log('jobId:'+jobId);
+         let addsql=[userId,jobId];
          connection.query(sql,addsql,function(err,result){
         if(err){
             throw err;
         }
+        console.log(result);
         if(result.length!==0){
+            console.log('true');
             res.send('true');
+           
         }else{
             res.send('false');
         }
@@ -468,6 +475,7 @@ app.get('/isLike',function(req,res){
    
 })
 app.post('/addOneLike',function(req,res){
+    console.log('into /addOneLike');
     if(req.session.user===undefined){
         res.send('notlog');
     }else{
@@ -486,6 +494,7 @@ app.post('/addOneLike',function(req,res){
     }
 })
 app.post('/addOneUser',function(req,res){
+    console.log('into /addOneUser');
     if(req.session.user===undefined){
         res.send('notlog');
     }else{
