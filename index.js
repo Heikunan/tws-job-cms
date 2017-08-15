@@ -232,23 +232,7 @@ app.get('/postdetial', function(req, res) {
 
 
 /*
- * #9修改用户密码
- * 输入：用户id和当前密码
- * 输出：1或0，表示用户信息是否更新成功
- */
-app.get('/changePsw',function (req,res) {
-    let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log(req.query.newPsw);
-    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
-    connection.query(sql, data, function(err, reply) {
-        if (err) {
-            console.log('error!' + err);
-            res.send('error');
-        }
-        res.send(''+reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
-    });
-});
+
 
 /*
  * #9注销登陆
@@ -507,7 +491,7 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
     connection.query(sql, data, function(err, reply) {
         if (err) {
             console.log('error!' + err);
-            res.send('error');
+            res.send('原密码错误');
         }
         let sql = 'select * from t_user where id =' + req.session.user.id;
         connection.query(sql,function (err,data) {
@@ -527,17 +511,18 @@ app.post('/changeUserInfo', urlencodedParser, function(req, res) {
  * 输入：用户id和当前密码
  * 输出：1或0，表示用户信息是否更新成功
  */
-app.get('changePsw',function (req,res) {
+app.post('/changePsw',urlencodedParser,function (req,res) {
     let sql = 'UPDATE t_user SET password = ? WHERE id = ? and password=? ';
-    console.log(req.query.newPsw);
-    let data = [req.query.newPsw, req.session.user.id,req.query.currentPsw];
+    console.log('newPsw: '+req.body.newPsw);
+    console.log('currentPsw: '+req.body.currentPsw);
+    let data = [req.body.newPsw, req.session.user.id,req.body.currentPsw];
     connection.query(sql, data, function(err, reply) {
         if (err) {
             console.log('error!' + err);
             res.send('error');
         }
-        res.send(reply.affectedRows);
-        console.log('数据库有' + reply.affectedRows + '条数据修改成功');
+        reply.affectedRows!==0?res.send('ok'):res.send('error');
+        console.log('密码修改成功'+reply.affectedRows+'条');
     });
 });
 
