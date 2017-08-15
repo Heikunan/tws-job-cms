@@ -381,5 +381,15 @@ a {
     background-color: #222;
     color: #fff;
 
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
+
+.ui:hover{
+    color:#00B83F;
+}
+.ui{
+    padding-bottom: 20px;
+
+}
