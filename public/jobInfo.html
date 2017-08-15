@@ -245,33 +245,36 @@
 				let type=$('#gyf_job_type').text();
 				let title=$('#gyf_title').text();
 			}
-				/*还可以根据tags*/
-				// let datas={};
-				// datas.category=category;
-				// datas.type=type;
-				// datas.title=title;
+				function getSuggestion(){
+					
+				}
+				let datas={};
+				datas.category=category;
+				datas.type=type;
+				datas.title=title;
 				/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
 				/*返回给我的是[{},{},{},{}]*/
 				/*缺陷：list里的tag 还没做*/
-			// 	$.post('/getSuggestion',datas).done(
-			// 		function(data){
-			// 			let suggestion='';
-			// 			for(let object of data){
-			// 				suggestion=suggestion+
-			// 				`<div class="list-group">
-			// 					<a href="#" class="list-group-item success">
-			// 						<h3 class="list-group-item-heading"> ${object.title} </h3>
-			// 						<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
-			// 						<span class="label label-success gyf_label">Default</span>
-			// 						<span class="label label-success gyf_label">Primary</span>
-			// 					</a>
-			// 				</div>`;
-			// 			}
-			// 			$('#gyf_list').append(suggestion);
-			// 		}).fail(function(xhr,status){
-			// 			console.log('失败: ' + xhr.status + ', 原因: ' + status);
-			// 		})
-			// }
+				$.post('/getSuggestion',datas).done(
+					function(data){
+						let suggestion='';
+						for(let object of data){
+							suggestion=suggestion+
+							`<div class="list-group">
+								<a href="/getJobDetail/id=:${object.id}" class="list-group-item success">
+									<h3 class="list-group-item-heading"> ${object.title} </h3>
+									<p class="list-group-item-text"><strong> ${object.company+object.city+object.country}</strong></p>
+									<span class="label label-success gyf_label">Default</span>
+									<span class="label label-success gyf_label">Primary</span>
+								</a>
+							</div>`;
+						}
+						$('#gyf_list').append(suggestion);
+					}).fail(function(xhr,status){
+						console.log('失败: ' + xhr.status + ', 原因: ' + status);
+					})
+				
+			
 		</script>
 		<script src="./js/common.js"></script>
 		</html> 
