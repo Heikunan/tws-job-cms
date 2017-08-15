@@ -304,12 +304,31 @@ a {
     color:#00B83F;
 }
 .job_suggest{
-    width: 300px;
-    height: 150px;
-    margin-top: 5px;
-    margin-right: 10px;
-    margin-left: 10px;
-    border: 2px dashed #e3e3e3;
+    width: 320px;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: 20px;
     text-align: center;
+}
+
+.img_suggest{
+    margin-top: 20px;
+    width: 280px;
+    height: 150px;
+}
+
+.title_suggest .job_suggest{
+    text-align: center;
+<<<<<<< HEAD
     background: #fff;
+=======
+    color: #333333;
+}
+
+
+.job_suggest p:hover{
+    color: #209b60;
+    text-decoration: underline;
+
+>>>>>>> ef812f464654341cfef4b619e16bea3f67a5f227
 }

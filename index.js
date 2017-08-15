@@ -649,6 +649,18 @@ app.get('/init',function (req,res) {
      失败：500服务器发生错误
 */
 
+//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
+app.get('/job_suggest',function(req,res) {
+    var sql = 'select * from t_job order by likes desc limit 0,5';
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+        }else{
+            res.send(result);
+        }
+    });
+});
+
 let server = app.listen(8081, function() {
     let host = server.address().address;
     let port = server.address().port;
