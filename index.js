@@ -294,6 +294,8 @@ app.get('/loginout', urlencodedParser, function(req, res) {
     res.send('OK');
 });
 
+
+
 /*10 注册部分
 发送邮件,将用户信息绑定在里面发送过去，并不完善,只有id,email,password,激活码的存放
 */
@@ -341,7 +343,16 @@ app.post('/send', function(req, res, next) {
     });
     }
 });
-
+app.get('/tjobcount',function (req,res) {
+    let sql = 'select count(*) from t_job';
+    connection.query(sql,function (err,result) {
+        if(err){
+            throw err;
+        }else {
+            res.send(result[0]);
+        }
+    })
+});
 //再次发送验证邮件
 app.post('/resend', function(req, res) {
     /*得到前台的数据*/
