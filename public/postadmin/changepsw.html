@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>changePsw</title>
+    <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
+    <script src="../src/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
+</head>
+<body>
+<!--<div class="tab-content">-->
+    <!--<div role="tabpanel" class="tab-pane fade" id="changepassword">-->
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="currentPsw" class="col-sm-2 col-xs-2 control-label">原密码</label>
+                <div class="col-sm-5 col-xs-5">
+                    <input type="password" class="form-control" id="currentPsw">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="newPsw" class="col-sm-2 col-xs-2 control-label">新密码</label>
+                <div class="col-sm-5 col-xs-5">
+                    <input type="password" class="form-control" id="newPsw">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmNewPsw" class="col-sm-2 col-xs-2 control-label">确认密码</label>
+                <div class="col-sm-5 col-xs-5">
+                    <input type="password" class="form-control" id="confirmNewPsw">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-5 col-xs-1">
+                    <button type="button" class="btn btn-default" id="pswbutton">确定修改</button>
+                </div>
+            </div>
+        </form>
+    <!--</div>-->
+<!--</div>-->
+<script>
+    let currentPsw = $('#currentPsw').val();
+    let newPsw = $('#newPsw').val();
+    let confimeNewPsw = $('#confirmNewPsw').val();
+    if (newPsw !== confimeNewPsw) {
+        alert('两次密码不一致！')
+    }
+    //监听修改密码的按钮
+    $('#pswbutton').click(function () {
+        $.post('/changePsw', {
+            data: {
+                newPsw: newPsw,
+                currentPsw: currentPsw
+            }
+        }).done(function (data) {
+            alert('修改成功：' + data)
+        }).fail(function (err) {
+            alert('错误：' + err);
+        });
+    });
+
+</script>
+</body>
+</html>
