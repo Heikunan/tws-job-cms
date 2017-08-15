@@ -1,4 +1,4 @@
-
+/*初始化得到未审核的数据*/
 $(document).ready(function () {
    $.get('/notcheck',function (users) {
        let result='';
@@ -25,10 +25,7 @@ $(document).ready(function () {
    });
 })
 
-
-
-
-
+/*审核单个用户*/
 function admin_role_check(obj,id){
     layer.confirm('确认完成此为用户的审核吗？',function(index) {
         $.ajax({
@@ -48,30 +45,7 @@ function admin_role_check(obj,id){
     });
 }
 
-function admin_role_edit(title,url,id,w,h){
-    layer_show(title,url,w,h);
-}
 /***删除这个用户**/
-function admin_role_del(obj,id){
-
-    layer.confirm('角色删除须谨慎，确认要删除吗？',function(index) {
-            $.ajax({
-                type: 'post',
-                url: '/deleteuser',
-                dataType: 'json',
-                data: {usersid: [id]},
-                success: function (data) {
-                    $("#sum").html($('tbody tr').length-1);
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!', {icon: 1, time: 1000});
-                },
-                error: function (data) {
-                    console.log(data.msg);
-                },
-            });
-    });
-}
-
 
 function delchosen() {
     let usersid=[];
@@ -98,6 +72,39 @@ function delchosen() {
                     }
                 });
                 layer.msg('已删除!', {icon: 1, time: 1000});
+            },
+            error: function (data) {
+                console.log(data.msg);
+            },
+        });
+    });
+}
+/*一键审核选中的数据*/
+function checkchosen() {
+    let usersid=[];
+    $('tbody tr').each(function (i) {
+        let b=$(this).find(':checkbox').get(0).checked;
+        let a=$($(this).find('td').get(1)).text();
+        if(b){
+            usersid.push(a);
+        }
+    });
+
+    layer.confirm('确认完成此为用户的审核吗？',function(index) {
+        $.ajax({
+            type: 'post',
+            url: '/tochecked',
+            dataType: 'json',
+            data: {usersid:usersid},
+            success: function (data) {
+                $("#sum").html($('tbody tr').length-usersid.length);
+                $('tbody tr').each(function (i) {
+                    let b=$(this).find(':checkbox').get(0).checked;
+                    if(b){
+                        $(this).remove();
+                    }
+                });
+                layer.msg('审核成功!', {icon: 1, time: 1000});
             },
             error: function (data) {
                 console.log(data.msg);

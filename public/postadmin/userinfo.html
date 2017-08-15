@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userinfo</title>
+    <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
+    <script src="../src/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
+</head>
+<body">
+<form class=" form-horizontal
+" id="myform">
+    <div class="form-group">
+        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputCompany" class="col-sm-2 control-label">Company</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputCompany" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputAddress" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputTrade" class="col-sm-2 control-label">Trade</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputTrade" readonly>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-default" id="idb">编辑</button>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    //    getUserInfo();
+    //
+    //    //获得用户详细信息,填入表单
+    //    function getUserInfo() {
+    $.get('/getUserInfo', function (data) {
+        $('#inputEmail').val(data.email)
+        $('#inputCompany').val(data.company)
+        $('#inputAddress').val(data.address)
+        $('#inputTrade').val(data.trade)
+    });
+    //监听我的资料中的编辑按钮
+    $('#myform button').click(function () {
+        if ($('#idb').html() === '编辑') {
+            $('#myform .form-control').attr('readonly', false);
+            $('#myform button').html('完成')
+        } else {
+            //调用修改信息的函数
+            changeInfo($('#inputCompany').val(), $('#inputAddress').val(), $('#inputTrade').val());
+            $('#myform button').html('编辑')
+            $('#myform .form-control').attr('readonly', true);
+        }
+
+    });
+    //    }
+
+    //修改信息
+    function changeInfo(com, add, tra) {
+        $.ajax({
+            url: '/changeUserInfo',
+            method: 'post',
+            data: {
+                company: com,
+                address: add,
+                trade: tra
+            }
+        }).done(function (date) {
+            if (date === 'error') {
+                alert('修改失敗')
+            } else {
+                alert('修改成功！ ' + JSON.stringify(date));
+                location.reload(true);
+            }
+        }).fail(function (err) {
+            alert('失敗：' + err.status)
+
+        });
+
+    }
+</script>
+</body>
+</html>

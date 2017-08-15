@@ -1,14 +1,135 @@
 body {
     font-family: 'Microsoft YaHei',Tahoma;
+    background: #f2f2f5;
+}
+section{
+    margin: 10px 0;
+}
+a {
+    text-decoration: none!important;
 }
 #background-img{
     width: 100%;
+}
+.breadcrumb{
+    background-color: #ffffff;
+    border-radius: 0;
+    padding: 15px;
+}
+.panel{
+    border: 0;
+    border-radius: 0;
+    padding: 22px 40px;
+    border-bottom: 1px #f2f2f5 solid;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+.panel-body{
+    padding: 0;
+}
+.mypageinit{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+.job-contain:hover{
+    background-color: #f8f9fb;
+    transition: all linear .2s;
+}
+.job-primary{
+    color: #4a4160;
+    zoom: 1;
+    margin: 0;
+    padding: 0;
+}
+.job-primary .info-primary {
+    float: left;
+    color: #4a4160;
+}
+.vline{
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    vertical-align: middle;
+    background: #e0e0e0;
+    margin: 0 10px;
+}
+.info-company {
+    float: right;
+}
+.info-company .company-text {
+    display: inline-block;
+    vertical-align: top;
+}
+.info-company .company-text .name{
+    font-size: 20px;
+    font-weight: 400;
+}
+.info-company .company-text p{
+    margin-top: 17px;
+}
+.job-primary .info-primary .name{
+    font-size: 20px;
+    font-weight: 400;
+}
+.job-primary .info-primary p{
+    margin-top: 17px;
+}
+.job-tags {
+    margin-bottom: 10px;
+    height: 40px;
+    zoom: 1;
+    clear: both;
+}
+.job-tags .job-author p {
+    padding-top: 0;
+    margin-top: 0;
+    color: #4a4160;
+}
+.job-author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    vertical-align: middle;
+    margin-left: 35px;
+}
+.job-tags span {
+    display: inline-block;
+    border: 1px #d1d4da solid;
+    padding: 0 12px;
+    line-height: 20px;
+    border-radius: 15px;
+    margin-right: 15px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #9fa3af;
+}
+.job-tags .job-author {
+    float: right;
+    text-align: right;
+}
+.job-time {
+    padding: 4px 0;
+    margin-bottom: -2px;
+}
+.job-time .time {
+    font-size: 12px;
+    color: #d1d4da;
+    border: 0;
+    padding: 0;
 }
 .navbar{
     padding: 10px 0;
     margin: 0;
 }
-
+.changeyemian {
+    border: 0;
+    border-radius: 0;
+    padding: 22px 40px;
+    border-bottom: 1px #f2f2f5 solid;
+    overflow: hidden;
+    margin-bottom: 0;
+}
 .myheader-right a{
     font-size: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -148,58 +269,71 @@ body {
     border-radius: 10px;
     overflow: hidden;
 }
-.mybox .panel-body{
-    padding: 0;
-}
-.img-box{
-    height: 96px;
-    overflow: hidden;
-}
-.img-box img{
-    width: 100%;
-}
-.job-box{
-    padding: 22px 24px;
-}
-.job-title span{
-    font-size: 16px;
-    line-height: 28px;
-}
-.job-description{
-    height: 70px;
-    overflow: hidden;
-    margin-top: 8px;
-}
-.job-description span{
-    font-size: 12px;
-    line-height: 24px;
-    color: #93999f;
-}
-.job-company{
-    margin: 15px 0;
-    font-size: 15px;
-}
-.job-bottom{
-    position: absolute;
-    bottom: 25px;
-}
-.job-city{
-    font-size: 15px;
-}
-.job-bottom-right{
-    margin-left: 40px;
-}
-.job-time{
-    font-size: 15px;
-}
 .myfoot{
-
-    background-color: #222;
+    background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
-
-
 }
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
+}
+#my-footdiv{
+    background-color: #222;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.ui:hover{
+    color:#00B83F;
+}
+.ui{
+    margin-bottom: 35px;
+}
+.myspan{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    padding-top: 40px;
+}
+.myie{
+    padding-left: 20px;
+}
+.uii{
+    padding-bottom: 30px;
+}
+.uii:hover{
+    color:#00B83F;
+}
+.job_suggest{
+    width: 320px;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.img_suggest{
+    margin-top: 20px;
+    width: 280px;
+    height: 150px;
+}
+.title_suggest{
+    height: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.title_suggest span{
+    font-size: 25px;
+    line-height: 50px;
+}
+.title_suggest .job_suggest{
+    text-align: center;
+    background: #fff;
+    color: #333333;
+}
+
+
+.job_suggest p:hover{
+    color: #209b60;
+    text-decoration: underline;
 }
