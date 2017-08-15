@@ -257,10 +257,33 @@ a {
     overflow: hidden;
 }
 .myfoot{
-    background-color: #222;
+
+    background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
+
+
 }
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
+}
+#my-footdiv{
+    background-color: #222;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.ui:hover{
+    color:#00B83F;
+}
+.ui{
+    padding-bottom: 20px;
+}
+.myspan{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    padding-top: 40px;
 }
