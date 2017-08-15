@@ -470,9 +470,10 @@ app.post('/getSuggestion',function(req,res){
     let category = req.body.category;
     let title = req.body.title;
     console.log(jobtype, category);
-    let sql = 'select * from t_job where category=? or jobType=? or title like ?';
+    let sql = 'select * from t_job limit 0,4 where category=? or jobType=? or title like ?';
     let sqlinfor = [category, jobtype,`%${title}%`];
     connection.query(sql, sqlinfor, function(err, result) {
+        console.log(result);
         if (err) throw err;
         res.send(result);
     });
