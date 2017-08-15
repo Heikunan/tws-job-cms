@@ -91,7 +91,7 @@ $.get('/getcategory',function (ans) {
 $.get('/getjobtype',function (ans) {
     let str = '';
     for(let i =0;i<ans.length;i++){
-        str += `<div class="dropdown-menu-contain dropdown-menu-zwlb">
+        str += `<div class="dropdown-menu-contain dropdown-menu-zwzl">
 						<div class="dropdown-menu-text">
 							${ans[i].content}
 						</div>

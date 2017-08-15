@@ -269,11 +269,8 @@ a {
     overflow: hidden;
 }
 .myfoot{
-
     background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
-
-
 }
 .myconta{
     margin-top: 50px;
@@ -285,8 +282,6 @@ a {
     padding-top: 20px;
     padding-bottom: 20px;
 }
-
-
 .ui:hover{
     color:#00B83F;
 }
@@ -301,7 +296,6 @@ a {
 }
 .myie{
     padding-left: 20px;
-
 }
 .uii{
     padding-bottom: 30px;
@@ -309,7 +303,6 @@ a {
 .uii:hover{
     color:#00B83F;
 }
-
 .job_suggest{
     width: 300px;
     height: 150px;
@@ -319,5 +312,4 @@ a {
     border: 2px dashed #e3e3e3;
     text-align: center;
     background: #fff;
-
 }
