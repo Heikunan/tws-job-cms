@@ -39,31 +39,33 @@ $.get('/tjobcount',function (ans) {
         onPageChange: function (num, type) {
             $.post('/testjobs',{num:num},function (ans) {
                let str = '';
-               for(let i =1;i<ans.length;i++){
+               for(let i =0;i<ans.length;i++){
+                   let benefits = ans[i].benefits.split(',');
+                   let tags = ans[i].tags.split(',');
                    str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
 								<div class="job-primary">
 									<div class="info-primary">
-										<h3 class="name">技术总监 <span class="red">${ans[i].salary}</span></h3>
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
 										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
 									</div>
 									<div class="info-company">
 										<div class="company-text">
-											<h3 class="name">兆讯移动</h3>
-											<p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>20-99人</p>
+											<h3 class="name">${ans[i].company}</h3>
+											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
 								<div class="job-tags">
 									<div class="job-author">
-										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20161013/2438e95364d793dd5f0edc6f6b4f08718c7dd922ad47494fc02c388e12c00eac_s.jpg"></p>
+										<p>${benefits[0]}<em class="vline"></em>${benefits[1]}<img src="${ans[i].Logo}"></p>
 									</div>
-									<span>系统架构</span><span>高级技术管理</span><span>APP开发</span>
+									<span>${tags[0]}</span><span>${tags[1]}</span>
 								</div>
 								<div class="job-time">
-									<div class="time">发布于&nbsp;${ans[i].expiryDate}</div>
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
 								</div>
 							</div>
 						</div>
@@ -155,30 +157,32 @@ $(document).ready(function () {
                    let str = '';
                    if(num !== mynum){
                        for(let i = currentnum ;i<=(currentnum+9);i++){
+                           let benefits = ans[i].benefits.split(',');
+                           let tags = ans[i].tags.split(',');
                            str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
 								<div class="job-primary">
 									<div class="info-primary">
-										<h3 class="name">技术总监 <span class="red">${ans[i].salary}</span></h3>
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
 										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
 									</div>
 									<div class="info-company">
 										<div class="company-text">
-											<h3 class="name">兆讯移动</h3>
-											<p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>20-99人</p>
+											<h3 class="name">${ans[i].company}</h3>
+											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
 								<div class="job-tags">
 									<div class="job-author">
-										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20161013/2438e95364d793dd5f0edc6f6b4f08718c7dd922ad47494fc02c388e12c00eac_s.jpg"></p>
+										<p>${benefits[0]}<em class="vline"></em>${benefits[1]}<img src="${ans[i].Logo}"></p>
 									</div>
-									<span>系统架构</span><span>高级技术管理</span><span>APP开发</span>
+									<span>${tags[0]}</span><span>${tags[1]}</span>
 								</div>
 								<div class="job-time">
-									<div class="time">发布于&nbsp;${ans[i].expiryDate}</div>
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
 								</div>
 							</div>
 						</div>
@@ -188,30 +192,32 @@ $(document).ready(function () {
                        $('#myleft-job-all').empty().append(str);
                    }else if(num === mynum){
                        for(let i = currentnum;i<ans.length;i++){
+                           let benefits = ans[i].benefits.split(',');
+                           let tags = ans[i].tags.split(',');
                            str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
 								<div class="job-primary">
 									<div class="info-primary">
-										<h3 class="name">技术总监 <span class="red">${ans[i].salary}</span></h3>
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
 										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
 									</div>
 									<div class="info-company">
 										<div class="company-text">
-											<h3 class="name">兆讯移动</h3>
-											<p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>20-99人</p>
+											<h3 class="name">${ans[i].company}</h3>
+											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
 								<div class="job-tags">
 									<div class="job-author">
-										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20161013/2438e95364d793dd5f0edc6f6b4f08718c7dd922ad47494fc02c388e12c00eac_s.jpg"></p>
+										<p>${benefits[0]}<em class="vline"></em>${benefits[1]}<img src="${ans[i].Logo}"></p>
 									</div>
-									<span>系统架构</span><span>高级技术管理</span><span>APP开发</span>
+									<span>${tags[0]}</span><span>${tags[1]}</span>
 								</div>
 								<div class="job-time">
-									<div class="time">发布于&nbsp;${ans[i].expiryDate}</div>
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
 								</div>
 							</div>
 						</div>

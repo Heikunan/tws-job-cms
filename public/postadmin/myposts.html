@@ -17,7 +17,7 @@
     <thead>
     <tr>
         <th>title</th>
-        <th>description</th>
+        <th>category</th>
     </tr>
     </thead>
     <tbody id="table-body">
@@ -26,16 +26,22 @@
 <script>
     let str = '';
     $.get('/myposts', function (data) {
-        console.log('data: ' + JSON.stringify(data))
+        console.log('data: ' + JSON.stringify(data));
         if (data==='no') {
-            alert('登陆过期，重新登录！')
+            alert('登陆过期，重新登录！');
             top.location='../index.html'
         }
         else if (data.length === 0) {
-            $(`table`).html('暂时没有发表');
+            $(`table`).html('暂时没有发布').css({
+                'position':'absolute',
+                'left':'50%',
+                "font-size":"20px",
+                "padding":"50%",
+                'marge':'50%'
+            });
         } else {
             for (let i = 0; i < data.length; i++) {
-                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].description}</td></tr>`;
+                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].category}</td></tr>`;
                 if (i === data.length - 1) {
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {

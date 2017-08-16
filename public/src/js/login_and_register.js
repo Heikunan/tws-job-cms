@@ -7,7 +7,7 @@ $(function () {
             email:email,password:password
         },function (data) {
             if (data==='ok') {
-                window.location.assign('/');
+                window.location.href='/'
                 //获取session中用户信息，在主页更新用户状态
             }else if(data==='wrong'){
                 $('.flash_container').empty();
