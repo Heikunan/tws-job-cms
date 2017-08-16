@@ -501,15 +501,6 @@ app.get('/getUserInfo', function(req, res) {
         let id = req.session.user.id;
         let sql = `SELECT * FROM t_user WHERE id = ${id}`;
         connection.query(sql,function (err,data) {
-            // let user = {};
-            // user.email = req.session.user.email;
-            // user.company = req.session.user.company;
-            // user.address = req.session.user.address;
-            // user.trade = req.session.user.trade;
-            // user.id = req.session.user.id;
-            // user.status = req.session.user.status;
-            // user.identity = req.session.user.identity;
-            // res.send(user);
             res.send(data[0]);
         });
     } else {
@@ -725,7 +716,7 @@ app.post('/deletejobs', urlencodedParser, function (req, res) {
             }
         });
         if (i === jobsid.length - 1) {
-            req.send('ok');
+            res.send('ok');
         }
     }
 
