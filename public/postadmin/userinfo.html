@@ -6,43 +6,47 @@
     <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
     <script src="../src/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
+    <style>
+        .form-horizontal .form-group{
+            margin: 30px 0;
+        }
+    </style>
 </head>
 <body>
 <form class=" form-horizontal" id="myform">
     <div class="form-group">
         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <input type="email" class="form-control" id="inputEmail" disabled>
         </div>
     </div>
     <div class="form-group">
         <label for="inputCompany" class="col-sm-2 control-label">Company</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <input type="text" class="form-control" id="inputCompany" readonly>
         </div>
     </div>
     <div class="form-group">
         <label for="inputAddress" class="col-sm-2 control-label">Address</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <input type="text" class="form-control" id="inputAddress" readonly>
         </div>
     </div>
     <div class="form-group">
         <label for="inputTrade" class="col-sm-2 control-label">Trade</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <input type="text" class="form-control" id="inputTrade" readonly>
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-offset-2 col-sm-8">
             <button type="button" class="btn btn-default" id="idb">编辑</button>
         </div>
     </div>
 </form>
 
 <script>
-
     //    getUserInfo();
     //
     //    //获得用户详细信息,填入表单
@@ -68,11 +72,7 @@
             $('#myform button').html('编辑')
             $('#myform .form-control').attr('readonly', true);
         }
-
     });
-    //    }
-
-    //修改信息
     function changeInfo(com, add, tra) {
         $.ajax({
             url: '/changeUserInfo',
@@ -91,9 +91,7 @@
             }
         }).fail(function (err) {
             alert('失敗：' + err.status)
-
         });
-
     }
 </script>
 </body>
