@@ -46,7 +46,7 @@ $.get('/tjobcount',function (ans) {
 							<div class="job-card">
 								<div class="job-primary">
 									<div class="info-primary">
-										<h3 class="name">技术总监 <span class="red">${ans[i].salary}</span></h3>
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
 										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
 									</div>
 									<div class="info-company">
