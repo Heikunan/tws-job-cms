@@ -367,7 +367,6 @@ a {
 .suggest_contain{
     width:280px;
     text-align: center;
-    background-color: rgba(240, 255, 255, 0.5);
     margin-bottom: 80px;
 }
 
@@ -383,41 +382,34 @@ a {
     float: left;
 }
 
-.job_suggest p:hover {
-    color: #209b60;
-    text-decoration: underline;
-}
 .myfoot{
-
     background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
-
-
 }
+
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
 #my-footdiv{
     background-color: #222;
     color: #fff;
-
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-
 .ui:hover{
     color:#00B83F;
 }
+
 .ui{
     padding-bottom: 20px;
-
 }
+
 .myspan{
     padding-left: 50px;
     padding-right: 50px;
     padding-bottom: 30px;
     padding-top: 40px;
-
 }
