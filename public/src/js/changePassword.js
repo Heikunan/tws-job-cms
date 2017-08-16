@@ -8,13 +8,14 @@ function resetPassword() {
         success: function(res){
             if(res!=='fail'){
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class=alert>验证码已发送至您的邮箱，请注意查收</div>');
+                $('.flash_container').append('<div class="alert">验证码已发送至您的邮箱，请注意查收</div>');
+                hide();
                 $('#resetPassword_frame').hide();
                 $('#login_frame').show();
             }else {
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class=alert>该邮箱尚未被激活，请先注册激活！</div>');
-
+                $('.flash_container').append('<div class="alert">该邮箱尚未被激活，请先注册激活！</div>');
+                hide();
             }
         },
         error: function (err) {
@@ -31,6 +32,7 @@ function login() {
     if(password!==passwordConfirmation){
         $('.flash_container').empty();
         $('.flash_container').append('<div class=alert>密码输入不一致,请重新输入！</div>');
+        hide();
     }else {
         $.ajax({
             url: `/resettingLogin?email=${email}`,
@@ -53,3 +55,6 @@ function login() {
     }
 }
 
+function hide() {
+    $('.alert').delay(1000).hide(0);
+}
