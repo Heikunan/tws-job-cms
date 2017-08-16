@@ -51,19 +51,19 @@ $.get('/tjobcount',function (ans) {
 									</div>
 									<div class="info-company">
 										<div class="company-text">
-											<h3 class="name">兆讯移动</h3>
-											<p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>20-99人</p>
+											<h3 class="name">${ans[i].company}</h3>
+											<p>${ans[i].companyType}<em class="vline"></em>不需要融资<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
 								<div class="job-tags">
 									<div class="job-author">
-										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20161013/2438e95364d793dd5f0edc6f6b4f08718c7dd922ad47494fc02c388e12c00eac_s.jpg"></p>
+										<p>潘荣荣<em class="vline"></em>行政人力主管<img src="${ans[i].logo}"></p>
 									</div>
 									<span>系统架构</span><span>高级技术管理</span><span>APP开发</span>
 								</div>
 								<div class="job-time">
-									<div class="time">发布于&nbsp;${ans[i].expiryDate}</div>
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
 								</div>
 							</div>
 						</div>
