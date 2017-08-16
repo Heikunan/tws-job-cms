@@ -1,4 +1,6 @@
 let express = require('express');
+let multer = require('multer');
+let fs = require('fs');
 let Bodyparser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let session = require('express-session');
@@ -25,7 +27,32 @@ let connection = mysql.createConnection({
     database: 'twsjob'
 });
 connection.connect();
+/*上传图片*/
+let createFolder = function(folder) {
+    try {
+        fs.accessSync(folder);
+    } catch (e) {
+        fs.mkdirSync(folder);
+    }
+};
 
+let uploadFolder = './upload/';
+
+createFolder(uploadFolder);
+
+// 通过 filename 属性定制
+let storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, uploadFolder); // 保存的路径，备注：需要自己创建
+    },
+    filename: function(req, file, cb) {
+        // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+        cb(null, cp.hex(file.fieldname + '-' + Date.now()) + file.originalname);
+    }
+});
+
+// 通过 storage 选项来对 上传行为 进行定制化
+let upload = multer({ storage: storage });
 
 /**连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
