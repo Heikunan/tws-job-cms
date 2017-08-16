@@ -65,15 +65,17 @@ function changeback(){
 /***删除选中的工作**/
 function delchosen() {
     let jobsid=[];
-    $('tbody tr').each(function (i) {
-        let b=$(this).find(':checkbox').get(0).checked;
-        let a=$($(this).find('td').get(1)).text();
-        if(b){
-            jobsid.push(a);
-        }
-    });
+    if($($('tr').get(2)).text().indexOf('记录')===-1){
+        $('tbody tr').each(function (i) {
+            let b=$(this).find(':checkbox').get(0).checked;
+            let a=$($(this).find('td').get(1)).text();
+            if(b){
+                jobsid.push(a);
+            }
+        });
+    }
     if (jobsid.length===0){
-        layer.alert("无工作可操作！");
+        layer.msg('未选中任何记录!', {icon: 2, time: 1000});
     }else {
         layer.confirm('确认要删除此职位吗？', function (index) {
             $.ajax({
@@ -153,51 +155,65 @@ function admin_hotjob_add(obj,id) {
 /*一键审核选中的数据*/
 function checkchosen() {
     let jobsid=[];
-    $('tbody tr').each(function (i) {
-        let b=$(this).find(':checkbox').get(0).checked;
-        let a=$($(this).find('td').get(1)).text();
-        if(b){
-            jobsid.push(a);
-        }
-    });
-
-    layer.confirm('确认完成此职位的审核吗？',function(index) {
-        $.ajax({
-            type: 'post',
-            url: '/jobstochecked',
-            dataType: 'json',
-            data: {jobsid:jobsid},
-            success: function (data) {
-                $('tbody tr').each(function (i) {
-                    let b=$(this).find(':checkbox').get(0).checked;
-                    if(b){
-                        $(obj).attr("style", "BACKGROUND-COLOR: white");
-                    }
-                });
-                layer.msg('审核成功!', {icon: 1, time: 1000});
-            },
-            error: function (data) {
-                console.log(data.msg);
-            },
+    if($($('tr').get(2)).text().indexOf('记录')===-1){
+        $('tbody tr').each(function (i) {
+            let b=$(this).find(':checkbox').get(0).checked;
+            let a=$($(this).find('td').get(1)).text();
+            let c=$($(this).find('td').get(4)).text();
+            if(b&&c.indexOf('未审核')!==-1){
+                jobsid.push(a);
+            }
         });
-    });
+    }
+    if(jobsid.length!==0){
+        layer.confirm('确认完成此职位的审核吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/jobstochecked',
+                dataType: 'json',
+                data: {jobsid:jobsid},
+                success: function (data) {
+                        $('tbody tr').each(function (i) {
+                            let b=$(this).find(':checkbox').get(0).checked;
+                            let c=$($(this).find('td').get(4)).text();
+                            if(b&&c.indexOf('未审核')!==-1){
+                                $(this).attr("style", "BACKGROUND-COLOR: white");
+                                $($(this).find('td').get(4)).text('已审核');
+                            }
+                        });
+                        layer.msg('审核成功!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }else{
+        layer.msg('未选中未审核任何记录!', {icon: 2, time: 1000});
+    }
 }
 
 /*审核单个工作*/
 function admin_job_checked(obj,id){
-    layer.confirm('确认完成此职位的审核吗？',function(index) {
-        $.ajax({
-            type: 'post',
-            url: '/jobstochecked',
-            dataType: 'json',
-            data: {jobsid: [id]},
-            success: function (data) {
-                $(obj).parents('tr').attr("style", "BACKGROUND-COLOR: white");
-                layer.msg('审核已通过！', {icon: 1, time: 1000});
-            },
-            error: function (data) {
-                console.log(data.msg);
-            },
+    let a=$($(obj).parents('tr').find('td').get(4)).text();
+    if(a.indexOf('未审核')!==-1){
+        layer.confirm('确认完成此职位的审核吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/jobstochecked',
+                dataType: 'json',
+                data: {jobsid: [id]},
+                success: function (data) {
+                    $(obj).parents('tr').attr("style", "BACKGROUND-COLOR: white");
+                    $($(obj).parents('tr').find('td').get(4)).text('已审核');
+                    layer.msg('审核已通过！', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
         });
-    });
+    }else{
+        layer.msg('该职位已通过审核！', {icon: 2, time: 1000});
+    }
 }

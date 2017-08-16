@@ -15,7 +15,7 @@
 		<script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
 		<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
-		<link rel="stylesheet" type="text/css" href="./jobP.css">
+		<link rel="stylesheet" type="text/css" href="./src/css/jobP.css">
 		<link rel="stylesheet" type="text/css" href="./datepicker/css/jquery-ui.css" />
 		<!-- <link rel="stylesheet" href="./MarkdownIME/test/style.css"> -->
 		<script type="text/javascript">
@@ -66,13 +66,13 @@
 				<div class="form-group">
 					<label for="gyf_post_title" class="col-sm-2 control-label">标<i class = 'space2'></i>题</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="gyf_post_title" placeholder="title" name="title">
+						<input type="text" class="form-control" id="gyf_post_title" placeholder="title" name="title" required="required">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="gyf_post_expiryTime" class="col-sm-2 control-label">截止时间</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="expiryTime" id='gyf_post_expiryTime'>
+						<input type="text" class="form-control" name="expiryTime" id='gyf_post_expiryTime' required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -89,19 +89,19 @@
 				<div class="form-group">
 					<label for="gyf_tags_language_1" class="col-sm-2 control-label">开发语言</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="gyf_tags_language_1" placeholder="javascript" name="tags">
+						<input type="text" class="form-control" id="gyf_tags_language_1" placeholder="javascript" name="tags" required>
 					</div>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="gyf_tags_language_2" placeholder="html" name="tags">
+						<input type="text" class="form-control" id="gyf_tags_language_2" placeholder="html" name="tags" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="gyf_tags_benefits_1" class="col-sm-2 control-label">公司福利</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="gyf_tags_benefits_1" placeholder="五险一金" name="benefits">
+						<input type="text" class="form-control" id="gyf_tags_benefits_1" placeholder="五险一金" name="benefits" required>
 					</div>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="gyf_tags_benefits_2" placeholder="带薪休假" name="benefits">
+						<input type="text" class="form-control" id="gyf_tags_benefits_2" placeholder="带薪休假" name="benefits" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -118,13 +118,13 @@
 				<div class="form-group">
 					<label for="gyf_post_number" class="col-sm-2 control-label">招聘人数</label>
 					<div class="col-sm-5">
-						<input type="number" class="form-control" name="number" id='gyf_post_number' placeholder="5人">
+						<input type="number" class="form-control" name="number" id='gyf_post_number' placeholder="5人" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="gyf_post_Educational" class="col-sm-2 control-label">学<i class = 'space2'></i>历</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="Educational" id='gyf_post_Educational' placeholder="专科">
+						<input type="text" class="form-control" name="Educational" id='gyf_post_Educational' placeholder="专科" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -153,7 +153,7 @@
 				<div class="form-group">
 					<label for="gyf_post_company" class="col-sm-2 control-label">公司名称</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="gyf_post_company" name="company" placeholder="">
+						<input type="text" class="form-control" id="gyf_post_company" name="company" placeholder="" required>
 					</div>
 				</div>
 				<div class="form-group">

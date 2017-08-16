@@ -26,5 +26,5 @@ $(function () {
 });
 
 function hide() {
-    $('.alert').delay(1000).hide(0);
+    $('.alert').delay(2000).hide(0);
     }

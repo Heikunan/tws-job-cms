@@ -78,15 +78,17 @@ function admin_role_del(obj,id){
 
 function delchosen() {
     let usersid=[];
-    $('tbody tr').each(function (i) {
-        let b=$(this).find(':checkbox').get(0).checked;
-        let a=$($(this).find('td').get(1)).text();
-        if(b){
-            usersid.push(a);
-        }
-    });
+    if($($('tr').get(2)).text().indexOf('记录')===-1){
+        $('tbody tr').each(function (i) {
+            let b=$(this).find(':checkbox').get(0).checked;
+            let a=$($(this).find('td').get(1)).text();
+            if(b){
+                usersid.push(a);
+            }
+        });
+    }
     if (usersid.length===0){
-        layer.alert("无角色可操作！");
+        layer.msg('未选中任何记录!', {icon: 2, time: 1000});
     }else {
         layer.confirm('角色删除须谨慎，确认要删除吗？',function(index) {
             $.ajax({
@@ -117,36 +119,41 @@ function delchosen() {
 /*一键审核选中的数据*/
 function checkchosen() {
     let usersid=[];
-    $('tbody tr').each(function (i) {
-        let b=$(this).find(':checkbox').get(0).checked;
-        let a=$($(this).find('td').get(1)).text();
-        if(b){
-            usersid.push(a);
-        }
-    });
-
-    layer.confirm('确认完成此为用户的审核吗？',function(index) {
-        $.ajax({
-            type: 'post',
-            url: '/tochecked',
-            dataType: 'json',
-            data: {usersid:usersid},
-            success: function (data) {
-                $("#sum").html($('tbody tr').length-usersid.length);
-                $('tbody tr').each(function (i) {
-                    let b=$(this).find(':checkbox').get(0).checked;
-                    if(b){
-                        $(this).remove();
-                    }
-                });
-                if($('tbody tr').length===0){
-                    $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
-                }
-                layer.msg('审核成功!', {icon: 1, time: 1000});
-            },
-            error: function (data) {
-                console.log(data.msg);
-            },
+    if($($('tr').get(2)).text().indexOf('记录')===-1){
+        $('tbody tr').each(function (i) {
+            let b=$(this).find(':checkbox').get(0).checked;
+            let a=$($(this).find('td').get(1)).text();
+            if(b){
+                usersid.push(a);
+            }
         });
-    });
+    }
+    if(usersid.length!==0){
+        layer.confirm('确认完成此为用户的审核吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/tochecked',
+                dataType: 'json',
+                data: {usersid:usersid},
+                success: function (data) {
+                    $("#sum").html($('tbody tr').length-usersid.length);
+                    $('tbody tr').each(function (i) {
+                        let b=$(this).find(':checkbox').get(0).checked;
+                        if(b){
+                            $(this).remove();
+                        }
+                    });
+                    if($('tbody tr').length===0){
+                        $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                    }
+                    layer.msg('审核成功!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }else{
+        layer.msg('未选中任何记录!', {icon: 2, time: 1000});
+    }
 }
