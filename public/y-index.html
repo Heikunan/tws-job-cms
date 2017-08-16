@@ -12,6 +12,29 @@
     <link rel="stylesheet" href="src/css/index.css">
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="y-index.html">职位</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right myheader-right">
+                <li><a href="./login.html">登陆</a></li>
+                <li><a href="./register.html">注册</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="condition-box">
     <dl class="list-group-item condition-city" style="list-style: outside">
         <dt class="" style="font-size: large;display:inline">城市：</dt>
@@ -62,8 +85,81 @@
     </dl>
 
 </div>
+<section>
+    <div class="container-fluid mysection">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 mysectionleft">
+                <ol class="breadcrumb">
+                    <li class="active">全部职位</li>
+                </ol>
+                <div id="myleft-job-all">
+
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div id="fenye" class="pagination mypageinit" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 3 col-sm-3 col-xs-12 mysectionright" id="job_suggest">
+                <div class="title">
+                    <span>热门职位推荐</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="myfoot">
+    <div class="container">
+
+        <div class="text-center" style="background-color: #808080 !important;" >
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+                <ul>
+
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+
+
+
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+
+
+                <ul>
+                    <li class="text-center ui "><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui "><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+
+
+                <dl>
+                    <dt class="uii"><i class="fa fa-weixin" style="font-size: 1cm" aria-hidden="true"></i>
+                        <i class="fa fa-weibo myie " style="font-size: 1cm" aria-hidden="true"></i></dt>
+                    <dt class="uii"><span class="text-center myspan">微信客服:iuytfvgbh</span></dt>
+                    <dt class="uii"><span class="text-center myspan"> 微博:jhygtfrfcvgb</span></dt>
+                    <dt class="uii"><span class="text-center myspan">二维码</span></dt>
+
+
+
+
+
+                </dl>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv"><p class="myps">© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p></div>
 </body>
 <script src="src/js/jqPaginator.min.js"></script>
-<script src="src/js/app.js"></script>
+<script src="src/js/y-app.js"></script>
 <script src="js/common.js"></script>
 </html>
