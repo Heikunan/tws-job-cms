@@ -28,12 +28,6 @@
 	padding:0px!important;
 }
 
-.gyf_panel{
-	margin: 1rem 0;
-	text-align: center;
-	border-width: 1px;
-	border-color:black;
-}
 .gyf_panel_button{
 	color:#fff;
 	background-color: #795548;
@@ -45,19 +39,21 @@
 	margin:0 2em 2em;
 }
 .post-job{
-	border:solid;
-	 border-color:#795548; 
+	border:dashed;
+	border-color:#BDBDBD;
 	border-width: 1px;
 	border-radius:2px;
 	padding-top: 0;
 	background: #fff;
 	z-index: 2;
+
+	text-align: center;
 }
 .header-img{
 	margin:-10px -15px 0 -15px;
 	padding-top:0px;
 	height: 50px;
-	 background:#BDBDBD; 
+	 background:#C8E6C9;
 }
 .post_job_button{
 	color:black;
@@ -71,11 +67,12 @@
 .gyf_icon{
 	margin-right: 1em;
 }
+
 .gyf_more_jobs{
 	margin-top: 2em;
 }
 .gyf_label_main{
- 	background-color:#a9a4a4;
+ 	background-color:#757575;
 }
 
 .gyf_label{
@@ -95,9 +92,39 @@
 }
 
 .right{
-	color: #9b9595;
+	color: #757575;
 }
 
 .left{
-	color: #9b9595;
+	color: #757575;
+}
+#gyf_descript_content>h1,#gyf_company_introduce_content>h1,#gyf_apply_content>h1{
+	font-size: 1.6em;
+}
+#gyf_descript_content>h2,#gyf_company_introduce_content>h2,#gyf_apply_content>h2{
+	font-size: 1.4em;
+}
+#gyf_descript_content>h3,#gyf_company_introduce_content>h3,#gyf_apply_content>h3{
+	font-size: 1.3em;
+}
+#gyf_descript_content>h4,#gyf_company_introduce_content>h4,#gyf_apply_content>h4{
+	font-size: 1.2em;
+}
+#gyf_descript_content>h5,#gyf_company_introduce_content>h5,#gyf_apply_content>h5{
+	font-size: 1.1em;
+}
+#gyf_descript_content>h1>*,#gyf_company_introduce_content>h1>*,#gyf_apply_content>h1>*{
+	font-size: 1em;
+}
+#gyf_descript_content>h2>*,#gyf_company_introduce_content>h2>*,#gyf_apply_content>h2>*{
+	font-size: 1em;
+}
+#gyf_descript_content>h3>*,#gyf_company_introduce_content>h3>*,#gyf_apply_content>h3>*{
+	font-size: 1em;
+}
+#gyf_descript_content>h4>*,#gyf_company_introduce_content>h4>*,#gyf_apply_content>h4>*{
+	font-size: 1em;
+}
+#gyf_descript_content>h5>*,#gyf_company_introduce_content>h5>*,#gyf_apply_content>h5>*{
+	font-size: 1em;
 }
