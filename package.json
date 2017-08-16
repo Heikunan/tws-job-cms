@@ -28,6 +28,7 @@
     "node-crypto": "^1.0.0",
     "node-mandrill": "^1.0.1",
     "nodemailer": "^4.0.1",
+    "social-share.js": "^1.0.16",
     "wangeditor": "^3.0.8"
   }
 }
