@@ -26,9 +26,9 @@
 <script>
     let str = '';
     $.get('/myposts', function (data) {
-        console.log('data: ' + JSON.stringify(data))
+        console.log('data: ' + JSON.stringify(data));
         if (data==='no') {
-            alert('登陆过期，重新登录！')
+            alert('登陆过期，重新登录！');
             top.location='../index.html'
         }
         else if (data.length === 0) {
