@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -29,20 +29,36 @@
 	</style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 热门职位列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i>
+	首页 <span class="c-gray en">&gt;</span>
+	系统管理 <span class="c-gray en">&gt;</span>
+	查看用户
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
 <div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="delchosen()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<table class="table table-border table-bordered table-bg">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+			<a class="btn btn-danger radius" onclick="delchosen()">
+				<i class="Hui-iconfont">&#xe6e2;</i>批量删除</a>
+			<a class="btn btn-primary radius" onclick="checkchosen()">
+				<i class="Hui-iconfont">&#xe600;</i> 一键审核</a>
+		</span>
+		<span class="r">共有数据：<strong id="sum"></strong> 条 </span>
+	</div><table class="table table-border table-bordered table-bg">
 		<thead>
 		<tr>
-			<th scope="col" colspan="9" >热门职位列表</th>
-		</tr>colspan="9"
+			<th scope="col" colspan="9" >用户列表</th>
+		</tr>
 		<tr class="text-c">
-			<th width="20"><input type="checkbox" name="" value=""></th>
-			<th width="70">job ID</th>
-			<th width="120">user ID</th>
-			<th width="100">title</th>
+			<th width="20"><input type="checkbox"></th>
+			<th width="120">用户ID</th>
+			<th width="160">用户邮箱</th>
+			<th>用户类型</th>>
+			<th width="200">用户状态</th>
 			<th width="100">操作</th>
 		</tr>
 		</thead>
