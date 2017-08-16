@@ -339,6 +339,7 @@ app.post('/resend', function(req, res) {
     });
 });
 
+//主页获取五条热门职位
 app.get('/job_suggest',function(req,res) {
     var sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
     connection.query(sql, function (err, result) {
