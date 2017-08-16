@@ -274,7 +274,6 @@ a {
 }
 .myconta{
     margin-top: 50px;
-    margin-bottom: 50px;
 }
 .myconta ul{
     list-style: none;
@@ -284,6 +283,9 @@ a {
 }
 .myconta a:hover{
     color:  #00B83F;;
+}
+.red{
+    color: #dcbd19;
 }
 #my-footdiv{
     background-color: #222;
