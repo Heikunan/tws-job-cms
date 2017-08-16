@@ -24,10 +24,10 @@
 <body>
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
-        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">你好!&nbsp;<span class="postadmin-title"></a>
+        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="../index.html">首页&nbsp;<span class="postadmin-title"></a>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
-                    <li>职位发布者</li>
+                    <li id="u-name" >你好，</li>
                     <li id="Hui-skin" class="dropDown right dropDown_hover"><a href="javascript:;" class="dropDown_A"
                                                                                title="换肤"><i class="Hui-iconfont"
                                                                                              style="font-size:18px">&#xe62a;</i></a>
@@ -98,10 +98,15 @@
 <script type="text/javascript">
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
-        if (ans.status!=='已审核') {
+        if (ans==='no') {
+            alert('登陆过期，请重新登录！')
+            top.location = '../index.html'
+        }
+        else if (ans.status!=='已审核') {
             alert('账号未审核！')
             top.location = '../index.html'
         }
+        $('#u-name').append(ans.email);
     });
 </script>
 </body>
