@@ -22,6 +22,9 @@ $(document).ready(function () {
           $("#sum").html(users.length);
       }
       }
+       if($('tbody tr').length===0){
+           $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+       }
    });
 })
 
@@ -36,6 +39,9 @@ function admin_role_check(obj,id){
             success: function (data) {
                 $("#sum").html($('tbody tr').length-1);
                 $(obj).parents("tr").remove();
+                if($('tbody tr').length===0){
+                    $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                }
                 layer.msg('审核已通过！', {icon: 1, time: 1000});
             },
             error: function (data) {
@@ -56,6 +62,9 @@ function admin_role_del(obj,id){
             success: function (data) {
                 $("#sum").html($('tbody tr').length-1);
                 $(obj).parents("tr").remove();
+                if($('tbody tr').length===0){
+                    $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                }
                 layer.msg('已删除!', {icon: 1, time: 1000});
             },
             error: function (data) {
@@ -92,6 +101,9 @@ function delchosen() {
                             $(this).remove();
                         }
                     });
+                    if($('tbody tr').length===0){
+                        $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                    }
                     layer.msg('已删除!', {icon: 1, time: 1000});
                 },
                 error: function (data) {
@@ -126,6 +138,9 @@ function checkchosen() {
                         $(this).remove();
                     }
                 });
+                if($('tbody tr').length===0){
+                    $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                }
                 layer.msg('审核成功!', {icon: 1, time: 1000});
             },
             error: function (data) {
