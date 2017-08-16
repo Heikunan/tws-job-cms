@@ -141,40 +141,6 @@ app.post('/getSuggestion', function(req, res) {
     });
 });
 
-/*
-#6发布一个职位
-输入：招聘表单内容
-输出：成功：200添加成功
-     失败：500服务器发生错误
- */
-app.post('/postJob', function(req, res) {
-    //  req.body = JSON.parse(req.body);
-    console.log(req.body);
-    // let userId = req.session.user.id;
-    let userId = '1';
-    let likes = 0;
-    let releaseTime = new Date(Date.now());
-    console.log(releaseTime);
-    // let addSql='INSERT INTO t_test(userId) VALUES (?)';
-    // let addSqlParams=['1'];
-    req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
-    req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-    let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
-    connection.query(addSql, addSqlParams, function(err, result) {
-        console.log(result);
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.status(500).send('服务器发生错误');
-        } else {
-            res.status(200).send('添加成功');
-        }
-        console.log('end');
-    });
-});
-app.get('/postJob', function(req, res) {
-    res.sendFile(__dirname + "/public/" + "jobPost.html");
-});
 
 
 /*7 用户查看自己创建的职位Post列表
@@ -186,6 +152,7 @@ app.get('/myposts', function(req, res) {
         let userid = req.session.user.id;
         //查找用户的post
         let sql = 'select id,title,description from t_job where userid = ' + userid;
+        console.log(sql);
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -417,7 +384,8 @@ app.post('/postJob', function(req, res) {
     //  req.body = JSON.parse(req.body);
     // console.log(req.body);
     // let userId = req.session.user.id;
-    let userId = '1';
+    let userId = req.session.user.id;
+    console.log('userid: '+userId)
     let likes = 0;
     let releaseTime = new Date(Date.now());
     // console.log(releaseTime);
