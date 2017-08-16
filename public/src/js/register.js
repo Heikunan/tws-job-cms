@@ -9,8 +9,8 @@ $(function () {
         },function (data) {
             if (data===true) {
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class="alert">注册成功，正在发送验证邮件，请前往邮箱激活账号。3秒后页面将跳转至首页！</div>')
-                window.setTimeout("window.location='/'",3000);
+                $('.flash_container').append('<div class="alert">注册成功，正在发送验证邮件，请前往邮箱激活账号。5秒后页面将跳转至首页！</div>')
+                window.setTimeout("window.location='/'",5000);
             }else if(data===false){
                 $('.flash_container').empty();
                 $('.flash_container').append('<div class="alert">账号已注册！</div>')
@@ -30,5 +30,5 @@ $(function () {
 
 
 function hide() {
-    $('.alert').delay(1000).hide(0);
+    $('.alert').delay(2000).hide(0);
 };
