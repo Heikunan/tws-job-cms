@@ -8,10 +8,16 @@ $(function () {
             if (data===true) {
                 $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>邮件已发送，请前往邮箱验证！</div>');
+                hide();
             }else {
                 $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>该账号尚未注册，请注册！</div>');
+                hide();
             }
         });
     });
 });
+
+function hide() {
+    $('.alert').delay(1000).hide(0);
+};
