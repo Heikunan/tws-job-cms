@@ -339,10 +339,9 @@ app.post('/resend', function(req, res) {
     });
 });
 
-//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
-app.get('/job_suggest', function(req, res) {
-    var sql = 'select * from t_job order by likes desc limit 0,5';
-    connection.query(sql, function(err, result) {
+app.get('/job_suggest',function(req,res) {
+    var sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
+    connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
         } else {
@@ -350,6 +349,7 @@ app.get('/job_suggest', function(req, res) {
         }
     });
 });
+
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
