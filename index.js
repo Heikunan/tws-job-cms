@@ -15,7 +15,7 @@ app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
     name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
-    cookie: { maxAge: 600 * 1000 }
+    cookie: { maxAge: 1800 * 1000 }
 }));
 let connection = mysql.createConnection({
     host: '47.94.199.111',

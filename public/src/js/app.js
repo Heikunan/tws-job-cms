@@ -39,14 +39,14 @@ $.get('/tjobcount',function (ans) {
         onPageChange: function (num, type) {
             $.post('/testjobs',{num:num},function (ans) {
                let str = '';
-               for(let i =1;i<ans.length;i++){
+               for(let i =0;i<ans.length;i++){
                    str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
 								<div class="job-primary">
 									<div class="info-primary">
-										<h3 class="name">技术总监 <span class="red">${ans[i].salary}</span></h3>
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
 										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
 									</div>
 									<div class="info-company">
