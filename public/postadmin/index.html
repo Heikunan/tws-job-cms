@@ -98,6 +98,10 @@
 <script type="text/javascript">
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
+        if (ans.status!=='已审核') {
+            alert('账号未审核！')
+            top.location = '../index.html'
+        }
     });
 </script>
 </body>
