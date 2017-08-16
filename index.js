@@ -277,7 +277,7 @@ app.post('/send', function(req, res, next) {
             } else {
                 /*设置邮件信息,如果可以插入数据库中*/
                 let options = {
-                    from: 'ysj<thoughtworkersfive@126.com>',
+                    from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                     to: email,
                     subject: '注册成功，请激活！',
                     text: '欢迎注册',
@@ -287,11 +287,9 @@ app.post('/send', function(req, res, next) {
                 mailTransport.sendMail(options, function(err, msg) {
                     if (err) {
                         return console.log(err);
-                    } else {
-                        console.log(true);
-                        res.send(true);
                     }
                 });
+                res.send(true);
             }
         });
     }
@@ -331,10 +329,9 @@ app.post('/resend', function(req, res) {
             mailTransport.sendMail(options, function(err, msg) {
                 if (err) {
                     return console.log(err);
-                } else {
-                    res.send(true);
                 }
             });
+            res.send(true);
         }
     });
 });
@@ -642,7 +639,7 @@ app.post('/resettingPassword', urlencodedParser, function(req, res) {
         if (reply.length === 1 && reply[0].isactive === 1) {
             let content = "您的验证码是：" + passwordCode + " 如非本人操作，请忽略此邮件";
             let options = {
-                from: 'cr<thoughtworkersfive@126.com>',
+                from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
                 to: req.query.email,
                 subject: '重置密码',
                 text: '验证码',
