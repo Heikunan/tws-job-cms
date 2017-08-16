@@ -344,7 +344,16 @@ a {
     margin-top: 20px;
     width: 280px;
     height: 150px;
+
+    opacity:0.70;
+    filter:alpha(opacity=70);
 }
+
+.img_suggest:hover {
+    opacity:0.9;
+    filter:alpha(opacity=90);
+}
+
 .title{
     width: 280px;
     height: 50px;
@@ -374,11 +383,9 @@ a {
     line-height: 28px;
     text-align: center;
     color: white;
-    background-color:#c0bcbc;
+    background-color:#9a9a9b;
     float: left;
 }
-
-
 
 .job_suggest p:hover {
     color: #209b60;
