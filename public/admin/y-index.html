@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+    <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"> </script>
+    <script src="src/js/bootstrap.min.js"></script>
+    <title>首页</title>
+    <link rel="stylesheet" href="src/css/font-awesome.min.css">
+    <link rel="stylesheet" href="src/css/index.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right myheader-right">
+                <li><a href="./login.html">登陆</a></li>
+                <li><a href="./register.html">注册</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="search-background">
+    <div class="search-background-inline">
+        <div class="search-background-contain row ">
+            <div id="zwlb" class="search-background-contain search-background-contain-left hover-div search-one col-lg-3 col-md-3 col-sm-3 col-xs-3" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown my-dropdown-search">
+                    <div>
+                        <span id="zwlb-title">全部类别</span>
+                        <span class="caret"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-menu zwlb" aria-labelledby="zwlb">
+
+            </div>
+            <div class="search-background-contain search-background-contain-left hover-div search-two col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div id="zwzl" class="dropdown my-dropdown-search" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div>
+                        <span id="zwzl-title">全部种类</span>
+                        <span class="caret"></span>
+                    </div>
+                </div>
+                <div class="dropdown-menu zwzl" aria-labelledby="zwzl">
+
+                </div>
+            </div>
+
+            <div class="search-background-contain search-background-contain-left search-three col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="my-seach-input" placeholder="搜索...">
+                </div>
+            </div>
+            <div class="search-background-contain search-four col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="search-background-icon">
+                    <span class="glyphicon glyphicon-search"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="condition-box">
+    <dl class="list-group-item condition-city" style="list-style: outside">
+        <dt class="" style="font-size: large;display:inline">城市：</dt>
+        <dd style="display: inline" ><span class=" text-success hot-text">热门de 城市</span>
+            <span class=" bg-success hot-text active">热门城市</span>
+            <span class="hot-text">热门城市</span>
+            <span class="hot-text">热门城市</span>
+
+    </dl>
+
+    <dl class=" list-group-item condition-experience">
+        <dt>经验：</dt>
+        <dd>
+
+
+
+        </dd>
+    </dl>
+    <dl class="list-group-item condition-education">
+        <dt>学历：</dt>
+        <dd>
+
+
+
+        </dd>
+    </dl>
+
+    <dl class="list-group-item condition-scale">
+        <dt>规模：</dt>
+        <dd>
+
+            <a href="" class="selected" ka="sel-scale-0">不限</a>
+            <a href="" ka="sel-scale-301">0-20人</a>
+            <a href="" ka="sel-scale-302">20-99人</a>
+            <a href="" ka="sel-scale-303">100-499人</a>
+            <a href="" ka="sel-scale-304">500-999人</a>
+            <a href="" ka="sel-scale-305">1000-9999人</a>
+            <a href="" ka="sel-scale-306">10000人以上</a>
+
+        </dd>
+    </dl>
+    <dl class="list-group-item condition-stage">
+        <dt>融资：</dt>
+        <dd>
+
+
+        </dd>
+    </dl>
+    <dl class="list-group-item condition-insdustry">
+        <dt>行业：</dt>
+        <dd>
+            <span class="btn-all" ka="show-all-industry">全部行业<i class="icon-arrow-down"></i></span>
+
+
+        </dd>
+    </dl>
+
+</div>
+
+<section>
+    <div class="container-fluid mysection">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 mysectionleft">
+                <ol class="breadcrumb">
+                    <li class="active">全部职位</li>
+                </ol>
+                <div id="myleft-job-all">
+
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+                        <div id="fenye" class="pagination mypageinit" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 3 col-sm-3 col-xs-12 mysectionright" id="job_suggest">
+                <div class="title">
+                    <span>热门职位推荐</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="myfoot">
+    <div class="container">
+
+        <div class="text-center" style="background-color: #808080 !important;" >
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+                <ul>
+
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+
+
+
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+
+
+                <ul>
+                    <li class="text-center ui "><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+                    <li class="text-center ui "><a href="">友情链接</a></li>
+                    <li class="text-center ui"><a href="">友情链接</a></li>
+
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 myconta">
+
+
+                <dl>
+                    <dt class="uii"><i class="fa fa-weixin" style="font-size: 1cm" aria-hidden="true"></i>
+                        <i class="fa fa-weibo myie " style="font-size: 1cm" aria-hidden="true"></i></dt>
+                    <dt class="uii"><span class="text-center myspan">微信客服:iuytfvgbh</span></dt>
+                    <dt class="uii"><span class="text-center myspan"> 微博:jhygtfrfcvgb</span></dt>
+                    <dt class="uii"><span class="text-center myspan">二维码</span></dt>
+
+
+
+
+
+                </dl>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv"><p class="myps">© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p></div>
+</body>
+<script src="src/js/jqPaginator.min.js"></script>
+<script src="src/js/app.js"></script>
+<script src="js/common.js"></script>
+</html>

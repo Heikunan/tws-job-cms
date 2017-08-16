@@ -306,12 +306,11 @@ a {
     padding-top: 40px;
 }
 .condition-box {
-    background: #D4D4D4;
+    background: rgba(255, 255, 255, 0);
     margin-top: 40px;
     margin-left: 200px;
     margin-right: 200px;
-    padding-left: 50px;
-    padding-right: 50px;
+
 
     padding-top: 25px;
     padding-bottom: 25px;
