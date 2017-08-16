@@ -51,3 +51,12 @@ overflow-y:scroll;
 .gyf_view_btn{
 	background-color:#BDBDBD;
 }
+#gyf_postJob_markdown_introduce:link{
+	color: #BDBDBD;
+}
+#gyf_postJob_markdown_introduce:hover{
+	color: black;
+}
+#gyf_postJob_markdown_introduce:visited{
+	color: black;
+}

@@ -81,3 +81,10 @@
 	background-color:#9E9E9E;
 	color: black;
 }
+
+#my-footdiv{
+	background-color: #222;
+	color: #fff;
+	padding-top: 11px;
+	padding-bottom: 7px;
+}
