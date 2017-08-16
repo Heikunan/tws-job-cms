@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="./jobInfo.css">
+	
 	<title>JobInfo</title>
 </head>
 
@@ -57,7 +58,7 @@
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:black;"><i class="heart icon"></i> Like </div>
+							<div class="ui red button" style="background-color:black;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
 							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
 								1,048
 							</a>
@@ -163,10 +164,14 @@
 
 				</div>
 			</div>
-
 		</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv"><p>© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p></div>
 </body>
 <script type="text/javascript">
+	let status;
+	let jobId;
+	let num;
 	function load() {
 		let myurl = window.location.href.split("id=");
 		let datas = {};
@@ -199,10 +204,25 @@
 			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 			$("#gyf_jobInfo_Education").text(data.education);
 			$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
+			jobId=data.id;
+			num=data.likes+1;
+		//	console.log('jobId:'+jobId);
+			$.post('/isLike',{'id':jobId}).done(function(reply){
+				if(reply==='false' || 'first_notlog'){
+					console.log('into /islike');
+					console.log(reply);
+					status='可收藏';
+				}else if(reply==='true'){
+					status='已收藏';
+				}
+			}).fail(function(xhr,status){
+				console.log('500服务器出错');
+			})
 		}).fail(function (xhr, status) {
 			console.log('失败: ' + xhr.status + ', 原因: ' + status);
 		});
-
+		
+		
 		let category = $('#gyf_job_category').text();
 		let type = $('#gyf_job_type').text();
 		let title = $('#gyf_title').text();
@@ -232,6 +252,7 @@
 			}).fail(function (xhr, status) {
 				console.log('失败: ' + xhr.status + ', 原因: ' + status);
 			})
+			
 	}
 	$('#gyf_jobInfo_post').on('click', function () {
 		$.get('/getUserInfo', function (ans) {
@@ -249,6 +270,34 @@
 			}
 		});	
 	});
+	$('#gyf_like_button').on('click',function(){
+		console.log('gyf_like_button')
+		console.log('status:'+status);
+			if(status==='可收藏'){
+				$.post('/addOneUser',{'id':jobId}).done(function(good){
+							console.log('into addOneuser');
+							console.log(good);
+							if(good!=='notlog'){
+								$('#gyf_like_number').text(num);
+								//console.log('addOneUser'+good);
+								$.post('/addOneLike',{'id':jobId,'num':num}).done(function(result){
+									// console.log('into /addOneLike');
+									// console.log(result);
+									status='已收藏';
+							// console.log('addOneLike'+result);
+									}).fail(function(xhr,status){
+										console.log('500服务器出错');
+									});
+							}else{
+								alert("请先登录");
+							}
+						}).fail(function(xhr,status){
+								console.log('500服务器出错');
+						})
+				}else if(status==='已收藏'){
+					alert('此职位你已经收藏过了');
+				}				
+			});
 </script>
 <script src="./js/common.js"></script>
 

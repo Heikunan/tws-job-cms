@@ -11,14 +11,12 @@ let app = express();
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
 app.use(Bodyparser.urlencoded({ extended: true }));
-
 app.use(cookieParser('recommand 128 bytes random string'));
 app.use(session({
     name: 'twsjob',
     secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
     cookie: { maxAge: 600 * 1000 }
 }));
-
 let connection = mysql.createConnection({
     host: '47.94.199.111',
     user: 'tws',
@@ -341,6 +339,17 @@ app.post('/resend', function(req, res) {
     });
 });
 
+//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
+app.get('/job_suggest',function(req,res) {
+    var sql = 'select * from t_job order by likes desc limit 0,5';
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+        }else{
+            res.send(result);
+        }
+    });
+});
 /* 注册部分
 邮箱中点击此处确定，返回到这个界面，将邮箱激活*/
 app.get('/confirm', function(req, res, next) {
@@ -384,7 +393,7 @@ app.post('/login', urlencodedParser, function(req, res) {
 });
 
 app.post('/getJobDetail',urlencodedParser, function(req, res) {
-    console.log(req.body);
+   // console.log(req.body);
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function(err, result) {
         if (err) {
@@ -392,7 +401,7 @@ app.post('/getJobDetail',urlencodedParser, function(req, res) {
             res.status(500).send('服务器发生错误');
         }
         else{
-            console.log(result);
+         //   console.log(result);
             res.send(result);
         }
     });
@@ -409,12 +418,12 @@ app.get('/postJob',function(req,res){
 
 app.post('/postJob', function(req, res) {
     //  req.body = JSON.parse(req.body);
-    console.log(req.body);
+   // console.log(req.body);
     // let userId = req.session.user.id;
     let userId='1';
     let likes=0;
     let releaseTime=new Date(Date.now());
-    console.log(releaseTime);
+   // console.log(releaseTime);
     // let addSql='INSERT INTO t_test(userId) VALUES (?)';
     // let addSqlParams=['1'];
     req.body.tags=req.body.tags[0]+','+req.body.tags[1];
@@ -447,7 +456,73 @@ app.post('/getSuggestion',function(req,res){
 
 
 });
+app.post('/isLike',function(req,res){
+    // console.log('into /islike');
+    // console.log(req.body);
+    let jobId=req.body.id;
+    if(req.session.user===undefined){
+        res.send('first_notlog');
+    }else{
+         let userId=req.session.user.id;
+         let sql='select * from t_like where userId = ? and jobId = ?';
+        //  console.log('userId:'+userId);
+        //  console.log('jobId:'+jobId);
+         let addsql=[userId,jobId];
+         connection.query(sql,addsql,function(err,result){
+        if(err){
+            throw err;
+        }
+        console.log(result);
+        if(result.length!==0){
+            console.log('true');
+            res.send('true');
+           
+        }else{
+            res.send('false');
+        }
+    })
 
+    }
+   
+})
+app.post('/addOneLike',function(req,res){
+    console.log('into /addOneLike');
+    if(req.session.user===undefined){
+        res.send('notlog');
+    }else{
+    let jobId=req.body.id;
+    let num=req.body.num;
+    let sql='update t_job  set likes = ? where id ='+ jobId;
+    let addparams=[num];
+    connection.query(sql,addparams,function(err,result){
+        if(err){
+            throw err;
+        }else{
+             res.send('ok');
+        console.log(result);
+        }   
+     })
+    }
+})
+app.post('/addOneUser',function(req,res){
+    console.log('into /addOneUser');
+    if(req.session.user===undefined){
+        res.send('notlog');
+    }else{
+    let jobId=req.body.id;
+    let userId=req.session.user.id;
+    let sql='insert into t_like (userId,jobId) values (?,?)'
+    let addSqlParams=[userId,jobId];
+    connection.query(sql,addSqlParams,function(err,result){
+        if(err){
+            throw err;
+        }else{
+             res.send('ok');
+        console.log(result);
+        }
+    });
+    }
+})
 /**#9获得用户详细信息
 输入：
 输出：req.session.user除密码之外的所有信息
@@ -622,6 +697,62 @@ app.put('/resettingLogin',function (req,res) {
     });
 });
 
+/************************************后台api*****************************************************************/
+
+
+///************得到待审核的用户************////
+app.get('/notcheck',function (req,res) {
+    let sql="select * from t_user where status='待审核'";
+    connection.query(sql,function (err,users) {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(users);
+        }
+    });
+})
+
+//****************使用户可以发布职位**********************//
+app.post('/tochecked',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   let sql="update t_user set status='已审核' where id=?"
+    for(let i=0;i<usersid.length;i++){
+        connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+           if(err){
+               console.log(err);
+           }
+        });
+    }
+    res.send(true);
+});
+///*****************删除用户****************///
+app.post('/deleteuser',urlencodedParser,function (req,res) {
+   let usersid=req.body.usersid;
+   console.log(usersid);
+   let sql="delete from t_user where id =?";
+   for(let i=0;i<usersid.length;i++){
+       connection.query(sql,parseInt(usersid[i]),function (err,reply) {
+          if(err){
+              console.log(err);
+          }
+       });
+   }
+    res.send(true);
+});
+
+app.post('/deletejobs',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    console.log(jobsid);
+    let sql="delete from t_job where id =?";
+    for(let i=0;i<jobsid.length;i++){
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if(err){
+                console.log(err);
+            }
+        });
+    }
+    res.send(true);
+});
 
 
 
@@ -650,6 +781,19 @@ app.get('/init',function (req,res) {
     });
 });
 
+app.get('/cretateusers',function (req,res) {
+    console.log("aaaa");
+    let sql = "insert into t_user (password,email,status) values (?,?,?);";
+    for(let i=0;i<20;i++) {
+        console.log(i.toString());
+        let sqlinfor=[i.toString(), i.toString(),'待审核'];
+        console.log(sqlinfor);
+        connection.query(sql,sqlinfor , function (err, reply) {
+            if (err) console.log(err);
+        })
+    }
+    res.send(true);
+});
 /**************************************************/
 
 /*接收发布招聘的信息
@@ -658,17 +802,7 @@ app.get('/init',function (req,res) {
      失败：500服务器发生错误
 */
 
-//在主页获得热门职位推荐,返回被收藏次数最多的前五个职位
-app.get('/job_suggest',function(req,res) {
-    var sql = 'select * from t_job order by likes desc limit 0,5';
-    connection.query(sql, function (err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-        }else{
-            res.send(result);
-        }
-    });
-});
+
 
 let server = app.listen(8081, function() {
     let host = server.address().address;
