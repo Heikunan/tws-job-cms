@@ -20,9 +20,10 @@ $(document).ready(function () {
         }
         $("#sum").html(jobs.length);
         if(result.length===0){
-            $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+            $('tbody').empty().append("<tr><td colspan='9'>暂无任何记录!</td></tr>");
+        }else{
+            $('tbody').empty().append(result);
         }
-        $('tbody').empty().append(result);
     });
 });
 
@@ -31,15 +32,17 @@ $(document).ready(function () {
 /***选中的工作从hotjob里删除**/
 function delchosen() {
     let jobsid=[];
-    $('tbody tr').each(function (i) {
-        let b=$(this).find(':checkbox').get(0).checked;
-        let a=$($(this).find('td').get(1)).text();
-        if(b){
-            jobsid.push(a);
-        }
-    });
+    if($($('tr').get(2)).text().indexOf('记录')===-1){
+        $('tbody tr').each(function (i) {
+            let b=$(this).find(':checkbox').get(0).checked;
+            let a=$($(this).find('td').get(1)).text();
+            if(b){
+                jobsid.push(a);
+            }
+        });
+    }
     if (jobsid.length===0){
-        layer.alert("无职位可操作！");
+        layer.msg('未选中未审核任何记录!', {icon: 2, time: 1000});
     }else {
         layer.confirm('确认要删除这些热门职位吗？', function (index) {
             $.ajax({
