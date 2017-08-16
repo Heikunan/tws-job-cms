@@ -21,6 +21,12 @@
 .gyf_company_name{
 	max-height: 1em!important;
 }
+#gyf_inner_company_name{
+	word-break:keep-all;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis; 
+}
 .image{
 	max-width: 80%!important;
 }
