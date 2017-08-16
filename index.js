@@ -460,14 +460,14 @@ app.post('/addOneUser', function(req, res) {
      */
 app.get('/getUserInfo', function(req, res) {
     if (req.session.user) {
-        let user = {};
-        user.email = req.session.user.email;
-        user.company = req.session.user.company;
-        user.address = req.session.user.address;
-        user.trade = req.session.user.trade;
-        user.id = req.session.user.id;
-        user.status = req.session.user.status;
-        user.identity = req.session.user.identity;
+        let user = req.session.user;
+        // user.email = req.session.user.email;
+        // user.company = req.session.user.company;
+        // user.address = req.session.user.address;
+        // user.trade = req.session.user.trade;
+        // user.id = req.session.user.id;
+        // user.status = req.session.user.status;
+        // user.identity = req.session.user.identity;
         res.send(user);
     } else {
         res.send('no');
@@ -683,7 +683,7 @@ app.post('/deletejobs', urlencodedParser, function (req, res) {
             }
         });
         if (i === jobsid.length - 1) {
-            req.send('ok');
+            res.send('ok');
         }
     }
 

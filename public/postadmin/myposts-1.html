@@ -60,10 +60,6 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script>
-
-    //    $(".row-click-able a").click(function () {
-    //        top.location.href = $(this).data("href")
-    //    });
     let str = '';
     $.get('/myposts', function (data) {
         console.log('data: ' + JSON.stringify(data));
@@ -104,32 +100,62 @@
             }
         }
     });
-//单条删除
+
+    //单条删除
     function delpost(e) {
         let pid = $(e.target.parentNode).data('pid');
         console.log(pid)
-        console.log($(e.target).parent())
-//        $.post('/deletejob', {jobid: pid})
-//            .done(function (data) {
-//                if (data === 'ok') {
-//                    alert("删除成功！")
-//
-//                } else {
-//                    alert('删除失败');
-//                    $(e.target.parentNode)
-//                }
-//
-//            }).fail(function (a) {
-//            alert('fial')
-//        });
+        $.post('/deletejob', {jobid: pid})
+            .done(function (data) {
+                if (data === 'ok') {
+                    alert("删除成功！")
+                    $(e.target).parents('tr').remove();
+                } else {
+                    alert('删除失败');
+                    $(e.target.parentNode)
+                }
+
+            }).fail(function (a) {
+            alert('fial')
+        });
     }
 
     function change(e) {
 //        alert(e.target)
         console.log($(e.target.parentNode).data('pid'))
     }
+
+    //批量删除
     function delchosen() {
-        
+        let jobsid = [];
+        console.log($('tbody input[type=checkbox]:checked'));
+        $('tbody input[type=checkbox]:checked').each(function () {
+            let pid = $(this).parents('tr').find('a').data('pid');
+            console.log('pid: ' + pid);
+            jobsid.push(pid);
+        });
+        console.log(jobsid);
+
+        if (jobsid.length === 0) {
+            layer.alert("无职位可操作！");
+        } else {
+            layer.confirm('确认要删除这些职位吗？', function () {
+                $.ajax({
+                    type: 'post',
+                    url: '/deletejobs',
+                    data: {jobsid: jobsid}
+                }).done(function () {
+                    $('tbody input[type=checkbox]:checked').parents('tr').remove();
+                        if($('tbody tr').length===0){
+                            $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                        }
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+
+                }).fail(function () {
+                    alert('fail')
+                })
+            });
+        }
     }
 
 </script>
