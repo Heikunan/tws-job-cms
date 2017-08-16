@@ -193,8 +193,7 @@
 				<div class="form-group" id="gyf_description_all">
 					<label for="gyf_post_description" class="col-sm-2 control-label">职位详情</label>
 					<div class="col-sm-8" id='gyf_post_description'>
-						<!-- <div id="editor" spellcheck="false" contenteditable="true"><p><br></p></div>
- 						 <pre id="logOut"></pre> -->
+						
 					</div>
 					<button type="button" class="btn gyf_view_btn" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button" >预览</button>
 					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
@@ -223,7 +222,7 @@
 				<div class="form-group">
 					<label for="gyf_post_applyApproach" class="col-sm-2 control-label">申请方式</label>
 					<div class="col-sm-8" id="gyf_post_applyApproach">
-						<!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
+						
 					</div>
 					<button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
 					<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
@@ -296,45 +295,36 @@
 				$('#gyf_post_companyIntroduce').empty();
 				$('#gyf_post_applyApproach').empty();
 				let addElement1=`<div id="editor1" spellcheck="false" contenteditable="true"><p><br></p></div>`;
- 					//<pre id="logOut1"></pre>`;
+ 				
 				let addElement2=`<div id="editor2" spellcheck="false" contenteditable="true"><p><br></p></div>`;
- 						 //<pre id="logOut2"></pre>`;
+ 						
 				let addElement3=`<div id="editor3" spellcheck="false" contenteditable="true"><p><br></p></div>`;
- 						// <pre id="logOut3"></pre>`;
+ 						
 				$('#gyf_post_description').append(addElement1);
 				$('#gyf_post_companyIntroduce').append(addElement2);
 				$('#gyf_post_applyApproach').append(addElement3);
 				var editor1 = document.getElementById('editor1');
-			//	var logOut1 = document.getElementById('logOut1');
+		
 				MarkdownIME.Enhance(editor1);
 				editor1.focus();
 				MarkdownIME.Utils.move_cursor_to_end(editor1);
 				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
 				var editor2 = document.getElementById('editor2');
-			//	var logOut2 = document.getElementById('logOut2');
+			
 				MarkdownIME.Enhance(editor2);
 				editor2.focus();
 				MarkdownIME.Utils.move_cursor_to_end(editor2);
 				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
 				var editor3 = document.getElementById('editor3');
-			//	var logOut3 = document.getElementById('logOut3');
+		
 				MarkdownIME.Enhance(editor3)
 				editor3.focus();
 				MarkdownIME.Utils.move_cursor_to_end(editor3);
 				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-				//Load MathAddon.
-				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-				// function log() {
-				// 	console.log.apply(console, arguments);
-				// 	var str = [].join.call(arguments, "");
-				// 	var text = document.createTextNode(str + "\n");
-				// 	logOut.insertBefore(text, logOut.firstChild);
-				// }
 				
-				// console.log($('#editor').html());
-				// description=$('#editor').html();
+				MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
 			});
 			$('#gyf_editor_wangeditor').on('click',function(){
@@ -344,7 +334,7 @@
 				choice=1;
 				editor2.create();
 			//	description= $('#gyf_post_description>div:last-child>*').html()
-				//editor2.txt.html();
+				
 				 editor3.create();
 				 editor4.create();
 			});
@@ -394,13 +384,10 @@
 					description= $('#gyf_post_description>*').html();
 					companyIntroduce=$('#gyf_post_companyIntroduce>*').html();
 					applyApproach=$('#gyf_post_applyApproach>*').html();
-				}
-				// $('#gyf_post_companyIntroduce>div:last-child>*').html()
+				}		
 				let datas = $('#gyf_myform').serialize();
 				console.log(datas);
 				datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
-				// datas=JSON.stringify(datas);
-				// console.log(datas);
 				$.post('/postJob', datas).done(function (data) {
 					console.log('inner' + data);
 					data = data['max(id)'];

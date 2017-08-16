@@ -53,15 +53,15 @@
 					<div class="gyf_jumbotron_content col-md-6">
 						<h2 id="gyf_title"></h2>
 						<div class="row gyf_company_name">
-							<div class="col-md-4" id="gyf_inner_company_name"></div>
+							<div class="col-md-5" id="gyf_inner_company_name" ></div>
 							<div class="col-md-2" id="gyf_inner_company_country"></div>
 						</div>
 						<h3 id="gyf_salary"></h3>
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:#c03a3a;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
-							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
+							<div class="ui red button"  id="gyf_like_button"><i class="heart icon"></i> Like </div>
+							<a class="ui basic  left pointing label" id="gyf_like_number">
 							
 							</a>
 						</div>
@@ -200,11 +200,16 @@
 			num = data.likes + 1;
 			//	console.log('jobId:'+jobId);
 			$.post('/isLike', { 'id': jobId }).done(function (reply) {
-				if (reply === 'false' || 'first_notlog') {
+				
 					console.log('into /islike');
 					console.log(reply);
+					
+				if (reply === 'false' || 'first_notlog') {
 					status = '可收藏';
-				} else if (reply === 'true') {
+				} 
+			 if (reply === 'true') {
+					console.log("已收藏")
+					$('#gyf_like_button').css('background-color','red');
 					status = '已收藏';
 				}
 			}).fail(function (xhr, status) {
@@ -226,13 +231,14 @@
 		$.post('/getSuggestion', datas).done(
 			function (data) {
 				let suggestion = '';
+				console.log(data);
 				for (let object of data) {
 					let tags = object.tags.split(',');
 					suggestion = suggestion +
 						`<div class="list-group">
 								<a href="/jobInfo.html?id=${object.id}" class="list-group-item success">
 									<h3 class="list-group-item-heading"> ${object.title} </h3>
-									<p class="list-group-item-text"><strong> ${object.company + object.city + object.country}</strong></p>
+									<p class="list-group-item-text"><strong>${object.company}<br>${object.city}&nbsp;${object.country}</strong></p>
 									<h3>
 									<span class="label label-success gyf_label">${tags[0]}</span>
 									<span class="label label-success gyf_label">${tags[1]}</span>
@@ -263,13 +269,15 @@
 		});
 	});
 	$('#gyf_like_button').on('click', function () {
-		console.log('gyf_like_button')
+		console.log('gyf_like_button');
 		console.log('status:' + status);
 		if (status === '可收藏') {
+		
 			$.post('/addOneUser', { 'id': jobId }).done(function (good) {
 				console.log('into addOneuser');
 				console.log(good);
 				if (good !== 'notlog') {
+					$('#gyf_like_button').css('background-color','red');
 					$('#gyf_like_number').text(num);
 					//console.log('addOneUser'+good);
 					$.post('/addOneLike', { 'id': jobId, 'num': num }).done(function (result) {

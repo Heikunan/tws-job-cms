@@ -98,7 +98,7 @@
                 <div class="form-group">
                     <label for="gyf_post_Educational" class="col-sm-2 control-label">学<i class = 'space2'></i>历</label>
                     <div class="col-sm-5">
-                            <select id='gyf_post_Educational' name='Educational' class="form-control">
+                        <select id='gyf_post_Educational' name='Educational' class="form-control">
                                     <option value="初中">初中</option>
                                     <option value="高中">高中</option>
                                     <option value="专科">专科</option>
@@ -117,10 +117,10 @@
                             <select class="city form-control" data-value="广东" id="gyf_post_city" name="city"></select>
                             <select class="area form-control" data-value="深圳" id="gyf_post_area" name="area"></select>
                         </div>
-                     </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="gyf_post_salary" class="col-sm-2 control-label" >月<i class = 'space2'></i>薪</label>
+                    <label for="gyf_post_salary" class="col-sm-2 control-label">月<i class = 'space2'></i>薪</label>
                     <div class="col-sm-5">
                         <select class="form-control" id="gyf_post_salary" name="salary">
                         <option value="0~3K">0~3K</option>
@@ -173,71 +173,75 @@
                 </div>
                 <div class="form-group">
                     <label for="gyf_post_companyLogo" class="col-sm-2 control-label">公司图标</label>
+
                     <div class="col-sm-6">
                         <input type="text" class="form-control col-sm-4" id="gyf_post_companyLogo" name="companyLogo" placeholder="" disabled>
                     </div>
+
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"></label>
-                    <button type="button" class="btn gyf_choice_btn" id="gyf_editor_wangeditor">富文本编辑器</button>
-                    <button type="button" class="btn gyf_choice_btn" id="gyf_editor_markdown">markdown编辑器</button>
-                    <a  id="gyf_postJob_markdown_introduce" href="https://laobubu.net/MarkdownIME/index.zh.html" target="view_window"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <button type="button" class="btn gyf_choice_btn" id="gyf_editor_wangeditor">富文本编辑器</button>
+            <button type="button" class="btn gyf_choice_btn" id="gyf_editor_markdown">markdown编辑器</button>
+            <a id="gyf_postJob_markdown_introduce" href="https://laobubu.net/MarkdownIME/index.zh.html" target="view_window"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+        </div>
         <div class="myedit-kuang">
-                <div class="form-group" id="gyf_description_all">
-                    <label for="gyf_post_description" class="control-label">职位详情</label>
-                    <div  id='gyf_post_description'>
-                    </div>
-                    <button type="button" class="btn gyf_view_btn" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button">预览</button>
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content" id="gyf_description_view">
+            <div class="form-group" id="gyf_description_all">
+                <label for="gyf_post_description" class="control-label">职位详情</label>
+                <div id='gyf_post_description'>
+                </div>
+                <button type="button" class="btn gyf_view_btn" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button">预览</button>
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" id="gyf_description_view">
 
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" id="gyf_companyIntroduce_all">
-                    <label for="gyf_post_companyIntroduce" class="control-label">公司介绍</label>
-                    <div id='gyf_post_companyIntroduce'>
-
-                    </div>
-                    <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_companyIntroduce_modal">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content" id="gyf_companyIntroduce_view">
-
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="form-group" id="gyf_companyIntroduce_all">
+                <label for="gyf_post_companyIntroduce" class="control-label">公司介绍</label>
+                <div id='gyf_post_companyIntroduce'>
 
                 </div>
-                <div class="form-group">
-                    <label for="gyf_post_applyApproach" class="control-label">申请方式</label>
-                    <div id="gyf_post_applyApproach">
-                        <!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
-                    </div>
-                    <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content" id="gyf_applyApproach_view">
+                <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_companyIntroduce_modal">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" id="gyf_companyIntroduce_view">
 
-                            </div>
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div class="form-group">
+                <label for="gyf_post_applyApproach" class="control-label">申请方式</label>
+                <div id="gyf_post_applyApproach">
+                    <!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
+                </div>
+                <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" id="gyf_applyApproach_view">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-5">
-                        <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
-                    </div>
-                </div>
-            </form>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
+            </div>
         </div>
+        </form>
+    </div>
     </div>
 </body>
 <script type="text/javascript">
+
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
        if(ans){
@@ -250,175 +254,182 @@
        }
     });
 
+
 </script>
 
 <script type="text/javascript">
-        let E = window.wangEditor;
-        let editor2 = new E('#gyf_post_description');
-        let editor3 = new E('#gyf_post_companyIntroduce');
-        let editor4 = new E('#gyf_post_applyApproach');
-        editor2.customConfig.menus = [
-            'head',
-            'bold',
-            'italic',
-            'underline',
-            'link',
-            'list',
-            'justify',
-            'table',
-            'undo',
-            'redo'
-        ];
-        editor3.customConfig.menus = [
-            'head',
-            'bold',
-            'italic',
-            'underline',
-            'link',
-            'list',
-            'justify',
-            'table',
-            'undo',
-            'redo'
-        ];
-        editor4.customConfig.menus = [
-            'head',
-            'bold',
-            'italic',
-            'underline',
-            'link',
-            'list',
-            'justify',
-            'table',
-            'undo',
-            'redo'
-        ];
-        editor2.customConfig.zIndex = '1';
-        editor3.customConfig.zIndex = '1';
-        editor4.customConfig.zIndex = '1';
-        let description;
-        let companyIntroduce;
-        let applyApproach;
-        let choice = 0;
-        $('#gyf_editor_markdown').on('click', function () {
-            $('#gyf_post_description').empty();
-            $('#gyf_post_companyIntroduce').empty();
-            $('#gyf_post_applyApproach').empty();
-            let addElement1 = `<div id="editor1" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-            //<pre id="logOut1"></pre>`;
-            let addElement2 = `<div id="editor2" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-            //<pre id="logOut2"></pre>`;
-            let addElement3 = `<div id="editor3" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-            // <pre id="logOut3"></pre>`;
-            $('#gyf_post_description').append(addElement1);
-            $('#gyf_post_companyIntroduce').append(addElement2);
-            $('#gyf_post_applyApproach').append(addElement3);
-            var editor1 = document.getElementById('editor1');
-            //	var logOut1 = document.getElementById('logOut1');
-            MarkdownIME.Enhance(editor1);
-            editor1.focus();
-            MarkdownIME.Utils.move_cursor_to_end(editor1);
-            MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+            let E = window.wangEditor;
+            let editor2 = new E('#gyf_post_description');
+            let editor3 = new E('#gyf_post_companyIntroduce');
+            let editor4 = new E('#gyf_post_applyApproach');
+            editor2.customConfig.menus = [
+                'head',
+                'bold',
+                'italic',
+                'underline',
+                'link',
+                'list',
+                'justify',
+                'table',
+                'undo',
+                'redo'
+            ];
+            editor3.customConfig.menus = [
+                'head',
+                'bold',
+                'italic',
+                'underline',
+                'link',
+                'list',
+                'justify',
+                'table',
+                'undo',
+                'redo'
+            ];
+            editor4.customConfig.menus = [
+                'head',
+                'bold',
+                'italic',
+                'underline',
+                'link',
+                'list',
+                'justify',
+                'table',
+                'undo',
+                'redo'
+            ];
+            editor2.customConfig.zIndex = '1';
+            editor3.customConfig.zIndex = '1';
+            editor4.customConfig.zIndex = '1';
+            let description;
+            let companyIntroduce;
+            let applyApproach;
+            let choice = 0;
+            $('#gyf_editor_markdown').on('click', function () {
+                $('#gyf_post_description').empty();
+                $('#gyf_post_companyIntroduce').empty();
+                $('#gyf_post_applyApproach').empty();
+                let addElement1 = `<div id="editor1" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                //<pre id="logOut1"></pre>`;
+                let addElement2 = `<div id="editor2" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                //<pre id="logOut2"></pre>`;
+                let addElement3 = `<div id="editor3" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                // <pre id="logOut3"></pre>`;
+                $('#gyf_post_description').append(addElement1);
+                $('#gyf_post_companyIntroduce').append(addElement2);
+                $('#gyf_post_applyApproach').append(addElement3);
+                var editor1 = document.getElementById('editor1');
+                //	var logOut1 = document.getElementById('logOut1');
+                MarkdownIME.Enhance(editor1);
+                editor1.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor1);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
-            var editor2 = document.getElementById('editor2');
-            //	var logOut2 = document.getElementById('logOut2');
-            MarkdownIME.Enhance(editor2);
-            editor2.focus();
-            MarkdownIME.Utils.move_cursor_to_end(editor2);
-            MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+                var editor2 = document.getElementById('editor2');
+                //	var logOut2 = document.getElementById('logOut2');
+                MarkdownIME.Enhance(editor2);
+                editor2.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor2);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
-            var editor3 = document.getElementById('editor3');
-            //	var logOut3 = document.getElementById('logOut3');
-            MarkdownIME.Enhance(editor3)
-            editor3.focus();
-            MarkdownIME.Utils.move_cursor_to_end(editor3);
-            MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-            //Load MathAddon.
-            MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-            // function log() {
-            // 	console.log.apply(console, arguments);
-            // 	var str = [].join.call(arguments, "");
-            // 	var text = document.createTextNode(str + "\n");
-            // 	logOut.insertBefore(text, logOut.firstChild);
-            // }
+                var editor3 = document.getElementById('editor3');
+                //	var logOut3 = document.getElementById('logOut3');
+                MarkdownIME.Enhance(editor3)
+                editor3.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor3);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+                //Load MathAddon.
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+                // function log() {
+                // 	console.log.apply(console, arguments);
+                // 	var str = [].join.call(arguments, "");
+                // 	var text = document.createTextNode(str + "\n");
+                // 	logOut.insertBefore(text, logOut.firstChild);
+                // }
 
-            // console.log($('#editor').html());
-            // description=$('#editor').html();
+                // console.log($('#editor').html());
+                // description=$('#editor').html();
 
-        });
-        $('#gyf_editor_wangeditor').on('click', function () {
-            $('#gyf_post_description').empty();
-            $('#gyf_post_companyIntroduce').empty();
-            $('#gyf_post_applyApproach').empty();
-            choice = 1;
-            editor2.create();
-            //	description= $('#gyf_post_description>div:last-child>*').html()
-            //editor2.txt.html();
-            editor3.create();
-            editor4.create();
-        });
-        $('#gyf_post_adress').cxSelect({
-            url: '../node_modules/cxselect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
-            selects: ['country', 'city', 'area'],  // 数组，请注意顺序
-            emptyStyle: 'none'
-        });
-        $(function () {
-            $("#gyf_post_expiryTime").datepicker();
-        });
-        $('#gyf_description_view_button').on('click', function () {
-            if (choice === 1) {
-                description = editor2.txt.html();
-            } else {
-                description = $('#gyf_post_description>*').html();
-            }
-            console.log(description);
-            $('#gyf_description_view').html(description);
-        });
-        $('#gyf_companyIntroduce_view_button').on('click', function () {
-            if (choice === 1) {
-                console.log(3);
-                companyIntroduce = editor3.txt.html();
-            } else {
-                companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
-            }
-            //$('#gyf_post_companyIntroduce>div:last-child>*').html()
-            $('#gyf_companyIntroduce_view').html(companyIntroduce);
-        });
-        $('#gyf_applyApproach_view_button').click(function () {
-            if (choice === 1) {
-                console.log(4);
-                applyApproach = editor4.txt.html();
-            } else {
-                applyApproach = $('#gyf_post_applyApproach>*').html();
-            }
+            });
+            $('#gyf_editor_wangeditor').on('click', function () {
+                $('#gyf_post_description').empty();
+                $('#gyf_post_companyIntroduce').empty();
+                $('#gyf_post_applyApproach').empty();
+                choice = 1;
+                editor2.create();
+                //	description= $('#gyf_post_description>div:last-child>*').html()
+                //editor2.txt.html();
+                editor3.create();
+                editor4.create();
+            });
+            $('#gyf_post_adress').cxSelect({
+                url: '../node_modules/cxselect/js/globalData.min.json', // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+                selects: ['country', 'city', 'area'],  // 数组，请注意顺序
+                emptyStyle: 'none'
+            });
+            $(function () {
+                $("#gyf_post_expiryTime").datepicker();
+            });
+            $('#gyf_description_view_button').on('click', function () {
+                if (choice === 1) {
+                    description = editor2.txt.html();
+                } else {
+                    description = $('#gyf_post_description>*').html();
+                }
+                console.log(description);
+                $('#gyf_description_view').html(description);
+            });
+            $('#gyf_companyIntroduce_view_button').on('click', function () {
+                if (choice === 1) {
+                    console.log(3);
+                    companyIntroduce = editor3.txt.html();
+                } else {
+                    companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
+                }
+                //$('#gyf_post_companyIntroduce>div:last-child>*').html()
+                $('#gyf_companyIntroduce_view').html(companyIntroduce);
+            });
+            $('#gyf_applyApproach_view_button').click(function () {
+                if (choice === 1) {
+                    console.log(4);
+                    applyApproach = editor4.txt.html();
+                } else {
+                    applyApproach = $('#gyf_post_applyApproach>*').html();
+                }
 
-            $('#gyf_applyApproach_view').html(applyApproach);
-        });
-        $('#gyf_post_button').click(function (e) {
-            if (choice === 1) {
-                description = editor2.txt.html();
-                companyIntroduce = editor3.txt.html();
-                applyApproach = editor4.txt.html();
-            } else {
-                description = $('#gyf_post_description>*').html();
-                companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
-                applyApproach = $('#gyf_post_applyApproach>*').html();
-            }
-            // $('#gyf_post_companyIntroduce>div:last-child>*').html()
-            let datas = $('#gyf_myform').serialize();
-            console.log(datas);
-            datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
-            // datas=JSON.stringify(datas);
-            // console.log(datas);
-            $.post('/postJob', datas).done(function (data) {
-                console.log('inner' + data);
-                data = data['max(id)'];
-                alert("提交成功");
-                window.location.href = './myposts.html';
-            }).fail(function (xhr, status) {
-                console.log('失败: ' + xhr.status + ', 原因: ' + status);
-            })
-        });
+                $('#gyf_applyApproach_view').html(applyApproach);
+            });
+            $('#gyf_post_button').click(function (e) {
+                let number = $('#gyf_myform').serialize();
+                console.log(number.indexOf('=&'));
+                if (number.indexOf('=&')!==-1) {
+                    alert("请填写全部信息");
+                } else {
+                    if (choice === 1) {
+                        description = editor2.txt.html();
+                        companyIntroduce = editor3.txt.html();
+                        applyApproach = editor4.txt.html();
+                    } else {
+                        description = $('#gyf_post_description>*').html();
+                        companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
+                        applyApproach = $('#gyf_post_applyApproach>*').html();
+                    }
+                    // $('#gyf_post_companyIntroduce>div:last-child>*').html()
+                    let datas = $('#gyf_myform').serialize();
+                  //  console.log(datas);
+                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
+                    // datas=JSON.stringify(datas);
+                    // console.log(datas);
+                    $.post('/postJob', datas).done(function (data) {
+                        console.log('inner' + data);
+                        data = data['max(id)'];
+                        alert("提交成功");
+                        window.location.href = './myposts.html';
+                    }).fail(function (xhr, status) {
+                        console.log('失败: ' + xhr.status + ', 原因: ' + status);
+                    })
+                }
+            });
 
 </script>
 <script src="../js/common.js"></script>
