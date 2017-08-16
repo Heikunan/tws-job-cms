@@ -230,7 +230,7 @@ $.get('/job_suggest',function (ans) {
     let str='';
     for (let i=0;i<ans.length;i++) {
         str+=`<div class="suggest_contain center-block">
-                <a href="#">
+                <a href="jobinfo.html?id=${ans[i].id}">
                     <img src="${ans[i].Logo}" alt="${ans[i].company}" class="img_suggest center-block">
                     <span>${ans[i].title}</span>
                 </a>
