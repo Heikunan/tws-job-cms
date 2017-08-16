@@ -460,19 +460,23 @@ app.post('/addOneUser', function(req, res) {
      */
 app.get('/getUserInfo', function(req, res) {
     if (req.session.user) {
-        let user = {};
-        user.email = req.session.user.email;
-        user.company = req.session.user.company;
-        user.address = req.session.user.address;
-        user.trade = req.session.user.trade;
-        user.id = req.session.user.id;
-        user.status = req.session.user.status;
-        user.identity = req.session.user.identity;
-        res.send(user);
+        let id = req.session.user.id;
+        let sql = `SELECT * FROM t_user WHERE id = ${id}`;
+        connection.query(sql,function (err,data) {
+            // let user = {};
+            // user.email = req.session.user.email;
+            // user.company = req.session.user.company;
+            // user.address = req.session.user.address;
+            // user.trade = req.session.user.trade;
+            // user.id = req.session.user.id;
+            // user.status = req.session.user.status;
+            // user.identity = req.session.user.identity;
+            // res.send(user);
+            res.send(data[0]);
+        });
     } else {
         res.send('no');
     }
-
 });
 
 app.get('/getuserinfofromsql', function (req, res) {
