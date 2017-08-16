@@ -39,7 +39,7 @@ $.get('/tjobcount',function (ans) {
         onPageChange: function (num, type) {
             $.post('/testjobs',{num:num},function (ans) {
                let str = '';
-               for(let i =1;i<ans.length;i++){
+               for(let i =0;i<ans.length;i++){
                    str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
