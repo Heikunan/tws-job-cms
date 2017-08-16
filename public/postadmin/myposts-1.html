@@ -37,7 +37,7 @@
             <th width="50">操作</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
         </tbody>
     </table>
 </div>
@@ -50,8 +50,34 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-
+<script>
+    let str = '';
+    $.get('/myposts', function (data) {
+        console.log('data: ' + JSON.stringify(data));
+        if (data==='no') {
+            alert('登陆过期，重新登录！');
+            top.location='../index.html'
+        }
+        else if (data.length === 0) {
+            $(`table`).html('暂时没有发布').css({
+                'position':'absolute',
+                'left':'50%',
+                "font-size":"20px",
+                "padding":"50%",
+                'marge':'50%'
+            });
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].category}</td></tr>`;
+                if (i === data.length - 1) {
+                    $(`#table-body`).html(str);
+                    $(".row-click-able").click(function () {
+                        top.location.href=$(this).data("href")
+                    });
+                }
+            }
+        }
+    });
 </script>
 
 </body>
