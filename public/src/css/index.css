@@ -340,7 +340,16 @@ a {
     margin-top: 20px;
     width: 280px;
     height: 150px;
+
+    opacity:0.70;
+    filter:alpha(opacity=70);
 }
+
+.img_suggest:hover {
+    opacity:0.9;
+    filter:alpha(opacity=90);
+}
+
 .title{
     width: 280px;
     height: 50px;
@@ -358,7 +367,6 @@ a {
 .suggest_contain{
     width:280px;
     text-align: center;
-    background-color: rgba(240, 255, 255, 0.5);
     margin-bottom: 80px;
 }
 
@@ -370,47 +378,38 @@ a {
     line-height: 28px;
     text-align: center;
     color: white;
-    background-color:#c0bcbc;
+    background-color:#9a9a9b;
     float: left;
 }
 
-
-
-.job_suggest p:hover {
-    color: #209b60;
-    text-decoration: underline;
-}
 .myfoot{
-
     background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
-
-
 }
+
 .myconta{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
 #my-footdiv{
     background-color: #222;
     color: #fff;
-
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-
 .ui:hover{
     color:#00B83F;
 }
+
 .ui{
     padding-bottom: 20px;
-
 }
+
 .myspan{
     padding-left: 50px;
     padding-right: 50px;
     padding-bottom: 30px;
     padding-top: 40px;
-
 }

@@ -1,4 +1,6 @@
 let express = require('express');
+let multer = require('multer');
+let fs = require('fs');
 let Bodyparser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let session = require('express-session');
@@ -25,7 +27,32 @@ let connection = mysql.createConnection({
     database: 'twsjob'
 });
 connection.connect();
+/*上传图片*/
+let createFolder = function(folder) {
+    try {
+        fs.accessSync(folder);
+    } catch (e) {
+        fs.mkdirSync(folder);
+    }
+};
 
+let uploadFolder = './upload/';
+
+createFolder(uploadFolder);
+
+// 通过 filename 属性定制
+let storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, uploadFolder); // 保存的路径，备注：需要自己创建
+    },
+    filename: function(req, file, cb) {
+        // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+        cb(null, cp.hex(file.fieldname + '-' + Date.now()) + file.originalname);
+    }
+});
+
+// 通过 storage 选项来对 上传行为 进行定制化
+let upload = multer({ storage: storage });
 
 /**连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
@@ -289,7 +316,7 @@ app.post('/resend', function (req, res) {
 
 //主页获取五条热门职位
 app.get('/job_suggest', function (req, res) {
-    var sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
+    let sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -373,8 +400,8 @@ app.post('/postJob', function (req, res) {
     // let addSqlParams=['1'];
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-    let addSql = 'INSERT INTO t_job(userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
+    let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -419,7 +446,7 @@ app.post('/isLike', function(req, res) {
 
     }
 
-})
+});
 app.post('/addOneLike', function(req, res) {
     if (req.session.user === undefined) {
         res.send('notlog');
@@ -436,7 +463,7 @@ app.post('/addOneLike', function(req, res) {
             }
         })
     }
-})
+});
 app.post('/addOneUser', function(req, res) {
         if (req.session.user === undefined) {
             res.send('notlog');
@@ -453,26 +480,21 @@ app.post('/addOneUser', function(req, res) {
                 }
             });
         }
-    })
+    });
     /**#9获得用户详细信息
     输入：
     输出：req.session.user除密码之外的所有信息
      */
 app.get('/getUserInfo', function(req, res) {
     if (req.session.user) {
-        let user = req.session.user;
-        // user.email = req.session.user.email;
-        // user.company = req.session.user.company;
-        // user.address = req.session.user.address;
-        // user.trade = req.session.user.trade;
-        // user.id = req.session.user.id;
-        // user.status = req.session.user.status;
-        // user.identity = req.session.user.identity;
-        res.send(user);
+        let id = req.session.user.id;
+        let sql = `SELECT * FROM t_user WHERE id = ${id}`;
+        connection.query(sql,function (err,data) {
+            res.send(data[0]);
+        });
     } else {
         res.send('no');
     }
-
 });
 
 app.get('/getuserinfofromsql', function (req, res) {

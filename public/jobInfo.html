@@ -3,15 +3,17 @@
 
 <head>
 	<meta charset="utf-8">
-	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js">
-
-	</script>
+	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src='./src/semantic.min.js'></script>
+	<!-- <script src="../node_modules/social-share.js/dist/js/social-share.min.js"></script> -->
+	<script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+
 	<link rel="stylesheet" type="text/css" href="./src/css/jobInfo.css">
-	
+	<link rel="stylesheet" href="../node_modules/social-share.js/dist/css/share.min.css">
+
 	<title>JobInfo</title>
 </head>
 
@@ -58,7 +60,7 @@
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:black;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
+							<div class="ui red button" style="background-color:#c03a3a;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
 							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
 							
 							</a>
@@ -79,7 +81,7 @@
 				<div class="gyf_all_left col-xs-8">
 					<div class="ui divider gyf_divider"></div>
 					<div class="row gyf_About">
-						<h2 style="padding-left: 0.5em"> 关于工作</h2>
+						<h2 style="padding-left: 0.5em" class="left"> 关于工作</h2>
 						<div class="row col-md-8 gyf_about_row">
 							<div class="col-xs-5 col-md-5 gyf_about_content">工作性质：<strong id="gyf_job_type">Permanent</strong></div>
 							<div class="col-xs-5 col-md-5 gyf_about_content">工作种类：<strong id="gyf_job_category">Permanent</strong></div>
@@ -95,16 +97,18 @@
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="Tags gyf_tags" style="clear: both;">
-						<h2>关键字</h2>
-						<span class="label label-warning gyf_label" id="gyf_jobInfo_Education"></span>
-						<span class="label label-default gyf_label" id="gyf_jobInfo_tag1"></span>
-						<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2"></span>
-						<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1"></span>
-						<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2"></span>
+						<h2 class="left">关键字</h2>
+						<h2>
+							<span class="label gyf_label_main" id="gyf_jobInfo_Education"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_tag1"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_tag2"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_benefits1"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_benefits2"></span>
+						</h2>
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="gyf_descript">
-						<h2>职位详情</h2>
+						<h2 class="left">职位详情</h2>
 						<div class="description_content" id="gyf_descript_content">
 
 
@@ -112,15 +116,15 @@
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="company_introduce">
-						<h2>公司介绍</h2>
+						<h2 class="left">公司介绍</h2>
 						<div class="company_introduce_content" id="gyf_company_introduce_content">
 						</div>
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="gyf_apply_Approach">
-						<h2>申请方式</h2>
+						<h2 class="left">申请方式</h2>
 						<div class="gyf_apply_content" id="gyf_apply_content">
-							
+
 						</div>
 
 					</div>
@@ -137,17 +141,12 @@
 		 					</button>
 						</div>
 					</div>
-					<div class="gyf_panel panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Are you looking for a job?</h3>
-						</div>
-						<div class="panel-body">
-							When you create a Developer Story, we’ll accelerate your matches and get you in front of employers ASAP.
-						</div>
-						<button class="gyf_panel_button ">Create a Developter Story</button>
+
+					<div class="social-share" data-description="一键分享到微博，QQ空间，腾讯微博，人人，豆瓣" data-wechat-qrcode-title="扫一扫" data-wechat-qrcode-helper="扫码分享" >
+						分享至:&nbsp;
 					</div>
 					<div class="gyf_more_jobs">
-						<h2>Jobs you might like</h2>
+						<h2 class="right">你可能还想看：</h2>
 						<div id="gyf_list">
 						</div>
 					</div>
@@ -155,8 +154,10 @@
 				</div>
 			</div>
 		</div>
-		</div>
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv"><p>© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p></div>
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv">
+		<p>© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p>
+	</div>
 </body>
 <script type="text/javascript">
 	let status;
@@ -168,7 +169,7 @@
 		datas.id = myurl[1];
 		$.post('/getJobDetail', datas).done(function (data) {
 			data = data[0];
-			console.log('data[0]:'+data);
+			console.log('data[0]:' + data);
 			$('#gyf_postInfo_image').attr('src', data.Logo);
 			$('#gyf_title').text(data.title);
 			$('#gyf_inner_company_name').text(data.company);
@@ -195,25 +196,23 @@
 			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 			$("#gyf_jobInfo_Education").text(data.education);
 			$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
-			jobId=data.id;
-			num=data.likes+1;
-		//	console.log('jobId:'+jobId);
-			$.post('/isLike',{'id':jobId}).done(function(reply){
-				if(reply==='false' || 'first_notlog'){
+			jobId = data.id;
+			num = data.likes + 1;
+			//	console.log('jobId:'+jobId);
+			$.post('/isLike', { 'id': jobId }).done(function (reply) {
+				if (reply === 'false' || 'first_notlog') {
 					console.log('into /islike');
 					console.log(reply);
-					status='可收藏';
-				}else if(reply==='true'){
-					status='已收藏';
+					status = '可收藏';
+				} else if (reply === 'true') {
+					status = '已收藏';
 				}
-			}).fail(function(xhr,status){
+			}).fail(function (xhr, status) {
 				console.log('500服务器出错');
 			})
 		}).fail(function (xhr, status) {
 			console.log('失败: ' + xhr.status + ', 原因: ' + status);
 		});
-		
-		
 		let category = $('#gyf_job_category').text();
 		let type = $('#gyf_job_type').text();
 		let title = $('#gyf_title').text();
@@ -228,14 +227,16 @@
 			function (data) {
 				let suggestion = '';
 				for (let object of data) {
-					let tags=object.tags.split(',');
+					let tags = object.tags.split(',');
 					suggestion = suggestion +
 						`<div class="list-group">
 								<a href="/jobInfo.html?id=${object.id}" class="list-group-item success">
 									<h3 class="list-group-item-heading"> ${object.title} </h3>
 									<p class="list-group-item-text"><strong> ${object.company + object.city + object.country}</strong></p>
+									<h3>
 									<span class="label label-success gyf_label">${tags[0]}</span>
 									<span class="label label-success gyf_label">${tags[1]}</span>
+									</h3>
 								</a>
 							</div>`;
 				}
@@ -243,52 +244,53 @@
 			}).fail(function (xhr, status) {
 				console.log('失败: ' + xhr.status + ', 原因: ' + status);
 			})
-			
+
 	}
 	$('#gyf_jobInfo_post').on('click', function () {
 		$.get('/getUserInfo', function (ans) {
-			console.log('ans:'+ans);
+			console.log('ans:' + ans);
 			if (ans !== 'no') {
-				if (ans.identity === "职位发布者" && ans.status==="已审核") {
+				if (ans.identity === "职位发布者" && ans.status === "已审核") {
 					window.location.href = '/postJob';
 				} else if (ans.identity === "管理员") {
 					window.location.href = '/postJob';
-				}else if(ans.identity === "职位发布者" && ans.status==="待审核"){
-						alert("不好意思，你没有发布权限,请联系微信客服");
+				} else if (ans.identity === "职位发布者" && ans.status === "待审核") {
+					alert("不好意思，你没有发布权限,请联系微信客服");
 				}
-			} else{
+			} else {
 				alert('请先登录');
 			}
-		});	
+		});
 	});
-	$('#gyf_like_button').on('click',function(){
+	$('#gyf_like_button').on('click', function () {
 		console.log('gyf_like_button')
-		console.log('status:'+status);
-			if(status==='可收藏'){
-				$.post('/addOneUser',{'id':jobId}).done(function(good){
-							console.log('into addOneuser');
-							console.log(good);
-							if(good!=='notlog'){
-								$('#gyf_like_number').text(num);
-								//console.log('addOneUser'+good);
-								$.post('/addOneLike',{'id':jobId,'num':num}).done(function(result){
-									// console.log('into /addOneLike');
-									// console.log(result);
-									status='已收藏';
-							// console.log('addOneLike'+result);
-									}).fail(function(xhr,status){
-										console.log('500服务器出错');
-									});
-							}else{
-								alert("请先登录");
-							}
-						}).fail(function(xhr,status){
-								console.log('500服务器出错');
-						})
-				}else if(status==='已收藏'){
-					alert('此职位你已经收藏过了');
-				}				
-			});
+		console.log('status:' + status);
+		if (status === '可收藏') {
+			$.post('/addOneUser', { 'id': jobId }).done(function (good) {
+				console.log('into addOneuser');
+				console.log(good);
+				if (good !== 'notlog') {
+					$('#gyf_like_number').text(num);
+					//console.log('addOneUser'+good);
+					$.post('/addOneLike', { 'id': jobId, 'num': num }).done(function (result) {
+						// console.log('into /addOneLike');
+						// console.log(result);
+						status = '已收藏';
+						// console.log('addOneLike'+result);
+					}).fail(function (xhr, status) {
+						console.log('500服务器出错');
+					});
+				} else {
+					alert("请先登录");
+				}
+			}).fail(function (xhr, status) {
+				console.log('500服务器出错');
+			})
+		} else if (status === '已收藏') {
+			alert('此职位你已经收藏过了');
+		}
+	});
+
 </script>
 <script src="./js/common.js"></script>
 
