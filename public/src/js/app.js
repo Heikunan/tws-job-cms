@@ -82,9 +82,7 @@ $.get('/getcategory',function (ans) {
     let str = '';
     for(let i =0;i<ans.length;i++){
         str += `<div class="dropdown-menu-contain dropdown-menu-zwlb">
-						<div class="dropdown-menu-text">
-							${ans[i].content}
-						</div>
+						<div class="dropdown-menu-text">${ans[i].content}</div>
 					</div>`
     }
     $('.zwlb').empty().append(str);
@@ -94,9 +92,7 @@ $.get('/getjobtype',function (ans) {
     let str = '';
     for(let i =0;i<ans.length;i++){
         str += `<div class="dropdown-menu-contain dropdown-menu-zwzl">
-						<div class="dropdown-menu-text">
-							${ans[i].content}
-						</div>
+						<div class="dropdown-menu-text">${ans[i].content}</div>
 					</div>`
     }
     $('.zwzl').empty().append(str);
@@ -143,23 +139,24 @@ $(document).ready(function () {
         };
        $.post('/searchjobs',mydata,function (ans) {
            let mynum = ans.length;
-           if(mynum%10 === 0){
-               mynum = parseInt(mynum/10);
-           }else {
-               mynum = parseInt(mynum/10)+1;
-           }
-           $('#fenye').jqPaginator({
-               totalPages: mynum,
-               visiblePages: 10,
-               currentPage: 1,
-               onPageChange: function (num, type) {
-                   let currentnum = (num-1)*10;
-                   let str = '';
-                   if(num !== mynum){
-                       for(let i = currentnum ;i<=(currentnum+9);i++){
-                           let benefits = ans[i].benefits.split(',');
-                           let tags = ans[i].tags.split(',');
-                           str += `<div class="panel job-contain panel-default">
+           if(mynum>=10){
+               if(mynum%10 === 0){
+                   mynum = parseInt(mynum/10);
+               }else {
+                   mynum = parseInt(mynum/10)+1;
+               }
+               $('#fenye').jqPaginator({
+                   totalPages: mynum,
+                   visiblePages: 10,
+                   currentPage: 1,
+                   onPageChange: function (num, type) {
+                       let currentnum = (num-1)*10;
+                       let str = '';
+                       if(num !== mynum){
+                           for(let i = currentnum ;i<=(currentnum+9);i++){
+                               let benefits = ans[i].benefits.split(',');
+                               let tags = ans[i].tags.split(',');
+                               str += `<div class="panel job-contain panel-default">
 					<a href="jobinfo.html?id=${ans[i].id}">
 						<div class="panel-body">
 							<div class="job-card">
@@ -188,10 +185,54 @@ $(document).ready(function () {
 						</div>
 					</a>
 				</div>`
+                           }
+                           $('#myleft-job-all').empty().append(str);
+                       }else if(num === mynum){
+                           for(let i = currentnum;i<ans.length;i++){
+                               let benefits = ans[i].benefits.split(',');
+                               let tags = ans[i].tags.split(',');
+                               str += `<div class="panel job-contain panel-default">
+					<a href="jobinfo.html?id=${ans[i].id}">
+						<div class="panel-body">
+							<div class="job-card">
+								<div class="job-primary">
+									<div class="info-primary">
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
+										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
+									</div>
+									<div class="info-company">
+										<div class="company-text">
+											<h3 class="name">${ans[i].company}</h3>
+											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
+										</div>
+									</div>
+								</div>
+								<div class="job-tags">
+									<div class="job-author">
+										<p>${benefits[0]}<em class="vline"></em>${benefits[1]}<img src="${ans[i].Logo}"></p>
+									</div>
+									<span>${tags[0]}</span><span>${tags[1]}</span>
+								</div>
+								<div class="job-time">
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>`
+                           }
+                           $('#myleft-job-all').empty().append(str);
                        }
-                       $('#myleft-job-all').empty().append(str);
-                   }else if(num === mynum){
-                       for(let i = currentnum;i<ans.length;i++){
+                   }
+               });
+           }else if(mynum>0){
+               $('#fenye').jqPaginator({
+                   totalPages: 1,
+                   visiblePages: 10,
+                   currentPage: 1,
+                   onPageChange: function (num, type) {
+                       let str = '';
+                       for(let i = 0 ;i<mynum;i++){
                            let benefits = ans[i].benefits.split(',');
                            let tags = ans[i].tags.split(',');
                            str += `<div class="panel job-contain panel-default">
@@ -226,8 +267,10 @@ $(document).ready(function () {
                        }
                        $('#myleft-job-all').empty().append(str);
                    }
-               }
-           });
+               });
+           }else {
+               $('#myleft-job-all').empty();
+           }
        }) 
     });
 });
