@@ -437,6 +437,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 app.post('/isLike', function(req, res) {
     let jobId = req.body.id;
+    
     if (req.session.user === undefined) {
         res.send('first_notlog');
     } else {
