@@ -36,7 +36,7 @@ let createFolder = function(folder) {
     }
 };
 
-let uploadFolder = './upload/';
+let uploadFolder = './public/upload/';
 
 createFolder(uploadFolder);
 
@@ -90,6 +90,17 @@ app.get('/gettotal', function (req, res) {
         if (err) console(err);
         res.send({length: result.length});
     });
+});
+
+/*图片上传*/
+app.post('/upload', upload.single('logo'), function(req, res, next) {
+    let file = req.file;
+    let arr = file.path.split("\\");
+    let sql = `UPDATE t_user SET companylogo = '${arr[2]}' WHERE id = '${req.session.user.id}'`;
+    connection.query(sql,function (err,data) {
+        if(err) throw err;
+    });
+    res.send("ok");
 });
 
 /* 进入用户个人中心*/
@@ -515,7 +526,7 @@ app.get('/getuserinfofromsql', function (req, res) {
         }
         req.session.user = data[0]
     })
-})
+});
 
 
 /**
@@ -524,8 +535,8 @@ app.get('/getuserinfofromsql', function (req, res) {
  * 输出：1或0，表示用户信息是否更新成功
  */
 app.post('/changeUserInfo', urlencodedParser, function (req, res) {
-    let sql = 'UPDATE t_user SET company = ?,address=?,trade=? WHERE id = ? ';
-    let data = [req.body.company, req.body.address, req.body.trade, req.session.user.id];
+    let sql = 'UPDATE t_user SET company = ?,address=?,trade=?,name=? WHERE id = ? ';
+    let data = [req.body.company, req.body.address, req.body.trade,req.body.name, req.session.user.id];
     connection.query(sql, data, function (err, reply) {
         if (err) {
             console.log('error!' + err);
@@ -539,7 +550,7 @@ app.post('/changeUserInfo', urlencodedParser, function (req, res) {
             }
             req.session.user = data[0]
             res.send('ok')
-        })
+        });
         console.log('数据库有' + reply.affectedRows + '条数据修改成功 ');
     });
 });

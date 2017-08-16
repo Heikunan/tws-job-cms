@@ -13,27 +13,42 @@
     </style>
 </head>
 <body>
+<div class="container" style="margin: 20px auto;">
+    <div id="uploadForm" class="well">
+        <h2>公司LOGO上传</h2>
+        <br/>
+        <input type="file" name="logo" id="myfile">
+        <br/>
+        <button id="upload" type="button" class="btn btn-primary">上传</button>
+    </div>
+</div>
 <form class=" form-horizontal" id="myform">
     <div class="form-group">
-        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+        <label for="inputCompany" class="col-sm-2 control-label">姓名</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="inputName" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
         <div class="col-sm-8">
             <input type="email" class="form-control" id="inputEmail" disabled>
         </div>
     </div>
     <div class="form-group">
-        <label for="inputCompany" class="col-sm-2 control-label">Company</label>
+        <label for="inputCompany" class="col-sm-2 control-label">公司名称</label>
         <div class="col-sm-8">
             <input type="text" class="form-control" id="inputCompany" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+        <label for="inputAddress" class="col-sm-2 control-label">公司地址</label>
         <div class="col-sm-8">
             <input type="text" class="form-control" id="inputAddress" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="inputTrade" class="col-sm-2 control-label">Trade</label>
+        <label for="inputTrade" class="col-sm-2 control-label">公司行业</label>
         <div class="col-sm-8">
             <input type="text" class="form-control" id="inputTrade" readonly>
         </div>
@@ -45,7 +60,22 @@
         </div>
     </div>
 </form>
-
+<script>
+    $('#upload').on('click',function () {
+        let formData = new FormData();
+        formData.append('logo', $('#myfile')[0].files[0]);
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            alert('上传成功');
+        }).fail(function(res) {});
+    });
+</script>
 <script>
     //    getUserInfo();
     //
@@ -56,31 +86,33 @@
             alert('登陆过期，请重新登录！')
             top.location = '../index.html'
         }
-        $('#inputEmail').val(data.email)
-        $('#inputCompany').val(data.company)
-        $('#inputAddress').val(data.address)
-        $('#inputTrade').val(data.trade)
+        $('#inputEmail').val(data.email);
+        $('#inputCompany').val(data.company);
+        $('#inputAddress').val(data.address);
+        $('#inputTrade').val(data.trade);
+        $('#inputName').val(data.name);
     });
     //监听我的资料中的编辑按钮
     $('#myform button').click(function () {
         if ($('#idb').html() === '编辑') {
             $('#myform .form-control').attr('readonly', false);
-            $('#myform button').html('完成')
+            $('#myform button').html('提交信息')
         } else {
             //调用修改信息的函数
-            changeInfo($('#inputCompany').val(), $('#inputAddress').val(), $('#inputTrade').val());
-            $('#myform button').html('编辑')
+            changeInfo($('#inputCompany').val(), $('#inputAddress').val(), $('#inputTrade').val(),$('#inputName').val());
+            $('#myform button').html('编辑');
             $('#myform .form-control').attr('readonly', true);
         }
     });
-    function changeInfo(com, add, tra) {
+    function changeInfo(com,add,tra,nam) {
         $.ajax({
             url: '/changeUserInfo',
             method: 'post',
             data: {
                 company: com,
                 address: add,
-                trade: tra
+                trade: tra,
+                name:nam
             }
         }).done(function (date) {
             if (date === 'error') {
