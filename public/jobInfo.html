@@ -10,8 +10,10 @@
 	<script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+
 	<link rel="stylesheet" type="text/css" href="./jobInfo.css">
 	<link rel="stylesheet" href="../node_modules/social-share.js/dist/css/share.min.css">
+
 	<title>JobInfo</title>
 </head>
 
@@ -58,7 +60,7 @@
 					</div>
 					<div class="gyf_share col-md-4">
 						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button" style="background-color:black;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
+							<div class="ui red button" style="background-color:#c03a3a;" id="gyf_like_button"><i class="heart icon"></i> Like </div>
 							<a class="ui basic  left pointing label" style=" border-color:black" id="gyf_like_number">
 							
 							</a>
@@ -79,7 +81,7 @@
 				<div class="gyf_all_left col-xs-8">
 					<div class="ui divider gyf_divider"></div>
 					<div class="row gyf_About">
-						<h2 style="padding-left: 0.5em"> 关于工作</h2>
+						<h2 style="padding-left: 0.5em" class="left"> 关于工作</h2>
 						<div class="row col-md-8 gyf_about_row">
 							<div class="col-xs-5 col-md-5 gyf_about_content">工作性质：<strong id="gyf_job_type">Permanent</strong></div>
 							<div class="col-xs-5 col-md-5 gyf_about_content">工作种类：<strong id="gyf_job_category">Permanent</strong></div>
@@ -95,16 +97,18 @@
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="Tags gyf_tags" style="clear: both;">
-						<h2>关键字</h2>
-						<span class="label label-warning gyf_label" id="gyf_jobInfo_Education"></span>
-						<span class="label label-default gyf_label" id="gyf_jobInfo_tag1"></span>
-						<span class="label label-primary gyf_label" id="gyf_jobInfo_tag2"></span>
-						<span class="label label-success gyf_label" id="gyf_jobInfo_benefits1"></span>
-						<span class="label label-info gyf_label" id="gyf_jobInfo_benefits2"></span>
+						<h2 class="left">关键字</h2>
+						<h2>
+							<span class="label gyf_label_main" id="gyf_jobInfo_Education"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_tag1"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_tag2"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_benefits1"></span>
+							<span class="label gyf_label_main" id="gyf_jobInfo_benefits2"></span>
+						</h2>
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="gyf_descript">
-						<h2>职位详情</h2>
+						<h2 class="left">职位详情</h2>
 						<div class="description_content" id="gyf_descript_content">
 
 
@@ -112,13 +116,13 @@
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="company_introduce">
-						<h2>公司介绍</h2>
+						<h2 class="left">公司介绍</h2>
 						<div class="company_introduce_content" id="gyf_company_introduce_content">
 						</div>
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div class="gyf_apply_Approach">
-						<h2>申请方式</h2>
+						<h2 class="left">申请方式</h2>
 						<div class="gyf_apply_content" id="gyf_apply_content">
 
 						</div>
@@ -137,23 +141,12 @@
 		 					</button>
 						</div>
 					</div>
+
 					<div class="social-share" data-description="一键分享到微博，QQ空间，腾讯微博，人人，豆瓣" data-wechat-qrcode-title="扫一扫" data-wechat-qrcode-helper="扫码分享" >
 						
 					</div>
-
-
-
-					<!-- <div class="gyf_panel panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Are you looking for a job?</h3>
-						</div>
-						<div class="panel-body">
-							When you create a Developer Story, we’ll accelerate your matches and get you in front of employers ASAP.
-						</div>
-						<button class="gyf_panel_button ">Create a Developter Story</button>
-					</div> -->
 					<div class="gyf_more_jobs">
-						<h2>Jobs you might like</h2>
+						<h2 class="right">你可能还想看：</h2>
 						<div id="gyf_list">
 						</div>
 					</div>
@@ -240,8 +233,10 @@
 								<a href="/jobInfo.html?id=${object.id}" class="list-group-item success">
 									<h3 class="list-group-item-heading"> ${object.title} </h3>
 									<p class="list-group-item-text"><strong> ${object.company + object.city + object.country}</strong></p>
+									<h3>
 									<span class="label label-success gyf_label">${tags[0]}</span>
 									<span class="label label-success gyf_label">${tags[1]}</span>
+									</h3>
 								</a>
 							</div>`;
 				}

@@ -13,7 +13,7 @@
         <script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
         <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../src/semantic.min.css">
-        <link rel="stylesheet" type="text/css" href="../jobP.css">
+        <link rel="stylesheet" type="text/css" href="../src/css/jobP.css">
         <link rel="stylesheet" type="text/css" href="../datepicker/css/jquery-ui.css" />
         <script type="text/javascript">
             $.cxSelect.defaults.url = '../node_modules/cxselect/js/globalData.min.json';
@@ -112,10 +112,12 @@
                 <div class="form-group">
                     <label for="gyf_post_adress" class="col-sm-2 control-label">工作地点</label>
                     <div class="col-sm-6" id="gyf_post_adress">
-                        <select class="country" data-value="中国" id="gyf_post_country" name="country"></select>
-                        <select class="city" data-value="广东" id="gyf_post_city" name="city"></select>
-                        <select class="area" data-value="深圳" id="gyf_post_area" name="area"></select>
-                    </div>
+                        <div class="form-inline">
+                            <select class="country form-control" data-value="中国" id="gyf_post_country" name="country"></select>
+                            <select class="city form-control" data-value="广东" id="gyf_post_city" name="city"></select>
+                            <select class="area form-control" data-value="深圳" id="gyf_post_area" name="area"></select>
+                        </div>
+                     </div>
                 </div>
                 <div class="form-group">
                     <label for="gyf_post_salary" class="col-sm-2 control-label">月<i class = 'space2'></i>薪</label>
@@ -170,22 +172,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="gyf_post_companyLogo" class="col-sm-2 control-label">LOGO地址</label>
+                    <label for="gyf_post_companyLogo" class="col-sm-2 control-label">公司图标</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="gyf_post_companyLogo" name="companyLogo" placeholder="https://xxxxxx.com">
+                        <input type="text" class="form-control col-sm-4" id="gyf_post_companyLogo" name="companyLogo" placeholder="https://xxxxxx.com">
+                    </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label"></label>
                     <button type="button" class="btn gyf_choice_btn" id="gyf_editor_markdown">markdown编辑器</button>
                     <button type="button" class="btn gyf_choice_btn" id="gyf_editor_wangeditor">富文本编辑器</button>
-
                 </div>
+        <div class="myedit-kuang">
                 <div class="form-group" id="gyf_description_all">
-                    <label for="gyf_post_description" class="col-sm-2 control-label">职位详情</label>
-                    <div class="col-sm-8" id='gyf_post_description'>
-                        <!-- <div id="editor" spellcheck="false" contenteditable="true"><p><br></p></div>
-                      <pre id="logOut"></pre> -->
+                    <label for="gyf_post_description" class="control-label">职位详情</label>
+                    <div  id='gyf_post_description'>
                     </div>
                     <button type="button" class="btn gyf_view_btn" data-toggle="modal" data-target="#gyf_description_modal" id="gyf_description_view_button">预览</button>
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_description_modal">
@@ -197,8 +198,8 @@
                     </div>
                 </div>
                 <div class="form-group" id="gyf_companyIntroduce_all">
-                    <label for="gyf_post_companyIntroduce" class="col-sm-2 control-label">公司介绍</label>
-                    <div class="col-sm-8" id='gyf_post_companyIntroduce'>
+                    <label for="gyf_post_companyIntroduce" class="control-label">公司介绍</label>
+                    <div id='gyf_post_companyIntroduce'>
 
                     </div>
                     <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_companyIntroduce_modal" id="gyf_companyIntroduce_view_button">预览</button>
@@ -212,8 +213,8 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="gyf_post_applyApproach" class="col-sm-2 control-label">申请方式</label>
-                    <div class="col-sm-8" id="gyf_post_applyApproach">
+                    <label for="gyf_post_applyApproach" class="control-label">申请方式</label>
+                    <div id="gyf_post_applyApproach">
                         <!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
                     </div>
                     <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
@@ -225,6 +226,7 @@
                         </div>
                     </div>
                 </div>
+        </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-5">
                         <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
@@ -234,13 +236,13 @@
         </div>
     </div>
 </body>
-
 <script type="text/javascript">
+
 
 </script>
 
 <script type="text/javascript">
-        var E = window.wangEditor;
+        let E = window.wangEditor;
         let editor2 = new E('#gyf_post_description');
         let editor3 = new E('#gyf_post_companyIntroduce');
         let editor4 = new E('#gyf_post_applyApproach');

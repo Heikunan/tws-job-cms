@@ -30,16 +30,19 @@ overflow-y:scroll;
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: scroll;
+	border: 1px solid black;
 }
 #editor2{
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: scroll;
+	border: 1px solid black;
 }
 #editor3{
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: scroll;
+	border: 1px solid black;
 }
 #ui-datepicker-div{
 	display: none;
@@ -59,4 +62,7 @@ overflow-y:scroll;
 }
 #gyf_postJob_markdown_introduce:visited{
 	color: black;
+}
+.myedit-kuang{
+	margin: 0 100px ;
 }
