@@ -67,7 +67,9 @@
 .gyf_icon{
 	margin-right: 1em;
 }
-
+#gyf_like_button{
+	background-color: grey;
+}
 .gyf_more_jobs{
 	margin-top: 2em;
 }
