@@ -110,21 +110,22 @@ app.post('/searchjobs', urlencodedParser, function(req, res) {
 /*
 #5查看职位详情
  */
-app.get('/getJobDetail/id=:id', function(req, res) {
-    res.sendFile(__dirname + "/public/" + "jobInfo.html");
-});
-app.post('/getJobDetail/id=:id', function(req, res) {
-    console.log(req.body);
-    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
-    connection.query(sql, function(err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.status(500).send('服务器发生错误');
-        } else {
-            res.send(result);
-        }
-    });
-});
+// app.get('/getJobDetail/id=:id', function(req, res) {
+//     res.sendFile(__dirname + "/public/" + "jobInfo.html");
+// });
+// app.post('/getJobDetail/id=:id', function(req, res) {
+//     console.log(req.body);
+//     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
+//     connection.query(sql, function(err, result) {
+//         if (err) {
+//             console.log('[SELECT ERROR] - ', err.message);
+//             res.status(500).send('服务器发生错误');
+//         } else {
+//             console.log(result);
+//             res.send(result);
+//         }
+//     });
+// });
 
 /*在详细页面得到推荐工作
  */
@@ -365,7 +366,7 @@ app.post('/getJobDetail', urlencodedParser, function(req, res) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         } else {
-            //   console.log(result);
+             console.log(result);
             res.send(result);
         }
     });
@@ -776,5 +777,41 @@ let server = app.listen(8081, function() {
 
 
 app.get('/hotjob', function(req, res) {
-
+    let sql="select * from t_hotjob,t_job where t_hotjob.jobid=t_job.id"
+    connection.query(sql,function (err,hotjobs) {
+        console.log(hotjobs);
+       res.send(hotjobs);
+    });
 });
+
+///***删除hotjob里的工作id**////
+app.post('/deletehotjobs',urlencodedParser,function (req,res) {
+    let jobsid = req.body.jobsid;
+    let sql = "delete from t_hotjob where jobid =?";
+    for (let i = 0; i < jobsid.length; i++) {
+        connection.query(sql, parseInt(jobsid[i]), function(err, reply) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+    res.send(true);
+})
+
+////***增加Hotjob表里的工作id****/////////
+app.post('/addhotjobs',urlencodedParser,function (req,res) {
+    let jobsid = req.body.jobsid;
+    let sql = "insert into t_hotjob (jobid) values (?)";
+    for (let i = 0; i < jobsid.length; i++) {
+        connection.query(sql, parseInt(jobsid[i]), function(err, reply) {
+            if (err) {
+                res.send(false);
+            }else{
+                if(i===jobsid.length-1){
+                    res.send(true);
+                }
+            }
+
+        });
+    }
+})
