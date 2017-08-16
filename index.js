@@ -289,7 +289,7 @@ app.post('/resend', function (req, res) {
 
 //主页获取五条热门职位
 app.get('/job_suggest', function (req, res) {
-    var sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
+    let sql = 'select * from t_hotjob ,t_job where t_hotjob.jobid = t_job.id';
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -419,7 +419,7 @@ app.post('/isLike', function(req, res) {
 
     }
 
-})
+});
 app.post('/addOneLike', function(req, res) {
     if (req.session.user === undefined) {
         res.send('notlog');
@@ -436,7 +436,7 @@ app.post('/addOneLike', function(req, res) {
             }
         })
     }
-})
+});
 app.post('/addOneUser', function(req, res) {
         if (req.session.user === undefined) {
             res.send('notlog');
@@ -453,7 +453,7 @@ app.post('/addOneUser', function(req, res) {
                 }
             });
         }
-    })
+    });
     /**#9获得用户详细信息
     输入：
     输出：req.session.user除密码之外的所有信息
