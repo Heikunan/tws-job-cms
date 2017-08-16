@@ -5,11 +5,11 @@ $(document).ready(function () {
       for(let i=0;i<users.length;i++){
       result+=`
           <tr class="text-c">
-              <td><input type="checkbox" checked="" name="check"/></td>
+              <td><input type="checkbox"/></td>
               <td>${users[i].id}</td>
               <td>${users[i].email}</td>
               <td>${users[i].identity}</td>
-              <td>${users[i].status}</td>
+              <td>${users[i].status},${users[i].isactive?'已激活':'未激活'}</td>
               <td class="f-14">
                   <a title="编辑" onclick="admin_role_check(this,${users[i].id})" style="text-decoration:none">
                   <i class="Hui-iconfont">&#xe6df;</i></a> 
@@ -27,6 +27,7 @@ $(document).ready(function () {
        }
    });
 })
+
 
 /*审核单个用户*/
 function admin_role_check(obj,id){
