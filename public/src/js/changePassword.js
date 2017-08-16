@@ -1,4 +1,3 @@
-'use strict';
 let email='';
 function resetPassword() {
     email=$('.resetPassword_text').val();
@@ -8,7 +7,7 @@ function resetPassword() {
         success: function(res){
             if(res!=='fail'){
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class="alert">验证码已发送至您的邮箱，请注意查收</div>');
+                $('.flash_container').append('<div class="alert">验证码正发送至您的邮箱，请等待！</div>');
                 hide();
                 $('#resetPassword_frame').hide();
                 $('#login_frame').show();
@@ -45,7 +44,7 @@ function login() {
             success: function (reply) {
                 console.log(reply);
                 if (reply.affectedRows === 1) {
-                    window.location.assign('/');//前端跳转可以，用res.redirect等都不行
+                    window.location.assign('/');
                 }
             },
             error: function (err) {
@@ -56,5 +55,5 @@ function login() {
 }
 
 function hide() {
-    $('.alert').delay(1000).hide(0);
+    $('.alert').delay(2000).hide(0);
 }

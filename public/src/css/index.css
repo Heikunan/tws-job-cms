@@ -305,6 +305,20 @@ a {
     padding-bottom: 30px;
     padding-top: 40px;
 }
+.condition-box {
+    background: rgba(255, 255, 255, 0);
+    margin-top: 40px;
+    padding: 15px;
+    
+}
+.my-btn:hover{
+    background-color: rgba(109, 252, 115, 0);
+    border: 2px solid rgba(163, 164, 175, 0.08); 
+}
+.my-btn:visited{
+    background-color: rgba(109, 252, 115, 0); /* Green */
+    border: 2px solid rgba(163, 164, 175, 0.08); /* Green */
+}
 .myie{
     padding-left: 20px;
 }
@@ -348,6 +362,7 @@ a {
     margin-bottom: 80px;
 }
 
+
 .suggest_contain span{
     font-size: 14px;
     width: 280px;
@@ -357,4 +372,45 @@ a {
     color: white;
     background-color:#c0bcbc;
     float: left;
+}
+
+
+
+.job_suggest p:hover {
+    color: #209b60;
+    text-decoration: underline;
+}
+.myfoot{
+
+    background-color: rgba(60, 60, 60, 0.87);
+    color: #fff;
+
+
+}
+.myconta{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#my-footdiv{
+    background-color: #222;
+    color: #fff;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.ui:hover{
+    color:#00B83F;
+}
+.ui{
+    padding-bottom: 20px;
+
+}
+.myspan{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    padding-top: 40px;
+
 }
