@@ -231,7 +231,24 @@ $(document).ready(function () {
         })
     });
 });
+$(document).ready(function () {
+    let mysaixuan=[];
+    let city={};
+    let selery={};
+    mysaixuan.push(selery);
+    mysaixuan.push(city);
+    $('.btn.my-btn.ya').on('click',function () {
+        mysaixuan[0].ya='yes';
+       // this.$btn.closest('.ya').css('backgroundColor','rgba(109, 252, 115, 0)');
+        $('this').setAttribute('backgroundColor','rgba(109, 252, 115, 0)');//style.backgroundColor='Red';
+       
+    });
+    $.post('./saixuan',mydate,function (ans) {
+        
+    })
 
+
+});
 $.get('/job_suggest',function (ans) {
     let str='';
     for (let i=0;i<ans.length;i++) {
