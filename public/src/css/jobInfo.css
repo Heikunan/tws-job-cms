@@ -74,9 +74,14 @@
 .gyf_more_jobs{
 	margin-top: 2em;
 }
-.gyf_label{
- background-color:#212121; 
+.gyf_label_main{
+ 	background-color:#a9a4a4;
 }
+
+.gyf_label{
+	background-color: #77a777;
+}
+
 .panel-default>.panel-heading{
 	background-color:#9E9E9E;
 	color: black;
@@ -87,4 +92,12 @@
 	color: #fff;
 	padding-top: 11px;
 	padding-bottom: 7px;
+}
+
+.right{
+	color: #9b9595;
+}
+
+.left{
+	color: #9b9595;
 }
