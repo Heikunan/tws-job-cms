@@ -11,6 +11,9 @@ $(document).ready(function () {
 				<td>${jobs[i].title}</td>
 				<td width="100">未审核</td>
  				<td width="100" style="text-align: center;">
+ 				    <a href="/jobInfo.html?id=${jobs[i].id}" title="查看" onclick="" class="ml-5" style="text-decoration:none">
+ 				        <i class="Hui-iconfont">&#xe725;</i>
+ 				    </a> 
  				    <a  title="编辑" onclick="admin_job_checked(this,${jobs[i].id})" class="ml-5" style="text-decoration:none">
  				        <i class="Hui-iconfont">&#xe6df;</i>
  				    </a> 

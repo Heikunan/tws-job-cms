@@ -399,7 +399,7 @@ app.post('/getJobDetail', urlencodedParser, function(req, res) {
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
         if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
+            console.log('[SELECT ERROR] -getjobdetail ', err.message);
             res.status(500).send('服务器发生错误');
         } else {
             res.send(result);
@@ -501,16 +501,20 @@ app.post('/putJob',function(req,res){
         }
     })
 })
-app.post('/saveChangeJob',function(req,res){
-    let jobId=req.query.id;
+app.post('/saveChangeJob',urlencodedParser,function(req,res){
+    // let jobId=req.body.id;
     let releaseTime = new Date(Date.now());
-    let addparams=[req.body.title, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize,req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor,jobId];
-    let sql = 'UPDATE t_job SET title = ?,description=?,applyApproach=?,expiryTime=?,category=?,jobType=?,tags=?,city=?,country=?,number=?,benefits=?,releaseTime=?,area=?,companyType=?,companySize=?,companyIntroduce=?,salary=?,education=?,editor=? WHERE id = ? ';
+    req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
+    req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
+    console.log('dats:'+JSON.stringify(req.body));
+    let addparams=[req.body.title, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize,req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor,req.body.jobId];
+    let sql = 'UPDATE t_job SET title = ?,description=?,applyApproach=?,expiryDate=?,category=?,jobType=?,tags=?,city=?,country=?,num=?,benefits=?,releaseTime=?,area=?,companyType=?,companySize=?,companyIntroduce=?,salary=?,education=?,editor=? WHERE id = ? ';
     connection.query(sql, addparams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         } else {
+            console.log('savejobOK');
             res.status(200).send('修改成功');
         }
     });
