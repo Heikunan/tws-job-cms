@@ -272,9 +272,6 @@ a {
     background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
 }
-.myconta{
-    margin-top: 50px;
-}
 .myconta ul{
     list-style: none;
 }
@@ -389,7 +386,6 @@ a {
 
 .myconta{
     margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 #my-footdiv{
