@@ -157,9 +157,18 @@ app.delete('/somewhere',function(req,res)){
 |---|---|
 |email|用户邮箱|
 |password|用户密码|
+|name|用户名|
 |company|用户所在公司|
 |address|公司地址|
 |trade|公司所属行业|
+|isactive|是否激活|
+|status|是否审核|
+|activeToken|激活码|
+|activeTimeLimit|激活码过期时间|
+|identity|身份|
+|companylogo|公司Logo|
+|passwordCode|修改密码验证码|
+
 
 ### 职位表 T_job
 
@@ -171,11 +180,26 @@ app.delete('/somewhere',function(req,res)){
 |description|职位描述|
 |applyApproach|申请职位的方法|
 |expiryDate|职位申请的截止时间|
+|num|招聘人数|
 |category|工作职位的种类|
 |jobType|工作性质|
 |tags|职位标签|
 |city|所在城市|
+|area|所在地区|
 |country|所在国家|
+|status|职位状态|
+|salary|工资|
+|Logo|公司logo|
+|companyIntroduce|公司介绍|
+|companyType|公司性质|
+|companySize|公司规模|
+|requirement|收藏次数|
+|releaseTime|发布时间|
+|benefits|公司福利|
+
+
+
+
 
 ### 工作性质 T_jobtype
 
@@ -190,7 +214,18 @@ app.delete('/somewhere',function(req,res)){
 |content|职位种类的名称|
 
 
+### 热门职位 T_hotjob
+
+|ID|热门职位ID主键|
+|---|---|
+|jobId|职位ID|
 
 
+ ### 收藏记录 T_like
+
+ |ID|收藏记录ID主键|
+   |---|---|
+|userId|用户ID|
+|jobId|职位ID|
 
 
