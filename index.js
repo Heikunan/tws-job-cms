@@ -859,3 +859,49 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
         res.send(true);
     }
 });
+
+/*用户得到收藏的职位*/
+app.get('/getlikesjob',urlencodedParser,function (req,res) {
+    let userid=8009;
+    let sql='select * from t_like where userId='+userid;
+    console.log(sql);
+    connection.query(sql,function (err,jobsid) {
+        if(err){ console.log(err); }
+        if(jobsid.length===0){
+            res.send([]);
+        }else{
+            let result=[];
+            for(let i=0;i<jobsid.length;i++){
+                let sql0='select * from t_job where id='+jobsid[i].jobId;
+                connection.query(sql0,function (err,jobs) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result.push(jobs[0]);
+                    }
+                    if(i===jobsid.length-1){
+                        res.send(result);
+                    }
+                })
+            }
+        }
+    });
+});
+/*删除收藏的职位*/
+app.post('/dellikesjob',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    let userid=req.session.user.id;
+    console.log(jobsid+userid);
+    for(let i=0;i<jobsid.length;i++){
+        let sql='delete from t_like where jobId=? and userId='+userid;
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if (err){
+                console.log(err);
+            }
+            if(i===jobsid.length-1){
+                res.send(true);
+            }
+        })
+    }
+})
+/**/
