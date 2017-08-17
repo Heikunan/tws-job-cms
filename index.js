@@ -630,10 +630,12 @@ app.post('/resettingPassword', urlencodedParser, function (req, res) {
             let data = [passwordCode, email];
             connection.query(sql, data, function (err, rep) {
                 if (err) throw err;
-                res.send(rep);
+                if (rep) {
+                    res.send(true);//账号存在且已经激活，更新“激活码”，并返回true
+                }
             });
         } else {
-            res.send('fail');
+            res.send(false);//账号未注册激活，返回false
         }
     })
 });
@@ -648,7 +650,7 @@ app.put('/resettingLogin', function (req, res) {
     let passwordCode = req.body.passwordCode;
     let password = req.body.password;
     let sql = 'SELECT * FROM t_user WHERE email = ?';
-    let data = email;
+    let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
         reply[0].email = req.query.email;
