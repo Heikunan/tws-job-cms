@@ -120,7 +120,7 @@ app.get('/myinfo', function (req, res) {
 app.post('/testjobs', function (req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum - 1) * 10;
-    let sql = `SELECT * FROM t_job LIMIT ${mynum},10`;
+    let sql = `SELECT * FROM t_job WHERE status = '1' LIMIT ${mynum},10`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result)
@@ -135,7 +135,7 @@ app.post('/searchjobs', urlencodedParser, function (req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
     let jobname = req.body.jobname;
-    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'";
+    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'" + `and status = '1'`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result);
@@ -176,7 +176,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 
 
-/*7 用户查看自己创建的职位Post列表
+/*7 用户查看自己的已发布
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 */
 app.get('/myposts', function (req, res) {
@@ -184,7 +184,7 @@ app.get('/myposts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select id,title,category from t_job where userid = ' + userid;
+        let sql = 'select status,id,title,category from t_job where userid = ' + userid+' and status != 2';
 
         connection.query(sql, function(err, result) {
             if (err) {
@@ -206,7 +206,7 @@ app.get('/mydrafts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的草稿箱
-        let sql = 'select id,title,category from t_job where userid = ' + userid +'and status = 0';
+        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 2';
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -242,11 +242,6 @@ app.get('/postdetial', function (req, res) {
     })
 });
 
-
-/*
-
-
-/*
 
 
 /*
@@ -427,8 +422,10 @@ app.post('/postJob', function (req, res) {
     let releaseTime = new Date(Date.now());
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-    let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
+
+    let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companylogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
+
     connection.query(addSql, addSqlParams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -438,6 +435,60 @@ app.post('/postJob', function (req, res) {
         }
     });
 });
+app.post('/saveJob',function(req,res){
+    let userId = req.session.user.id;
+    let likes = 0;
+    let releaseTime = new Date(Date.now());
+    req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
+    req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
+    let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    let addSqlParams = [2,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companylogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
+    connection.query(addSql, addSqlParams, function(err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        } else {
+            res.status(200).send('添加成功');
+        }
+    });
+});
+app.get('/getChangeJobDetail', urlencodedParser, function(req, res) {
+    let sql = 'SELECT * FROM t_job where id =' + req.query.id;
+    connection.query(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        } else {
+            res.send(result);
+        }
+    });
+});
+app.post('/putJob',function(req,res){
+    let jobId=req.body.id;
+    let sql="update t_job set status=0 where jobId="+jobId;
+    connection.query(sql,function(err,result){
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        } else {
+            res.status(200).send('发布成功');
+        }
+    })
+})
+app.post('/saveChangeJob',function(req,res){
+    let jobId=req.query.id;
+    let releaseTime = new Date(Date.now());
+    let addparams=[req.body.title, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize,req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor,jobId];
+    let sql = 'UPDATE t_job SET title = ?,description=?,applyApproach=?,expiryTime=?,category=?,jobType=?,tags=?,city=?,country=?,number=?,benefits=?,releaseTime=?,area=?,companyType=?,companySize=?,companyIntroduce=?,salary=?,education=?,editor=? WHERE id = ? ';
+    connection.query(sql, addparams, function(err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.status(500).send('服务器发生错误');
+        } else {
+            res.status(200).send('修改成功');
+        }
+    });
+})
 app.post('/getSuggestion', function (req, res) {
     let jobtype = req.body.type;
     let category = req.body.category;
@@ -858,3 +909,49 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
         res.send(true);
     }
 });
+
+/*用户得到收藏的职位*/
+app.get('/getlikesjob',urlencodedParser,function (req,res) {
+    let userid=req.session.user.id;
+    let sql='select * from t_like where userId='+userid;
+    console.log(sql);
+    connection.query(sql,function (err,jobsid) {
+        if(err){ console.log(err); }
+        if(jobsid.length===0){
+            res.send([]);
+        }else{
+            let result=[];
+            for(let i=0;i<jobsid.length;i++){
+                let sql0='select * from t_job where id='+jobsid[i].jobId;
+                connection.query(sql0,function (err,jobs) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result.push(jobs[0]);
+                    }
+                    if(i===jobsid.length-1){
+                        res.send(result);
+                    }
+                })
+            }
+        }
+    });
+});
+/*删除收藏的职位*/
+app.post('/dellikesjob',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    let userid=req.session.user.id;
+    console.log(jobsid+userid);
+    for(let i=0;i<jobsid.length;i++){
+        let sql='delete from t_like where jobId=? and userId='+userid;
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if (err){
+                console.log(err);
+            }
+            if(i===jobsid.length-1){
+                res.send(true);
+            }
+        })
+    }
+})
+/**/

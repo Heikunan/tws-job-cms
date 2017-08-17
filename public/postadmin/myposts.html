@@ -1,11 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css"/>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
     <title>myposts</title>
-    <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
-    <script src="../src/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
     <style type="text/css">
         .row-click-able {
             cursor: pointer;
@@ -13,44 +28,148 @@
     </style>
 </head>
 <body>
-<table class="table table-striped table-hover">
-    <thead>
-    <tr>
-        <th>title</th>
-        <th>category</th>
-    </tr>
-    </thead>
-    <tbody id="table-body">
-    </tbody>
-</table>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 我的发布 <a
+        class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+        href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray"><span class="l"> <a onclick="delchosen()" class="btn btn-danger radius"><i
+            class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>  </span>
+        <span class="r">共有数据：<strong id="sum"></strong> 条</span></div>
+    <table class="table table-border table-bordered table-hover table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="6">发布管理</th>
+        </tr>
+        <tr class="text-c">
+            <th width="1"><input type="checkbox" value="" name=""></th>
+            <th width="300">title</th>
+            <th width="300">category</th>
+            <th width="100">审核状态</th>
+            <th width="50">操作</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script>
     let str = '';
     $.get('/myposts', function (data) {
         console.log('data: ' + JSON.stringify(data));
-        if (data==='no') {
+        if (data === 'no') {
             alert('登陆过期，重新登录！');
-            top.location='../index.html'
+            top.location = '../index.html'
         }
         else if (data.length === 0) {
-            $(`table`).html('暂时没有发布').css({
-                'position':'absolute',
-                'left':'50%',
-                "font-size":"20px",
-                "padding":"50%",
-                'marge':'50%'
-            });
+            $('#sum').html(0)
+            $(`thead`).html('<tr ><td>暂时没有发布</td></tr>')
+
         } else {
+            $('#sum').html(data.length)
+            let status;
             for (let i = 0; i < data.length; i++) {
-                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].category}</td></tr>`;
+                switch (data[i].status) {
+                    case 0:
+                        status = '未审核';
+                        break;
+                    case 1:
+                        status = '已审核';
+                        break;
+                }
+                str += `<tr class="text-c row-click-able" data-href="/jobInfo.html?id=${data[i].id}">
+                            <td width="1"><input type="checkbox" value="" name=""></td>
+                            <td width="300">${data[i].title}</td>
+                            <td width="300">${data[i].category}</td>
+                            <td width="100">${status}</td>
+                            <td width="50" style="text-align: center;">
+                            <!--//这里修改为 点击后跳转到发布页面-->
+                                <a href="./update.html?id=${data[i].id}" title="编辑" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                                    <i class="Hui-iconfont">&#xe6df;</i>
+                                </a>
+                                <a title="删除" onclick=" delpost(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                                    <i class="Hui-iconfont">&#xe6e2;</i>
+                                </a>
+                            </td>
+                         </tr>`
                 if (i === data.length - 1) {
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {
-                        top.location.href=$(this).data("href")
+                        top.location.href = $(this).data("href")
                     });
                 }
             }
         }
     });
+
+
+    //单条删除
+    function delpost(e) {
+        e.stopPropagation();
+        let pid = $(e.target.parentNode).data('pid');
+        console.log(pid)
+        layer.confirm('确认要删除职位吗？', function () {
+            $.post('/deletejob', {jobid: pid})
+                .done(function (data) {
+                    if (data === 'ok') {
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                        $(e.target).parents('tr').remove();
+                    } else {
+                        layer.msg('删除失败!', {icon: 2, time: 1000});
+                    }
+
+                }).fail(function (a) {
+                alert('fial')
+            });
+        })
+    }
+
+    function change(e) {
+        e.stopPropagation();
+        console.log($(e.target.parentNode).data('pid'))
+    }
+
+    //批量删除
+    function delchosen() {
+        let jobsid = [];
+        console.log($('tbody input[type=checkbox]:checked'));
+        $('tbody input[type=checkbox]:checked').each(function () {
+            let pid = $(this).parents('tr').find('a').data('pid');
+            console.log('pid: ' + pid);
+            jobsid.push(pid);
+        });
+        console.log(jobsid);
+
+        if (jobsid.length === 0) {
+            layer.alert("无职位可操作！");
+        } else {
+            layer.confirm('确认要删除这些职位吗？', function () {
+                $.ajax({
+                    type: 'post',
+                    url: '/deletejobs',
+                    data: {jobsid: jobsid}
+                }).done(function () {
+                    $('tbody input[type=checkbox]:checked').parents('tr').remove();
+                    if ($('tbody tr').length === 0) {
+                        $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
+                    }
+                    layer.msg('已删除!', {icon: 1, time: 1000});
+
+                }).fail(function () {
+                    alert('fail')
+                })
+            });
+        }
+    }
+
 </script>
+
 </body>
 </html>
