@@ -204,20 +204,21 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.btn.my-btn').on('click',function () {
-        let mysaixuan={city:[],salary:[],type:[],guimo:[],benefits:[]};
+        let mysaixuan={category:[],salary:[],jobType:[],companySize:[],education:[],companyType:[]};
         if($(this).attr('class').indexOf('btn-warning')>=0) {
             $(this).removeClass('btn-warning');
         }else{
             $(this).addClass('btn-warning');
         }
         getstr(mysaixuan);
+        console.log(mysaixuan);
     })
 });
 
 function getstr(obj) {
     $('.category span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.city.push($(this).text());
+            obj.category.push($(this).text());
         }
     });
     $('.salary span').each(function () {
@@ -227,22 +228,23 @@ function getstr(obj) {
     });
     $('.education span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.benefits.push($(this).text());
+            obj.education.push($(this).text());
         }
     });
     $('.guimo span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.guimo.push($(this).text());
+            obj.companySize.push($(this).text());
         }
     });
     $('.type span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.type.push($(this).text());
+            obj.jobType.push($(this).text());
         }
     });
     $('.gsxz span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.gsxz.push($(this).text());
+            obj.companyType.push($(this).text());
+            console.log(obj);
         }
     });
 }
