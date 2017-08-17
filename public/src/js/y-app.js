@@ -215,7 +215,7 @@ $(document).ready(function () {
 });
 
 function getstr(obj) {
-    $('.mycity span').each(function () {
+    $('.category span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
             obj.city.push($(this).text());
         }
@@ -225,7 +225,7 @@ function getstr(obj) {
             obj.salary.push($(this).text());
         }
     });
-    $('.benefits span').each(function () {
+    $('.education span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
             obj.benefits.push($(this).text());
         }
@@ -238,6 +238,11 @@ function getstr(obj) {
     $('.type span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
             obj.type.push($(this).text());
+        }
+    });
+    $('.gsxz span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.gsxz.push($(this).text());
         }
     });
 }
