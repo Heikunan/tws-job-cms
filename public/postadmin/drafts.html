@@ -87,7 +87,7 @@
                 if (i === data.length - 1) {
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {
-                        top.location.href = $(this).data("href")
+                        window.location.href = $(this).data("href")
                     });
                 }
             }
