@@ -20,7 +20,7 @@
     <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>myposts</title>
+    <title>Drafts</title>
     <style type="text/css">
         .row-click-able {
             cursor: pointer;
@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 我的发布 <a
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 草稿箱 <a
         class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
         href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -38,7 +38,7 @@
     <table class="table table-border table-bordered table-hover table-bg">
         <thead>
         <tr>
-            <th scope="col" colspan="6">发布管理</th>
+            <th scope="col" colspan="6">草稿管理</th>
         </tr>
         <tr class="text-c">
             <th width="1"><input type="checkbox" value="" name=""></th>
@@ -61,7 +61,7 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script>
     let str = '';
-    $.get('/myposts', function (data) {
+    $.get('/mydrafts', function (data) {
         console.log('data: ' + JSON.stringify(data));
         if (data === 'no') {
             alert('登陆过期，重新登录！');
@@ -69,8 +69,7 @@
         }
         else if (data.length === 0) {
             $('#sum').html(0)
-            $(`thead`).html('<tr ><td>暂时没有发布</td></tr>')
-
+            $(`thead`).html('<tr ><td>暂时没有草稿</td></tr>')
         } else {
             $('#sum').html(data.length)
             for (let i = 0; i < data.length; i++) {
@@ -87,6 +86,7 @@
                                 </a>
                             </td>
                          </tr>`
+//                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].category}</td></tr>`;
                 if (i === data.length - 1) {
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {
