@@ -100,7 +100,6 @@
 <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
     $.get('/getUserInfo',function (ans) {
-        console.log(ans);
         if (ans==='no') {
             alert('登陆过期，请重新登录！');
             top.location = '../index.html'

@@ -437,6 +437,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 app.post('/isLike', function(req, res) {
     let jobId = req.body.id;
+    
     if (req.session.user === undefined) {
         res.send('first_notlog');
     } else {
@@ -719,35 +720,7 @@ app.post('/deletejobs', urlencodedParser, function (req, res) {
             res.send('ok');
         }
     }
-
 });
-
-
-////////////////**进入首页时处理数据/////////////////////////////////
-app.get('/init', function (req, res) {
-    let sql = 'select * from t_job';
-    let categorys = ['development', 'designer', 'marketing', 'prodectManager'];
-    let jobtypes = ['volunteer', 'permanent', 'freelance', 'contract'];
-    let logo = 'https://i.stack.imgur.com/Nppgg.jpg';
-    let companyType = 'IT';
-    let companySize = '10000+';
-    let benefits = 'there had no now';
-    let num = '15';
-    let likes = 9;
-    let method = ['phone', 'email', 'facetoface', 'QQ']
-    connection.query(sql, function (err, jobs) {
-        if (err) throw err;
-        for (let i = 0; i < jobs.length; i++) {
-            let sql2 = 'update t_job set company=?,applyApproach=?,tags=?,Logo=?,likes=?,benefits=?,companySize=?,companyType=?,num=?,education=? where id=?'
-            let sqlinfo = ['thoughtworkers\'child', method[i % 4], 'java,C/C++', logo, likes, benefits, companySize, companyType, '1000+', 'undergraduate student', jobs[i].id];
-            connection.query(sql2, sqlinfo, function (err, jobs) {
-                if (err) throw err;
-            });
-        }
-        res.send(jobs);
-    });
-});
-
 app.get('/cretateusers', function(req, res) {
     let sql = "insert into t_user (password,email,status) values (?,?,?);";
     for (let i = 0; i < 20; i++) {
@@ -760,25 +733,18 @@ app.get('/cretateusers', function(req, res) {
 });
 /**************************************************/
 
-/*接收发布招聘的信息
-输入：招聘表单内容
-输出：成功：200添加成功
-     失败：500服务器发生错误
-*/
+let server = app.listen(8081, function() {
 
-
-let server = app.listen(8081, function () {
     let host = server.address().address;
     let port = server.address().port;
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
 });
 
 
-app.get('/hotjob', function (req, res) {
-    let sql = "select * from t_hotjob,t_job where t_hotjob.jobid=t_job.id"
-    connection.query(sql, function (err, hotjobs) {
-        console.log(hotjobs);
-        res.send(hotjobs);
+app.get('/hotjob', function(req, res) {
+    let sql="select * from t_hotjob,t_job where t_hotjob.jobid=t_job.id"
+    connection.query(sql,function (err,hotjobs) {
+       res.send(hotjobs);
     });
 });
 
@@ -799,17 +765,79 @@ app.post('/deletehotjobs', urlencodedParser, function (req, res) {
 ////***增加Hotjob表里的工作id****/////////
 app.post('/addhotjobs', urlencodedParser, function (req, res) {
     let jobsid = req.body.jobsid;
-    let sql = "insert into t_hotjob (jobid) values (?)";
-    for (let i = 0; i < jobsid.length; i++) {
-        connection.query(sql, parseInt(jobsid[i]), function (err, reply) {
-            if (err) {
+    let sql0='select * from t_job where id=? and status=1';
+    for(let i=0;i<jobsid.length;i++){
+        connection.query(sql0, parseInt(jobsid[i]), function(err, jobs) {
+            if (err){
+                console.log(err);
+            }
+            if(jobs.length===0){
                 res.send(false);
-            } else {
-                if (i === jobsid.length - 1) {
-                    res.send(true);
+            }else {
+                let flag=1;
+                let sql = "insert into t_hotjob (jobid) values (?)";
+                for (let i = 0; i < jobs.length; i++) {
+                    connection.query(sql, jobs[i].id, function(err, reply) {
+                        if (err) {
+                            flag=0;
+                        }
+                    })
+                    if(i===jobs.length-1){
+                        if(jobs.length<jobsid.length){
+                            res.send(false);
+                        }else if(flag===0){
+                            res.send(false);
+                        }else {
+                            res.send(true);
+                        }
+                    }
                 }
             }
-
         });
     }
 })
+
+///**得到所有的用户**///
+app.post('/allusers',urlencodedParser,function (req,res) {
+   let page=req.body.page;
+   let sql="select * from t_user limit ?,?";
+   let sqlinfo=[page*10-10,10];
+   connection.query(sql,sqlinfo,function (err,users) {
+      if(err){
+          console.log(err);
+      }
+      else{
+          res.send(users);
+      }
+   });
+});
+
+///**得到没有审核的工作**//
+app.get('/nocheckedjobs',urlencodedParser,function (req,res) {
+    let sql='select * from t_job where status=0';
+    connection.query(sql,function (err,jobs) {
+        if(err){
+            console.log(err);
+        }else{
+            res.send(jobs);
+        }
+    });
+});
+
+/*完成职位的审核*/
+app.post('/jobstochecked',urlencodedParser,function (req,res) {
+    let jobsid = req.body.jobsid;
+    let sql = "update t_job set status=1 where id=?"
+    for (let i = 0; i < jobsid.length; i++) {
+        connection.query(sql, parseInt(jobsid[i]), function(err, reply) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+    if(jobsid.length===0){
+        res.send(false);
+    }else {
+        res.send(true);
+    }
+});
