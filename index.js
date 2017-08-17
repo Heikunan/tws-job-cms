@@ -422,14 +422,9 @@ app.get('/postJob', function (req, res) {
 */
 
 app.post('/postJob', function (req, res) {
-    //  req.body = JSON.parse(req.body);
-    // let userId = req.session.user.id;
     let userId = req.session.user.id;
     let likes = 0;
     let releaseTime = new Date(Date.now());
-    // console.log(releaseTime);
-    // let addSql='INSERT INTO t_test(userId) VALUES (?)';
-    // let addSqlParams=['1'];
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
     let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
@@ -456,9 +451,8 @@ app.post('/getSuggestion', function (req, res) {
 
 
 });
-app.post('/isLike', function(req, res) {
+app.post('/isLike',urlencodedParser,function(req, res) {
     let jobId = req.body.id;
-    
     if (req.session.user === undefined) {
         res.send('first_notlog');
     } else {

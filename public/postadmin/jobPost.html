@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src='../src/semantic.min.js'></script>
         <script type="text/javascript" src="../../node_modules/wangeditor/release/wangEditor.min.js"></script>
         <script type="text/javascript" src="../../node_modules/cxselect/js/jquery.cxselect.js"></script>
         <script type="text/javascript" src="../datepicker/js/jquery-ui-datepicker.js"></script>
@@ -38,7 +37,7 @@
                 <div class="form-group">
                     <label for="gyf_post_title" class="col-sm-2 control-label">标<i class = 'space2'></i>题</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="gyf_post_title" placeholder="title" name="title" required="required">
+                        <input type="text" class="form-control" id="gyf_post_title" placeholder="" name="title" required="required">
                     </div>
                 </div>
                 <div class="form-group">
@@ -51,29 +50,29 @@
                     <label for="gyf_post_category" class="col-sm-2 control-label">职业种类</label>
                     <div class="col-sm-5">
                         <select id='gyf_post_category' name='category' class="form-control">
-                        <option value="development">程序员</option>
-                        <option value="designer">设计师</option>
-                        <option value="marketing">销售经理</option>
-                        <option value="prodect manager">产品经理</option>
+                        <option value="程序员">程序员</option>
+                        <option value="设计师">设计师</option>
+                        <option value="销售经理">销售经理</option>
+                        <option value="产品经理">产品经理</option>
                     </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="gyf_tags_language_1" class="col-sm-2 control-label">技能需求</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="gyf_tags_language_1" placeholder="javascript" name="tags" required="required">
+                        <input type="text" class="form-control" id="gyf_tags_language_1" placeholder="如：javascript" name="tags" required="required">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="gyf_tags_language_2" placeholder="html" name="tags" required="required">
+                        <input type="text" class="form-control" id="gyf_tags_language_2" placeholder="如：html" name="tags" required="required">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="gyf_tags_benefits_1" class="col-sm-2 control-label">公司福利</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="gyf_tags_benefits_1" placeholder="五险一金" name="benefits" required="required">
+                        <input type="text" class="form-control" id="gyf_tags_benefits_1" placeholder="如：五险一金" name="benefits" required="required">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="gyf_tags_benefits_2" placeholder="带薪休假" name="benefits" required="required">
+                        <input type="text" class="form-control" id="gyf_tags_benefits_2" placeholder="如：带薪休假" name="benefits" required="required">
                     </div>
                 </div>
                 <div class="form-group">
@@ -92,7 +91,7 @@
                 <div class="form-group">
                     <label for="gyf_post_number" class="col-sm-2 control-label">招聘人数</label>
                     <div class="col-sm-5">
-                        <input type="number" class="form-control" name="number" id='gyf_post_number' placeholder="5人" required="required">
+                        <input type="number" class="form-control" name="number" id='gyf_post_number' placeholder="如：5人" required="required">
                     </div>
                 </div>
                 <div class="form-group">
@@ -401,6 +400,7 @@
             });
             $('#gyf_post_button').click(function (e) {
                 let number = $('#gyf_myform').serialize();
+                console.log(number);
                 console.log(number.indexOf('=&'));
                 if (number.indexOf('=&')!==-1) {
                     alert("请填写全部信息");
@@ -414,17 +414,13 @@
                         companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                         applyApproach = $('#gyf_post_applyApproach>*').html();
                     }
-                    // $('#gyf_post_companyIntroduce>div:last-child>*').html()
                     let datas = $('#gyf_myform').serialize();
-                  //  console.log(datas);
-                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
-                    // datas=JSON.stringify(datas);
-                    // console.log(datas);
+                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val();
                     $.post('/postJob', datas).done(function (data) {
                         console.log('inner' + data);
                         data = data['max(id)'];
                         alert("提交成功");
-                        window.location.href = './myposts.html';
+                        console.log(datas);
                     }).fail(function (xhr, status) {
                         console.log('失败: ' + xhr.status + ', 原因: ' + status);
                     })
