@@ -859,7 +859,7 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
 
 /*用户得到收藏的职位*/
 app.get('/getlikesjob',urlencodedParser,function (req,res) {
-    let userid=8009;
+    let userid=req.session.user.id;
     let sql='select * from t_like where userId='+userid;
     console.log(sql);
     connection.query(sql,function (err,jobsid) {
