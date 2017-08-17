@@ -204,47 +204,87 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.btn.my-btn').on('click',function () {
-        let mysaixuan={category:[],salary:[],jobType:[],companySize:[],education:[],companyType:[]};
+        let mysaixuan={salary:'(',jobType:'(',companyType:'(',companySize:'(',category:'(',education:'(',title:'(\'\%\%\')'}
         if($(this).attr('class').indexOf('btn-warning')>=0) {
             $(this).removeClass('btn-warning');
         }else{
             $(this).addClass('btn-warning');
         }
         getstr(mysaixuan);
+        for(let a in mysaixuan){
+            mysaixuan[a]+='\'%%\')';
+        }
         console.log(mysaixuan);
+        $.post('/supersearch',mysaixuan,function (ans) {
+            let str = '';
+            for(let i =0;i<ans.length;i++) {
+                let benefits = ans[i].benefits.split(',');
+                let tags = ans[i].tags.split(',');
+                str += `<div class="panel job-contain panel-default">
+					<a href="jobinfo.html?id=${ans[i].id}">
+						<div class="panel-body">
+							<div class="job-card">
+								<div class="job-primary">
+									<div class="info-primary">
+										<h3 class="name">${ans[i].title} <span class="red">${ans[i].salary}</span></h3>
+										<p>${ans[i].country}<em class="vline"></em>${ans[i].city}<em class="vline"></em>${ans[i].education}</p>
+									</div>
+									<div class="info-company">
+										<div class="company-text">
+											<h3 class="name">${ans[i].company}</h3>
+											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
+										</div>
+									</div>
+								</div>
+								<div class="job-tags">
+									<div class="job-author">
+										<p>${benefits[0]}<em class="vline"></em>${benefits[1]}<img src="${ans[i].Logo}"></p>
+									</div>
+									<span>${tags[0]}</span><span>${tags[1]}</span>
+								</div>
+								<div class="job-time">
+									<div class="time">截至时间&nbsp;${ans[i].expiryDate}</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>`
+            }
+            $('#myleft-job-all').empty().append(str);
+        });
+
     })
 });
 
 function getstr(obj) {
-    $('.category span').each(function () {
-        if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.category.push($(this).text());
-        }
-    });
     $('.salary span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.salary.push($(this).text());
+            obj.salary+='\''+$(this).text()+'\',';
+        }
+    });
+    $('.jobType span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.jobType+='\''+$(this).text()+'\',';
+        }
+    });
+    $('.category span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.category+='\''+$(this).text()+'\',';
         }
     });
     $('.education span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.education.push($(this).text());
+            obj.education+='\''+$(this).text()+'\',';
         }
     });
-    $('.guimo span').each(function () {
+    $('.companySize span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.companySize.push($(this).text());
+            obj.companySize+='\''+$(this).text()+'\',';
         }
     });
-    $('.type span').each(function () {
+    $('.companyType span').each(function () {
         if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.jobType.push($(this).text());
-        }
-    });
-    $('.gsxz span').each(function () {
-        if($(this).attr('class').indexOf('btn-warning')>=0){
-            obj.companyType.push($(this).text());
-            console.log(obj);
+            obj.companyType+='\''+$(this).text()+'\',';
         }
     });
 }
