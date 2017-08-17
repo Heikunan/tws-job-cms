@@ -702,15 +702,18 @@ app.put('/resettingLogin', function (req, res) {
     let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
-        reply[0].email = req.query.email;
+        // reply[0].email = req.query.email;
         req.session.user = reply[0];
     });
-    let sqlCode = 'UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode = parseInt(Math.random() * 1000000);
-    let dataCode = [password, rePasswordCode, email, passwordCode];
+    let sqlCode = 'UPDATE t_user SET password = ? WHERE email = ? and passwordCode = ?';
+    let dataCode = [password,  email, passwordCode];
     connection.query(sqlCode, dataCode, function (err, reply) {
         if (err) throw err;
-        res.send(reply);
+        if(reply.affectedRows===1){
+            res.send(true)//验证码正确，更新密码，返回true
+        }else{
+            res.send(false)//验证码错误，返回false
+        }
     });
 });
 
