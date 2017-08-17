@@ -161,20 +161,6 @@ app.post('/getJobDetail/id=:id', function(req, res) {
     });
 });
 
-/*在详细页面得到推荐工作
- */
-app.post('/getSuggestion', function (req, res) {
-    let jobtype = req.body.type;
-    let category = req.body.category;
-    let title = req.body.title;
-    let sql = 'select * from t_job where category=? or jobType=? or title like ? limit 0,4';
-    let sqlinfor = [category, jobtype, `%${title}%`];
-    connection.query(sql, sqlinfor, function (err, result) {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
 
 /*7 用户查看自己的已发布
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
@@ -394,7 +380,7 @@ app.post('/login', urlencodedParser, function (req, res) {
         }
     })
 });
-
+/*取得某个职位的详细信息*/ 
 app.post('/getJobDetail', urlencodedParser, function(req, res) {
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
@@ -457,6 +443,7 @@ app.post('/postJob', function (req, res) {
     }
    
 });
+/*将第一次创建的草稿保存*/
 app.post('/saveJob',function(req,res){
     let userId = req.session.user.id;
     let likes = 0;
@@ -474,11 +461,8 @@ app.post('/saveJob',function(req,res){
         }
     });
 });
+/*取得要修改职位的原始资料*/
 app.post('/getChangeJobDetail', function(req, res) {
-    //console.log(req.body.id);
-    console.log(req.body);
-    //console.log('req.query:'+req.query.id);
-    //1console.log('req.params:'+req.param)
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
         if (err) {
@@ -489,24 +473,11 @@ app.post('/getChangeJobDetail', function(req, res) {
         }
     });
 });
-app.post('/putJob',function(req,res){
-    let jobId=req.body.id;
-    let sql="update t_job set status=0 where jobId="+jobId;
-    connection.query(sql,function(err,result){
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.status(500).send('服务器发生错误');
-        } else {
-            res.status(200).send('发布成功');
-        }
-    })
-})
+/*保存已经创建又修改的草稿*/
 app.post('/saveChangeJob',urlencodedParser,function(req,res){
-    // let jobId=req.body.id;
     let releaseTime = new Date(Date.now());
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-    console.log('dats:'+JSON.stringify(req.body));
     let addparams=[req.body.title, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize,req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor,req.body.jobId];
     let sql = 'UPDATE t_job SET title = ?,description=?,applyApproach=?,expiryDate=?,category=?,jobType=?,tags=?,city=?,country=?,num=?,benefits=?,releaseTime=?,area=?,companyType=?,companySize=?,companyIntroduce=?,salary=?,education=?,editor=? WHERE id = ? ';
     connection.query(sql, addparams, function(err, result) {
@@ -514,24 +485,24 @@ app.post('/saveChangeJob',urlencodedParser,function(req,res){
             console.log('[SELECT ERROR] - ', err.message);
             res.status(500).send('服务器发生错误');
         } else {
-            console.log('savejobOK');
             res.status(200).send('修改成功');
         }
     });
 })
+/*在详细页面得到推荐工作
+ */
 app.post('/getSuggestion', function (req, res) {
     let jobtype = req.body.type;
     let category = req.body.category;
     let title = req.body.title;
-    let sql = 'select * from t_job limit 0,4 where category=? or jobType=? or title like ?';
+    let sql = 'select * from t_job  where category=? or jobType=? or title like ? limit 0,5';
     let sqlinfor = [category, jobtype, `%${title}%`];
     connection.query(sql, sqlinfor, function(err, result) {
         if (err) throw err;
         res.send(result);
     });
-
-
 });
+/*判断是否已经收藏*/
 app.post('/isLike',urlencodedParser,function(req, res) {
     let jobId = req.body.id;
     if (req.session.user === undefined) {
@@ -553,8 +524,8 @@ app.post('/isLike',urlencodedParser,function(req, res) {
         })
 
     }
-
 });
+/*如果没有收藏，点击收藏后Job表里的num字段+1*/
 app.post('/addOneLike', function(req, res) {
     if (req.session.user === undefined) {
         res.send('notlog');
@@ -572,6 +543,7 @@ app.post('/addOneLike', function(req, res) {
         })
     }
 });
+/*如果没有收藏，收藏后将用户和工作记录下来*/
 app.post('/addOneUser', function(req, res) {
         if (req.session.user === undefined) {
             res.send('notlog');
@@ -734,7 +706,6 @@ app.put('/resettingLogin', function (req, res) {
     let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
-        // reply[0].email = req.query.email;
         req.session.user = reply[0];
     });
     let sqlCode = 'UPDATE t_user SET password = ? WHERE email = ? and passwordCode = ?';
@@ -794,7 +765,6 @@ app.post('/deleteuser', urlencodedParser, function (req, res) {
 //用户自己删除自己发布的工作 单条删除
 app.post('/deletejob', urlencodedParser, function (req, res) {
     let jobid = req.body.jobid;
-    console.log(jobid);
     let sql = "delete from t_job where id =?";
 
     connection.query(sql, jobid, function (err, reply) {
@@ -957,7 +927,6 @@ app.post('/supersearch',urlencodedParser,function (req,res) {
         }
     }
     sql+='status=1';
-    console.log(sql);
     connection.query(sql,function (err,jobs) {
        if(err){
            console.log(err);
@@ -972,7 +941,6 @@ app.post('/supersearch',urlencodedParser,function (req,res) {
 app.get('/getlikesjob',urlencodedParser,function (req,res) {
     let userid=req.session.user.id;
     let sql='select * from t_like where userId='+userid;
-    console.log(sql);
     connection.query(sql,function (err,jobsid) {
         if(err){ console.log(err); }
         if(jobsid.length===0){
@@ -999,7 +967,6 @@ app.get('/getlikesjob',urlencodedParser,function (req,res) {
 app.post('/dellikesjob',urlencodedParser,function (req,res) {
     let jobsid=req.body.jobsid;
     let userid=req.session.user.id;
-    console.log(jobsid+userid);
     for(let i=0;i<jobsid.length;i++){
         let sql='delete from t_like where jobId=? and userId='+userid;
         connection.query(sql,parseInt(jobsid[i]),function (err,reply) {

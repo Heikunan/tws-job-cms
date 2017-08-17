@@ -107,7 +107,6 @@
                                     <option value="硕士">硕士</option>
                                     <option value="博士">博士</option>
                             </select>
-                        <!-- <input type="text" class="form-control" name="Educational" id='gyf_post_Educational' placeholder="专科"> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -154,7 +153,6 @@
                                 <option value="股份合作企业">股份合作企业</option>
                                 <option value="其他企业">其他企业</option>
                             </select>
-                        <!-- <input type="text" class="form-control" id="gyf_post_companyType" name="companyType" placeholder="国营"> -->
                     </div>
                 </div>
 
@@ -220,7 +218,6 @@
             <div class="form-group">
                 <label for="gyf_post_applyApproach" class="control-label">申请方式</label>
                 <div id="gyf_post_applyApproach">
-                    <!-- <textarea class="form-control" rows="3" id="applyApproach" name="applyApproach"></textarea> -->
                 </div>
                 <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
@@ -258,15 +255,10 @@
  <script>
     
      let jobId=window.location.href.split('?id=')[1];
-     console.log(jobId);
      let get_datas={};
      get_datas.id=jobId;
-     console.log(get_datas);
-     //get_datas=JSON.stringify(get_datas);
         $.post('/getChangeJobDetail',get_datas,function (ans) {
-             console.log(ans);
                         ans=ans[0];
-                        console.log(ans.category);
                         $('#gyf_post_title').val(ans.title);
                         $('#gyf_post_expiryTime').val(ans.expiryDate);
                         $('#gyf_post_category').val(ans.category);
@@ -282,23 +274,19 @@
                         $('#gyf_post_country').val(ans.country);
                         $('#gyf_post_city').val(ans.city);
                         $('#gyf_post_area').val(ans.area);
-                        console.log('编辑器:'+ans.editor);
             if(ans.editor==='fuwenben'){
-                console.log(ans.editor);
                             choice = 1;
                             editor2.create();
-                            //	description= $('#gyf_post_description>div:last-child>*').html()
-                            //editor2.txt.html();
                             editor3.create();
                             editor4.create();
-                            // $('#gyf_post_description>div:last-child>*').empty();
-                            // $('#gyf_post_companyIntroduce>div:last-child>*').empty();
-                            // $('#gyf_post_applyApproach>div:last-child>*').empty();
+                            $('#gyf_post_description>div:last-child>*').empty();
+                            $('#gyf_post_companyIntroduce>div:last-child>*').empty();
+                            $('#gyf_post_applyApproach>div:last-child>*').empty();
                             $('#gyf_post_description>div:last-child>*').html(ans.description);
+                            //console.log(ans.companyIntroduce)
                             $('#gyf_post_companyIntroduce>div:last-child>*').html(ans.companyIntroduce);
                             $('#gyf_post_applyApproach>div:last-child>*').html(ans.applyApproach);
             }else if(ans.editor==='markdown'){
-                console.log(ans.editor);
                 let addElement5 = `<div id="editor5" spellcheck="false" contenteditable="true"><p><br></p></div>`;
                 let addElement6 = `<div id="editor6" spellcheck="false" contenteditable="true"><p><br></p></div>`;
                 let addElement7 = `<div id="editor7" spellcheck="false" contenteditable="true"><p><br></p></div>`;
@@ -322,11 +310,10 @@
                 editor7.focus();
                 MarkdownIME.Utils.move_cursor_to_end(editor7);
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                //Load MathAddon.
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                // $('#edtor5').empty();
-                // $('#edtor6').empty();
-                // $('#edtor7').empty();
+                $('#gyf_post_description>div:first-child>*').empty();
+                $('#gyf_post_companyIntroduce>div:first-child>*').empty();
+                $('#gyf_post_applyApproach>div:first-child>*').empty();
                 $('#gyf_post_description>div:first-child>*').html(ans.description);
                 $('#gyf_post_companyIntroduce>div:first-child>*').html(ans.companyIntroduce);
                 $('#gyf_post_applyApproach>div:first-child>*').html(ans.applyApproach);
@@ -406,7 +393,6 @@
                 editor3.focus();
                 MarkdownIME.Utils.move_cursor_to_end(editor3);
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                //Load MathAddon.
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
             });
             $('#gyf_editor_wangeditor').on('click', function () {
@@ -415,8 +401,6 @@
                 $('#gyf_post_applyApproach').empty();
                 choice = 1;
                 editor2.create();
-                //	description= $('#gyf_post_description>div:last-child>*').html()
-                //editor2.txt.html();
                 editor3.create();
                 editor4.create();
             });
@@ -434,22 +418,18 @@
                 } else {
                     description = $('#gyf_post_description>*').html();
                 }
-                console.log(description);
                 $('#gyf_description_view').html(description);
             });
             $('#gyf_companyIntroduce_view_button').on('click', function () {
                 if (choice === 1) {
-                    console.log(3);
                     companyIntroduce = editor3.txt.html();
                 } else {
                     companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                 }
-                //$('#gyf_post_companyIntroduce>div:last-child>*').html()
                 $('#gyf_companyIntroduce_view').html(companyIntroduce);
             });
             $('#gyf_applyApproach_view_button').click(function () {
                 if (choice === 1) {
-                    console.log(4);
                     applyApproach = editor4.txt.html();
                 } else {
                     applyApproach = $('#gyf_post_applyApproach>*').html();
@@ -480,15 +460,12 @@
                     }
                     datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val()+'&editor='+editor+'&jobId='+jobId;
                     $.get('/getUserInfo',function (myuserinfo) {
-                        //console.log(myuserinfo);
                         if(myuserinfo){
                             if(myuserinfo.company && myuserinfo.companylogo){
                                 $.post('/postJob', datas).done(function (data) {
-                                    console.log('inner' + data);
                                     data = data['max(id)'];
                                      alert("提交成功,等待审核");
                                      window.location.href=`../jobInfo.html?id=${jobId}`
-                                    console.log(datas);
                                 }).fail(function (xhr, status) {
                                     console.log('失败: ' + xhr.status + ', 原因: ' + status);
                                 })
@@ -513,11 +490,7 @@
                                     companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                                     applyApproach = $('#gyf_post_applyApproach>*').html();
                                 }
-                                console.log(' description:'+description);
-                                console.log('companyIntroduce+'+companyIntroduce);
-                                console.log(' applyApproach'+ applyApproach);
                                 let datas = $('#gyf_myform').serialize();
-                                console.log('表单序列化:'+datas);
                                 let editor;
                                 if(choice===1){
                                     editor='fuwenben';
