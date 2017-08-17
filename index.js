@@ -191,7 +191,28 @@ app.get('/myposts', function (req, res) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-            //返回自己全部的post的title和company
+            //返回自己全部的post的title和category,id
+            res.send(result);
+        })
+    } else {
+        res.send('no')
+    }
+
+});
+
+//得到草稿箱
+app.get('/mydrafts', function (req, res) {
+    if (req.session.user) {
+        //得到用户的id
+        let userid = req.session.user.id;
+        //查找用户的草稿箱
+        let sql = 'select id,title,category from t_job where userid = ' + userid +'and status = 0';
+        connection.query(sql, function(err, result) {
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                return;
+            }
+            //返回自己全部的草稿箱的的id和title和category
             res.send(result);
         })
     } else {
@@ -401,18 +422,13 @@ app.get('/postJob', function (req, res) {
 */
 
 app.post('/postJob', function (req, res) {
-    //  req.body = JSON.parse(req.body);
-    // let userId = req.session.user.id;
     let userId = req.session.user.id;
     let likes = 0;
     let releaseTime = new Date(Date.now());
-    // console.log(releaseTime);
-    // let addSql='INSERT INTO t_test(userId) VALUES (?)';
-    // let addSqlParams=['1'];
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
     let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companylogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
+    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational];
     connection.query(addSql, addSqlParams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
