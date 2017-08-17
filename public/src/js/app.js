@@ -36,6 +36,11 @@ $.get('/tjobcount',function (ans) {
         totalPages: mynum,
         visiblePages: 10,
         currentPage: 1,
+        first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+        prev: '',
+        next: '',
+        last: '<li class="last"><a href="javascript:void(0);">最后一页</a></li>',
+        page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
         onPageChange: function (num, type) {
             $.post('/testjobs',{num:num},function (ans) {
                let str = '';
@@ -149,6 +154,11 @@ $(document).ready(function () {
                    totalPages: mynum,
                    visiblePages: 10,
                    currentPage: 1,
+                   first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                   prev: '',
+                   next: '',
+                   last: '<li class="last"><a href="javascript:void(0);">最后一页</a></li>',
+                   page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
                    onPageChange: function (num, type) {
                        let currentnum = (num-1)*10;
                        let str = '';
@@ -230,6 +240,11 @@ $(document).ready(function () {
                    totalPages: 1,
                    visiblePages: 10,
                    currentPage: 1,
+                   first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                   prev: '',
+                   next: '',
+                   last: '<li class="last"><a href="javascript:void(0);">最后一页</a></li>',
+                   page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
                    onPageChange: function (num, type) {
                        let str = '';
                        for(let i = 0 ;i<mynum;i++){
