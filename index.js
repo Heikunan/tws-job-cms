@@ -917,6 +917,17 @@ app.post('/supersearch',urlencodedParser,function (req,res) {
     let conditions=req.body;
     let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
     let guimo=conditions.guimo; let benefits=conditions.benefits;
+    let sql='select * from t_job where city in '+citys+' and salary in '+salary+' and tags in '+type+
+        ' companySize in '+guimo+' and benefits in'+benefits;
+    console.log(sql);
+    connection.query(sql,function (err,jobs) {
+       if(err){
+           console.log(err);
+       } else {
+           res.send(jobs);
+       }
+    });
+
 });
 
 /*用户得到收藏的职位*/
