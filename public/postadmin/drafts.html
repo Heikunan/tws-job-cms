@@ -73,20 +73,17 @@
         } else {
             $('#sum').html(data.length)
             for (let i = 0; i < data.length; i++) {
-                str += `<tr class="text-c row-click-able" data-href="/jobInfo.html?id=${data[i].id}">
+                //这里修改为 点击后跳转到发布页面
+                str += `<tr class="text-c row-click-able" data-href="/jobPost.html?id=${data[i].id}">
                             <td width="1"><input type="checkbox" value="" name=""></td>
                             <td width="300">${data[i].title}</td>
                             <td width="300">${data[i].category}</td>
                             <td width="50" style="text-align: center;">
-                                <a href="jobPost.html" title="编辑" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
-                                    <i class="Hui-iconfont">&#xe725;</i>
-                                </a>
                                 <a title="删除" onclick=" delpost(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6e2;</i>
                                 </a>
                             </td>
                          </tr>`
-//                str += `<tr class="row-click-able" data-href="/jobInfo.html?id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].category}</td></tr>`;
                 if (i === data.length - 1) {
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {
@@ -119,10 +116,6 @@
         })
     }
 
-    function change(e) {
-        e.stopPropagation();
-        console.log($(e.target.parentNode).data('pid'))
-    }
 
     //批量删除
     function delchosen() {

@@ -191,7 +191,7 @@ app.get('/myposts', function (req, res) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-            //返回自己全部的post的title和company
+            //返回自己全部的post的title和category,id
             res.send(result);
         })
     } else {
@@ -206,13 +206,13 @@ app.get('/mydrafts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的草稿箱
-        let sql = 'select id,title,category from t_job where userid = ' + userid +'and isput = 未发布';
+        let sql = 'select id,title,category from t_job where userid = ' + userid +'and status = 0';
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-            //返回自己全部的post的title和company
+            //返回自己全部的草稿箱的的id和title和category
             res.send(result);
         })
     } else {
