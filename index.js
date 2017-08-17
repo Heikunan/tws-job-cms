@@ -859,7 +859,7 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
 
 /*用户得到收藏的职位*/
 app.get('/getlikesjob',urlencodedParser,function (req,res) {
-    let userid=8010;
+    let userid=8009;
     let sql='select * from t_like where userId='+userid;
     console.log(sql);
     connection.query(sql,function (err,jobsid) {
@@ -884,3 +884,21 @@ app.get('/getlikesjob',urlencodedParser,function (req,res) {
         }
     });
 });
+/*删除收藏的职位*/
+app.post('/dellikesjob',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    let userid=req.session.user.id;
+    console.log(jobsid+userid);
+    for(let i=0;i<jobsid.length;i++){
+        let sql='delete from t_like where jobId=? and userId='+userid;
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if (err){
+                console.log(err);
+            }
+            if(i===jobsid.length-1){
+                res.send(true);
+            }
+        })
+    }
+})
+/**/
