@@ -3,18 +3,17 @@
 
 <head>
     <metahttp-equiv="content-type" content="text/html" charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src='../src/semantic.min.js'></script>
-        <script type="text/javascript" src="../../node_modules/wangeditor/release/wangEditor.min.js"></script>
-        <script type="text/javascript" src="../../node_modules/cxselect/js/jquery.cxselect.js"></script>
-        <script type="text/javascript" src="../datepicker/js/jquery-ui-datepicker.js"></script>
-        <script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
-        <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../src/semantic.min.css">
-        <link rel="stylesheet" type="text/css" href="../src/css/jobP.css">
-        <link rel="stylesheet" type="text/css" href="../datepicker/css/jquery-ui.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../node_modules/wangeditor/release/wangEditor.min.js"></script>
+    <script type="text/javascript" src="../../node_modules/cxselect/js/jquery.cxselect.js"></script>
+    <script type="text/javascript" src="../datepicker/js/jquery-ui-datepicker.js"></script>
+    <script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
+    <link rel="stylesheet" type="text/css" href="../src/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../src/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../src/css/jobP.css">
+    <link rel="stylesheet" type="text/css" href="../datepicker/css/jquery-ui.css" />
         <script type="text/javascript">
             $.cxSelect.defaults.url = '../node_modules/cxselect/js/globalData.min.json';
             $.cxSelect.defaults.emptyStyle = 'none';
@@ -52,11 +51,11 @@
                 <div class="form-group">
                     <label for="gyf_post_category" class="col-sm-2 control-label">职业种类</label>
                     <div class="col-sm-5">
-                        <select id='gyf_post_category' name='category' class="form-control">
-                        <option value="development">程序员</option>
-                        <option value="designer">设计师</option>
-                        <option value="marketing">销售经理</option>
-                        <option value="prodect manager">产品经理</option>
+                    <select id='gyf_post_category' name='category' class="form-control">
+                        <option value="程序员">程序员</option>
+                        <option value="设计师">设计师</option>
+                        <option value="销售经理">销售经理</option>
+                        <option value="产品经理">产品经理</option>
                     </select>
                     </div>
                 </div>
@@ -244,7 +243,6 @@
     </div>
 </body>
 <script type="text/javascript">
-
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
        if(ans){
@@ -258,14 +256,20 @@
     });
 </script>
  <script>
-     let editor;
-     let back_description,back_companyIntroduce,back_applyApproch;
-        $.get('/getChangeJobDetail',function (ans) {
+    
+     let jobId=window.location.href.split('?id=')[1];
+     console.log(jobId);
+     let get_datas={};
+     get_datas.id=jobId;
+     console.log(get_datas);
+     //get_datas=JSON.stringify(get_datas);
+        $.post('/getChangeJobDetail',get_datas,function (ans) {
              console.log(ans);
-           
+                        ans=ans[0];
+                        console.log(ans.category);
                         $('#gyf_post_title').val(ans.title);
-                        $('#expiryTime').val(ans.expiryDate);
-                        $('gyf_post_category').val(ans.category);
+                        $('#gyf_post_expiryTime').val(ans.expiryDate);
+                        $('#gyf_post_category').val(ans.category);
                         let language=ans.tags.split(',');
                         $('#gyf_tags_language_1').val(language[0]);
                         $('#gyf_tags_language_2').val(language[1]);
@@ -278,11 +282,56 @@
                         $('#gyf_post_country').val(ans.country);
                         $('#gyf_post_city').val(ans.city);
                         $('#gyf_post_area').val(ans.area);
-                        editor=ans.editor;
-                        back_description=ans.description;
-                        back_companyIntroduce=ans.companyIntroduce;
-                        back_applyApproch=ans.applyApproach;
-            });
+                        console.log('编辑器:'+ans.editor);
+            if(ans.editor==='fuwenben'){
+                console.log(ans.editor);
+                            choice = 1;
+                            editor2.create();
+                            //	description= $('#gyf_post_description>div:last-child>*').html()
+                            //editor2.txt.html();
+                            editor3.create();
+                            editor4.create();
+                            $('#gyf_post_description>div:last-child>*').empty();
+                            $('#gyf_post_companyIntroduce>div:last-child>*').empty();
+                            $('#gyf_post_applyApproach>div:last-child>*').empty();
+                            $('#gyf_post_description>div:last-child>*').html(ans.description);
+                            $('#gyf_post_companyIntroduce>div:last-child>*').html(ans.companyIntroduce);
+                            $('#gyf_post_applyApproach>div:last-child>*').html(ans.applyApproach);
+            }else if(ans.editor==='markdown'){
+                console.log(ans.editor);
+                let addElement5 = `<div id="editor5" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                let addElement6 = `<div id="editor6" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                let addElement7 = `<div id="editor7" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+                $('#gyf_post_description').append(addElement5);
+                $('#gyf_post_companyIntroduce').append(addElement6);
+                $('#gyf_post_applyApproach').append(addElement7);
+                var editor5 = document.getElementById('editor5');
+                MarkdownIME.Enhance(editor5);
+                editor5.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor5);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+
+                var editor6 = document.getElementById('editor6');
+                MarkdownIME.Enhance(editor6);
+                editor6.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor6);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+
+                var editor7 = document.getElementById('editor7');
+                MarkdownIME.Enhance(editor7)
+                editor7.focus();
+                MarkdownIME.Utils.move_cursor_to_end(editor7);
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+                //Load MathAddon.
+                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+                $('#edtor5').empty();
+                $('#edtor6').empty();
+                $('#edtor7').empty();
+                $('#edtor5').html(ans.description);
+                $('#edtor6').html(ans.companyIntroduce);
+                $('#edtor7').html(ans.applyApproach);
+            }
+                    });
             let E = window.wangEditor;
             let editor2 = new E('#gyf_post_description');
             let editor3 = new E('#gyf_post_companyIntroduce');
@@ -405,55 +454,57 @@
                 } else {
                     applyApproach = $('#gyf_post_applyApproach>*').html();
                 }
-
                 $('#gyf_applyApproach_view').html(applyApproach);
             });
-            if(editor==='fuwenben'){
-                            choice = 1;
-                            editor2.create();
-                            //	description= $('#gyf_post_description>div:last-child>*').html()
-                            //editor2.txt.html();
-                            editor3.create();
-                            editor4.create();
-                            $('#edtor2').empty();
-                            $('#edtor3').empty();
-                            $('#edtor4').empty();
-                            $('#edtor2').html(back_description);
-                            $('#edtor3').html(back_companyIntroduce);
-                            $('#edtor4').html(back_applyApproach);
-            }else if(editor==='markdown'){
-                let addElement1 = `<div id="editor1" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-                let addElement2 = `<div id="editor2" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-                let addElement3 = `<div id="editor3" spellcheck="false" contenteditable="true"><p><br></p></div>`;
-                $('#gyf_post_description').append(addElement1);
-                $('#gyf_post_companyIntroduce').append(addElement2);
-                $('#gyf_post_applyApproach').append(addElement3);
-                var editor1 = document.getElementById('editor1');
-                MarkdownIME.Enhance(editor1);
-                editor1.focus();
-                MarkdownIME.Utils.move_cursor_to_end(editor1);
-                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+            // console.log('编辑器:'+editor);
+            // if(editor==='fuwenben'){
+            //     console.log(editor);
+            //                 choice = 1;
+            //                 editor2.create();
+            //                 //	description= $('#gyf_post_description>div:last-child>*').html()
+            //                 //editor2.txt.html();
+            //                 editor3.create();
+            //                 editor4.create();
+            //                 $('#edtor2').empty();
+            //                 $('#edtor3').empty();
+            //                 $('#edtor4').empty();
+            //                 $('#edtor2').html(back_description);
+            //                 $('#edtor3').html(back_companyIntroduce);
+            //                 $('#edtor4').html(back_applyApproach);
+            // }else if(editor==='markdown'){
+            //     console.log(editor);
+            //     let addElement5 = `<div id="editor5" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+            //     let addElement6 = `<div id="editor6" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+            //     let addElement7 = `<div id="editor7" spellcheck="false" contenteditable="true"><p><br></p></div>`;
+            //     $('#gyf_post_description').append(addElement5);
+            //     $('#gyf_post_companyIntroduce').append(addElement6);
+            //     $('#gyf_post_applyApproach').append(addElement7);
+            //     var editor5 = document.getElementById('editor5');
+            //     MarkdownIME.Enhance(editor5);
+            //     editor5.focus();
+            //     MarkdownIME.Utils.move_cursor_to_end(editor5);
+            //     MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
-                var editor2 = document.getElementById('editor2');
-                MarkdownIME.Enhance(editor2);
-                editor2.focus();
-                MarkdownIME.Utils.move_cursor_to_end(editor2);
-                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+            //     var editor6 = document.getElementById('editor6');
+            //     MarkdownIME.Enhance(editor6);
+            //     editor6.focus();
+            //     MarkdownIME.Utils.move_cursor_to_end(editor6);
+            //     MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
 
-                var editor3 = document.getElementById('editor3');
-                MarkdownIME.Enhance(editor3)
-                editor3.focus();
-                MarkdownIME.Utils.move_cursor_to_end(editor3);
-                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                //Load MathAddon.
-                MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                $('#edtor1').empty();
-                $('#edtor2').empty();
-                $('#edtor3').empty();
-                $('#edtor1').html(back_description);
-                $('#edtor2').html(back_companyIntroduce);
-                $('#edtor3').html(back_applyApproach);
-            }
+            //     var editor7 = document.getElementById('editor7');
+            //     MarkdownIME.Enhance(editor7)
+            //     editor7.focus();
+            //     MarkdownIME.Utils.move_cursor_to_end(editor7);
+            //     MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+            //     //Load MathAddon.
+            //     MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
+            //     $('#edtor5').empty();
+            //     $('#edtor6').empty();
+            //     $('#edtor7').empty();
+            //     $('#edtor5').html(back_description);
+            //     $('#edtor6').html(back_companyIntroduce);
+            //     $('#edtor7').html(back_applyApproach);
+            // }
             $('#gyf_post_button').click(function (e) {
                 let number = $('#gyf_myform').serialize();
                // console.log(number.indexOf('=&'));
@@ -478,6 +529,7 @@
                     }else{
                         editor='markdown';
                     }
+
                     datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&isput=已发布';
                     // datas=JSON.stringify(datas);
                     // console.log(datas);
