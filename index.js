@@ -422,10 +422,8 @@ app.post('/postJob', function (req, res) {
     let releaseTime = new Date(Date.now());
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-
     let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companylogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
-
+    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
     connection.query(addSql, addSqlParams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
