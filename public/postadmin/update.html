@@ -573,6 +573,7 @@
                                     console.log('inner' + data);
                                     data = data['max(id)'];
                                      alert("提交成功,等待审核");
+                                     window.location.href=`../jobInfo.html?id=${jobId}`
                                     console.log(datas);
                                 }).fail(function (xhr, status) {
                                     console.log('失败: ' + xhr.status + ', 原因: ' + status);
