@@ -200,6 +200,27 @@ app.get('/myposts', function (req, res) {
 
 });
 
+//得到草稿箱
+app.get('/mydrafts', function (req, res) {
+    if (req.session.user) {
+        //得到用户的id
+        let userid = req.session.user.id;
+        //查找用户的草稿箱
+        let sql = 'select id,title,category from t_job where userid = ' + userid +'and isput = 未发布';
+        connection.query(sql, function(err, result) {
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                return;
+            }
+            //返回自己全部的post的title和company
+            res.send(result);
+        })
+    } else {
+        res.send('no')
+    }
+
+});
+
 /* #8 用户查看自己创建的职位Post详情
 作为已注册并登陆的用户（招聘者)，我想浏览自己发布的某一个招聘工作的详细信息 以便知道该招聘的详细信息。
  */
