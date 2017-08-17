@@ -59,7 +59,7 @@ $.get('/tjobcount',function (ans) {
 									<div class="info-company">
 										<div class="company-text">
 											<h3 class="name">${ans[i].company}</h3>
-											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
+											<p>${ans[i].jobType}<em class="vline"></em>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
@@ -178,7 +178,7 @@ $(document).ready(function () {
 									<div class="info-company">
 										<div class="company-text">
 											<h3 class="name">${ans[i].company}</h3>
-											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
+											<p>${ans[i].jobType}<em class="vline"></em>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
@@ -262,7 +262,7 @@ $(document).ready(function () {
 									<div class="info-company">
 										<div class="company-text">
 											<h3 class="name">${ans[i].company}</h3>
-											<p>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
+											<p>${ans[i].jobType}<em class="vline"></em>需要${ans[i].num}人<em class="vline"></em>${ans[i].companyType}<em class="vline"></em>${ans[i].companySize}</p>
 										</div>
 									</div>
 								</div>
