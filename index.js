@@ -450,8 +450,12 @@ app.post('/saveJob',function(req,res){
         }
     });
 });
-app.get('/getChangeJobDetail', urlencodedParser, function(req, res) {
-    let sql = 'SELECT * FROM t_job where id =' + req.query.id;
+app.post('/getChangeJobDetail', function(req, res) {
+    //console.log(req.body.id);
+    console.log(req.body);
+    //console.log('req.query:'+req.query.id);
+    //1console.log('req.params:'+req.param)
+    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
