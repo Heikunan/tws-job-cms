@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="../src/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="../src/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src='../src/semantic.min.js'></script>
         <script type="text/javascript" src="../../node_modules/wangeditor/release/wangEditor.min.js"></script>
         <script type="text/javascript" src="../../node_modules/cxselect/js/jquery.cxselect.js"></script>
         <script type="text/javascript" src="../datepicker/js/jquery-ui-datepicker.js"></script>
@@ -52,10 +51,10 @@
                     <label for="gyf_post_category" class="col-sm-2 control-label">职业种类</label>
                     <div class="col-sm-5">
                         <select id='gyf_post_category' name='category' class="form-control">
-                        <option value="development">程序员</option>
-                        <option value="designer">设计师</option>
-                        <option value="marketing">销售经理</option>
-                        <option value="prodect manager">产品经理</option>
+                        <option value="程序员">程序员</option>
+                        <option value="设计师">设计师</option>
+                        <option value="销售经理">销售经理</option>
+                        <option value="产品经理">产品经理</option>
                     </select>
                     </div>
                 </div>
@@ -243,7 +242,6 @@
     </div>
 </body>
 <script type="text/javascript">
-
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
        if(ans){
@@ -255,8 +253,6 @@
            }
        }
     });
-
-
 </script>
 
 <script type="text/javascript">
@@ -403,7 +399,8 @@
             });
             $('#gyf_post_button').click(function (e) {
                 let number = $('#gyf_myform').serialize();
-               // console.log(number.indexOf('=&'));
+
+
                 if (number.indexOf('=&')!==-1) {
                     alert("请填写全部信息");
                 } else {
@@ -416,26 +413,31 @@
                         companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                         applyApproach = $('#gyf_post_applyApproach>*').html();
                     }
-                    // $('#gyf_post_companyIntroduce>div:last-child>*').html()
                     let datas = $('#gyf_myform').serialize();
-                  //  console.log(datas);
                     let editor;
                     if(choice===1){
                         editor='fuwenben';
                     }else{
                         editor='markdown';
                     }
-                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&isput=已发布';
-                    // datas=JSON.stringify(datas);
-                    // console.log(datas);
-                    $.post('/postJob', datas).done(function (data) {
-                        console.log('inner' + data);
-                        data = data['max(id)'];
-                        alert("提交成功,等待审核");
-                        window.location.href = './myposts.html';
-                    }).fail(function (xhr, status) {
-                        console.log('失败: ' + xhr.status + ', 原因: ' + status);
-                    })
+                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val()+'&editor='+editor;
+                    $.get('/getUserInfo',function (myuserinfo) {
+                        //console.log(myuserinfo);
+                        if(myuserinfo){
+                            if(myuserinfo.company && myuserinfo.companylogo){
+                                $.post('/postJob', datas).done(function (data) {
+                                    console.log('inner' + data);
+                                    data = data['max(id)'];
+                                     alert("提交成功,等待审核");
+                                    console.log(datas);
+                                }).fail(function (xhr, status) {
+                                    console.log('失败: ' + xhr.status + ', 原因: ' + status);
+                                })
+                            }else {
+                                alert('请完善个人信息,并上传公司logo');
+                            }
+                        }
+                    });
                 }
             });
 $('#gyf_save_button').on('click',function(){

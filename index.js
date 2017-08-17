@@ -176,7 +176,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 
 
-/*7 用户查看自己创建的职位Post列表
+/*7 用户查看自己的已发布
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 */
 app.get('/myposts', function (req, res) {
@@ -184,14 +184,36 @@ app.get('/myposts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select id,title,category from t_job where userid = ' + userid;
+        let sql = 'select status,id,title,category from t_job where userid = ' + userid+' and status != 0';
 
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 return;
             }
-            //返回自己全部的post的title和company
+            //返回自己全部的post的title和category,id
+            res.send(result);
+        })
+    } else {
+        res.send('no')
+    }
+
+});
+
+//得到草稿箱
+app.get('/mydrafts', function (req, res) {
+    if (req.session.user) {
+        //得到用户的id
+        let userid = req.session.user.id;
+        //查找用户的草稿箱
+        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 0';
+        console.log(sql)
+        connection.query(sql, function(err, result) {
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                return;
+            }
+            //返回自己全部的草稿箱的的id和title和category
             res.send(result);
         })
     } else {
@@ -406,8 +428,10 @@ app.post('/postJob', function (req, res) {
     let releaseTime = new Date(Date.now());
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
+
     let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companylogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
+
     connection.query(addSql, addSqlParams, function(err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -663,10 +687,12 @@ app.post('/resettingPassword', urlencodedParser, function (req, res) {
             let data = [passwordCode, email];
             connection.query(sql, data, function (err, rep) {
                 if (err) throw err;
-                res.send(rep);
+                if (rep) {
+                    res.send(true);//账号存在且已经激活，更新“激活码”，并返回true
+                }
             });
         } else {
-            res.send('fail');
+            res.send(false);//账号未注册激活，返回false
         }
     })
 });
@@ -681,7 +707,7 @@ app.put('/resettingLogin', function (req, res) {
     let passwordCode = req.body.passwordCode;
     let password = req.body.password;
     let sql = 'SELECT * FROM t_user WHERE email = ?';
-    let data = email;
+    let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
         reply[0].email = req.query.email;
@@ -889,3 +915,49 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
         res.send(true);
     }
 });
+
+/*用户得到收藏的职位*/
+app.get('/getlikesjob',urlencodedParser,function (req,res) {
+    let userid=8009;
+    let sql='select * from t_like where userId='+userid;
+    console.log(sql);
+    connection.query(sql,function (err,jobsid) {
+        if(err){ console.log(err); }
+        if(jobsid.length===0){
+            res.send([]);
+        }else{
+            let result=[];
+            for(let i=0;i<jobsid.length;i++){
+                let sql0='select * from t_job where id='+jobsid[i].jobId;
+                connection.query(sql0,function (err,jobs) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result.push(jobs[0]);
+                    }
+                    if(i===jobsid.length-1){
+                        res.send(result);
+                    }
+                })
+            }
+        }
+    });
+});
+/*删除收藏的职位*/
+app.post('/dellikesjob',urlencodedParser,function (req,res) {
+    let jobsid=req.body.jobsid;
+    let userid=req.session.user.id;
+    console.log(jobsid+userid);
+    for(let i=0;i<jobsid.length;i++){
+        let sql='delete from t_like where jobId=? and userId='+userid;
+        connection.query(sql,parseInt(jobsid[i]),function (err,reply) {
+            if (err){
+                console.log(err);
+            }
+            if(i===jobsid.length-1){
+                res.send(true);
+            }
+        })
+    }
+})
+/**/
