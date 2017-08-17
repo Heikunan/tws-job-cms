@@ -120,7 +120,7 @@ app.get('/myinfo', function (req, res) {
 app.post('/testjobs', function (req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum - 1) * 10;
-    let sql = `SELECT * FROM t_job WHERE status = '1' LIMIT ${mynum},10`;
+    let sql = `SELECT * FROM t_job WHERE status = '1' ORDER BY expiryDate ASC LIMIT ${mynum},10`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result)
@@ -135,7 +135,7 @@ app.post('/searchjobs', urlencodedParser, function (req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
     let jobname = req.body.jobname;
-    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'" + `and status = '1'`;
+    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'" + `and status = '1' ORDER BY expiryDate ASC`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result);
@@ -762,7 +762,7 @@ app.get('/notcheck', function (req, res) {
             res.send(users);
         }
     });
-})
+});
 
 //****************使用户可以发布职位**********************//
 app.post('/tochecked', urlencodedParser, function (req, res) {
@@ -896,7 +896,7 @@ app.post('/addhotjobs', urlencodedParser, function (req, res) {
             }
         });
     }
-})
+});
 
 ///**得到所有的用户**///
 app.post('/allusers',urlencodedParser,function (req,res) {
