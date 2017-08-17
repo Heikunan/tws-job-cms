@@ -206,7 +206,7 @@ app.get('/mydrafts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的草稿箱
-        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 0';
+        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 2';
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
