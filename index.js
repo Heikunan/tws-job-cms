@@ -841,3 +841,10 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
         res.send(true);
     }
 });
+
+
+app.post('/supersearch',urlencodedParser,function (req,res) {
+    let conditions=req.body;
+    let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
+    let guimo=conditions.guimo; let benefits=conditions.benefits;
+});

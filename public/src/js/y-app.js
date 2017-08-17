@@ -231,30 +231,83 @@ $(document).ready(function () {
         })
     });
 });
+
+
+
+
+
+
+// $(document).ready(function () {
+//     let mysaixuan=[];
+//     let city={};
+//     let selery={};
+//     mysaixuan.push(selery);
+//     mysaixuan.push(city);
+//     $('.btn.my-btn').on('click',function () {
+//
+//         mysaixuan[0].ya='yes';
+//        // this.$btn.closest('.ya').css('backgroundColor','rgba(109, 252, 115, 0)');
+//         alert($(this).attr('class'));
+//
+//         //$(this).setAttribute('backgroundColor','rgba(109, 252, 115, 0)');//style.backgroundColor='Red';
+//         if($(this).attr('class').indexOf('btn-warning')>=0){
+//             $(this).removeClass('btn-warning');
+//             mysaixuan[0].ya='';
+//            // alert(mysaixuan[0].ya);
+//         }else {
+//             $(this).addClass('btn-warning');
+//             mysaixuan[0].ya='北京';
+//           //  alert(mysaixuan[0].ya);
+//         }
+//         alert(mysaixuan[0].ya);
+//
+//     });
+//     $.post('./saixuan',mydate,function (ans) {
+//
+//     })
+//
+//
+// });
 $(document).ready(function () {
-    let mysaixuan=[];
-    let city={};
-    let selery={};
-    mysaixuan.push(selery);
-    mysaixuan.push(city);
-    $('.btn.my-btn.ya').on('click',function () {
-        mysaixuan[0].ya='yes';
-       // this.$btn.closest('.ya').css('backgroundColor','rgba(109, 252, 115, 0)');
-        alert($(this).attr('class'));
-        //$(this).setAttribute('backgroundColor','rgba(109, 252, 115, 0)');//style.backgroundColor='Red';
-        if($(this).attr('class').indexOf('btn-warning')>=0){
+    $('.btn.my-btn').on('click',function () {
+        let mysaixuan={city:[],salary:[],type:[],guimo:[],benefits:[]}
+        if($(this).attr('class').indexOf('btn-warning')>=0) {
             $(this).removeClass('btn-warning');
-        }else {
+        }else{
             $(this).addClass('btn-warning');
         }
-
-    });
-    $.post('./saixuan',mydate,function (ans) {
-        
+        getstr(mysaixuan);
     })
-
-
 });
+
+function getstr(obj) {
+    $('.mycity span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.city.push($(this).text());
+        }
+    });
+    $('.salary span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.salary.push($(this).text());
+        }
+    });
+    $('.benefits span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.benefits.push($(this).text());
+        }
+    });
+    $('.guimo span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.guimo.push($(this).text());
+        }
+    });
+    $('.type span').each(function () {
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            obj.type.push($(this).text());
+        }
+    });
+}
+
 $.get('/job_suggest',function (ans) {
     let str='';
     for (let i=0;i<ans.length;i++) {
