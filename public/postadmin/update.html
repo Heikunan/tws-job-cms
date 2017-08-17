@@ -291,9 +291,9 @@
                             //editor2.txt.html();
                             editor3.create();
                             editor4.create();
-                            $('#gyf_post_description>div:last-child>*').empty();
-                            $('#gyf_post_companyIntroduce>div:last-child>*').empty();
-                            $('#gyf_post_applyApproach>div:last-child>*').empty();
+                            // $('#gyf_post_description>div:last-child>*').empty();
+                            // $('#gyf_post_companyIntroduce>div:last-child>*').empty();
+                            // $('#gyf_post_applyApproach>div:last-child>*').empty();
                             $('#gyf_post_description>div:last-child>*').html(ans.description);
                             $('#gyf_post_companyIntroduce>div:last-child>*').html(ans.companyIntroduce);
                             $('#gyf_post_applyApproach>div:last-child>*').html(ans.applyApproach);
@@ -324,12 +324,12 @@
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
                 //Load MathAddon.
                 MarkdownIME.Renderer.inlineRenderer.addRule(new MarkdownIME.Addon.MathAddon());
-                $('#edtor5').empty();
-                $('#edtor6').empty();
-                $('#edtor7').empty();
-                $('#edtor5').html(ans.description);
-                $('#edtor6').html(ans.companyIntroduce);
-                $('#edtor7').html(ans.applyApproach);
+                // $('#edtor5').empty();
+                // $('#edtor6').empty();
+                // $('#edtor7').empty();
+                $('#gyf_post_description>div:first-child>*').html(ans.description);
+                $('#gyf_post_companyIntroduce>div:first-child>*').html(ans.companyIntroduce);
+                $('#gyf_post_applyApproach>div:first-child>*').html(ans.applyApproach);
             }
                     });
             let E = window.wangEditor;
@@ -505,9 +505,46 @@
             //     $('#edtor6').html(back_companyIntroduce);
             //     $('#edtor7').html(back_applyApproach);
             // }
+            // $('#gyf_post_button').click(function (e) {
+            //     let number = $('#gyf_myform').serialize();
+            //    // console.log(number.indexOf('=&'));
+            //     if (number.indexOf('=&')!==-1) {
+            //         alert("请填写全部信息");
+            //     } else {
+            //         if (choice === 1) {
+            //             description = editor2.txt.html();
+            //             companyIntroduce = editor3.txt.html();
+            //             applyApproach = editor4.txt.html();
+            //         } else {
+            //             description = $('#gyf_post_description>*').html();
+            //             companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
+            //             applyApproach = $('#gyf_post_applyApproach>*').html();
+            //         }
+            //         // $('#gyf_post_companyIntroduce>div:last-child>*').html()
+            //         let datas = $('#gyf_myform').serialize();
+            //       //  console.log(datas);
+            //         let editor;
+            //         if(choice===1){
+            //             editor='fuwenben';
+            //         }else{
+            //             editor='markdown';
+            //         }
+
+            //         datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&isput=已发布';
+            //         // datas=JSON.stringify(datas);
+            //         // console.log(datas);
+            //         $.post('/postJob', datas).done(function (data) {
+            //             console.log('inner' + data);
+            //             data = data['max(id)'];
+            //             alert("提交成功,等待审核");
+            //             window.location.href = './myposts.html';
+            //         }).fail(function (xhr, status) {
+            //             console.log('失败: ' + xhr.status + ', 原因: ' + status);
+            //         })
+            //     }
+            // });
             $('#gyf_post_button').click(function (e) {
                 let number = $('#gyf_myform').serialize();
-               // console.log(number.indexOf('=&'));
                 if (number.indexOf('=&')!==-1) {
                     alert("请填写全部信息");
                 } else {
@@ -520,27 +557,31 @@
                         companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                         applyApproach = $('#gyf_post_applyApproach>*').html();
                     }
-                    // $('#gyf_post_companyIntroduce>div:last-child>*').html()
                     let datas = $('#gyf_myform').serialize();
-                  //  console.log(datas);
                     let editor;
                     if(choice===1){
                         editor='fuwenben';
                     }else{
                         editor='markdown';
                     }
-
-                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&isput=已发布';
-                    // datas=JSON.stringify(datas);
-                    // console.log(datas);
-                    $.post('/postJob', datas).done(function (data) {
-                        console.log('inner' + data);
-                        data = data['max(id)'];
-                        alert("提交成功,等待审核");
-                        window.location.href = './myposts.html';
-                    }).fail(function (xhr, status) {
-                        console.log('失败: ' + xhr.status + ', 原因: ' + status);
-                    })
+                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val()+'&editor='+editor;
+                    $.get('/getUserInfo',function (myuserinfo) {
+                        //console.log(myuserinfo);
+                        if(myuserinfo){
+                            if(myuserinfo.company && myuserinfo.companylogo){
+                                $.post('/postJob', datas).done(function (data) {
+                                    console.log('inner' + data);
+                                    data = data['max(id)'];
+                                     alert("提交成功,等待审核");
+                                    console.log(datas);
+                                }).fail(function (xhr, status) {
+                                    console.log('失败: ' + xhr.status + ', 原因: ' + status);
+                                })
+                            }else {
+                                alert('请完善个人信息,并上传公司logo');
+                            }
+                        }
+                    });
                 }
             });
             $('#gyf_save_button').on('click',function(){
@@ -565,7 +606,7 @@
                                 }else{
                                     editor='markdown';
                                 }
-                                datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor;
+                                datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&jobId='+jobId;
                                 $.post('/saveChangeJob', datas).done(function (data) {
                                     alert("提交成功,已经保存至草稿箱");
                                     window.location.href = './drafts.html';
