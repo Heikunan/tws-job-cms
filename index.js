@@ -840,3 +840,31 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
         res.send(true);
     }
 });
+
+/*用户得到收藏的职位*/
+app.get('/getlikesjob',urlencodedParser,function (req,res) {
+    let userid=8010;
+    let sql='select * from t_like where userId='+userid;
+    console.log(sql);
+    connection.query(sql,function (err,jobsid) {
+        if(err){ console.log(err); }
+        if(jobsid.length===0){
+            res.send([]);
+        }else{
+            let result=[];
+            for(let i=0;i<jobsid.length;i++){
+                let sql0='select * from t_job where id='+jobsid[i].jobId;
+                connection.query(sql0,function (err,jobs) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result.push(jobs[0]);
+                    }
+                    if(i===jobsid.length-1){
+                        res.send(result);
+                    }
+                })
+            }
+        }
+    });
+});
