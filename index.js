@@ -422,16 +422,40 @@ app.post('/postJob', function (req, res) {
     let releaseTime = new Date(Date.now());
     req.body.tags = req.body.tags[0] + ',' + req.body.tags[1];
     req.body.benefits = req.body.benefits[0] + ',' + req.body.benefits[1];
-    let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-    let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
-    connection.query(addSql, addSqlParams, function(err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.status(500).send('服务器发生错误');
-        } else {
-            res.status(200).send('添加成功');
-        }
-    });
+    if(req.body.jobId===undefined){
+        let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
+        connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                res.status(500).send('服务器发生错误');
+            } else {
+                res.status(200).send('添加成功');
+            }
+        });
+    }else{
+        let deleteSql='delete from t_job where id ='+req.body.jobId;
+        connection.query(deleteSql,function(err,result){
+            if (err) {
+                console.log('[SELECT ERROR] - ', err.message);
+                res.status(500).send('服务器发生错误');
+            } else {
+               console.log('删除成功');
+               let addSql = 'INSERT INTO t_job(status,userId,title,company,description,applyApproach,expiryDate,category,jobType,tags,city,country,num,benefits,releaseTime,area,companyType,companySize,Logo,likes,companyIntroduce,salary,education,editor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+               let addSqlParams = [0,userId, req.body.title, req.body.company, req.body.description, req.body.applyApproach, req.body.expiryTime, req.body.category, req.body.jobType, req.body.tags, req.body.city, req.body.country, req.body.number, req.body.benefits, releaseTime, req.body.area, req.body.companyType, req.body.companySize, req.body.companyLogo, likes, req.body.companyIntroduce, req.body.salary, req.body.Educational,req.body.editor];
+               connection.query(addSql, addSqlParams, function(err, result) {
+                   if (err) {
+                       console.log('[SELECT ERROR] - ', err.message);
+                       res.status(500).send('服务器发生错误');
+                   } else {
+                       console.log('发布成功');
+                       res.status(200).send('成功');
+                   }
+               });
+            }
+        })
+    }
+   
 });
 app.post('/saveJob',function(req,res){
     let userId = req.session.user.id;
@@ -928,7 +952,7 @@ app.post('/supersearch',urlencodedParser,function (req,res) {
             sql+=' '+i+' in '+conditions[i]+' and ';
         }
     }
-    sql=sql.substring(0,sql.length-4);
+    sql+='status=1';
     console.log(sql);
     connection.query(sql,function (err,jobs) {
        if(err){

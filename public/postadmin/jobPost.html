@@ -429,9 +429,10 @@
                                     console.log('inner' + data);
                                     data = data['max(id)'];
                                      alert("提交成功,等待审核");
-                                    console.log(datas);
+                                     window.location.href='./myposts.html'
                                 }).fail(function (xhr, status) {
                                     console.log('失败: ' + xhr.status + ', 原因: ' + status);
+                                    window.location.reload()
                                 })
                             }else {
                                 alert('请完善个人信息,并上传公司logo');

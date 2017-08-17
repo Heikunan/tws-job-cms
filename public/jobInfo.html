@@ -257,9 +257,9 @@
 			console.log('ans:' + ans);
 			if (ans !== 'no') {
 				if (ans.identity === "职位发布者" && ans.status === "已审核") {
-					window.location.href = '/postJob';
+					window.location.href = './postadmin';
 				} else if (ans.identity === "管理员") {
-					window.location.href = '/postJob';
+					window.location.href = '/admin';
 				} else if (ans.identity === "职位发布者" && ans.status === "待审核") {
 					alert("不好意思，你没有发布权限,请联系微信客服");
 				}
