@@ -41,10 +41,13 @@ function login() {
                 password: password,
                 passwordConfirmation: passwordConfirmation
             },
-            success: function (reply) {
-                console.log(reply);
-                if (reply.affectedRows === 1) {
+            success: function (res) {
+                if (res===true) {
                     window.location.assign('/');
+                }else{
+                    $('.flash_container').empty();
+                    $('.flash_container').append('<div class=alert>验证码错误，请重新输入！</div>');
+                    hide();
                 }
             },
             error: function (err) {

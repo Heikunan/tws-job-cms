@@ -450,8 +450,12 @@ app.post('/saveJob',function(req,res){
         }
     });
 });
-app.get('/getChangeJobDetail', urlencodedParser, function(req, res) {
-    let sql = 'SELECT * FROM t_job where id =' + req.query.id;
+app.post('/getChangeJobDetail', function(req, res) {
+    //console.log(req.body.id);
+    console.log(req.body);
+    //console.log('req.query:'+req.query.id);
+    //1console.log('req.params:'+req.param)
+    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -702,15 +706,18 @@ app.put('/resettingLogin', function (req, res) {
     let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
-        reply[0].email = req.query.email;
+        // reply[0].email = req.query.email;
         req.session.user = reply[0];
     });
-    let sqlCode = 'UPDATE t_user SET password = ?,passwordCode = ? WHERE email = ? and passwordCode = ?';
-    let rePasswordCode = parseInt(Math.random() * 1000000);
-    let dataCode = [password, rePasswordCode, email, passwordCode];
+    let sqlCode = 'UPDATE t_user SET password = ? WHERE email = ? and passwordCode = ?';
+    let dataCode = [password,  email, passwordCode];
     connection.query(sqlCode, dataCode, function (err, reply) {
         if (err) throw err;
-        res.send(reply);
+        if(reply.affectedRows===1){
+            res.send(true)//验证码正确，更新密码，返回true
+        }else{
+            res.send(false)//验证码错误，返回false
+        }
     });
 });
 
@@ -908,6 +915,14 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
     }
 });
 
+
+
+app.post('/supersearch',urlencodedParser,function (req,res) {
+    let conditions=req.body;
+    let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
+    let guimo=conditions.guimo; let benefits=conditions.benefits;
+});
+
 /*用户得到收藏的职位*/
 app.get('/getlikesjob',urlencodedParser,function (req,res) {
     let userid=req.session.user.id;
@@ -953,3 +968,4 @@ app.post('/dellikesjob',urlencodedParser,function (req,res) {
     }
 })
 /**/
+
