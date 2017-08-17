@@ -240,7 +240,6 @@
     </div>
 </body>
 <script type="text/javascript">
-
     $.get('/getUserInfo',function (ans) {
         console.log(ans);
        if(ans){
@@ -252,8 +251,6 @@
            }
        }
     });
-
-
 </script>
 
 <script type="text/javascript">
@@ -416,14 +413,24 @@
                     }
                     let datas = $('#gyf_myform').serialize();
                     datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val();
-                    $.post('/postJob', datas).done(function (data) {
-                        console.log('inner' + data);
-                        data = data['max(id)'];
-                        alert("提交成功");
-                        console.log(datas);
-                    }).fail(function (xhr, status) {
-                        console.log('失败: ' + xhr.status + ', 原因: ' + status);
-                    })
+                    $.get('/getUserInfo',function (myuserinfo) {
+                        //console.log(myuserinfo);
+                        if(myuserinfo){
+                            if(myuserinfo.company && myuserinfo.companylogo){
+                                $.post('/postJob', datas).done(function (data) {
+                                    console.log('inner' + data);
+                                    data = data['max(id)'];
+                                    alert("提交成功");
+                                    console.log(datas);
+                                }).fail(function (xhr, status) {
+                                    console.log('失败: ' + xhr.status + ', 原因: ' + status);
+                                })
+                            }else {
+                                alert('请完善个人信息,并上传公司logo');
+                            }
+                        }
+                    });
+
                 }
             });
 
