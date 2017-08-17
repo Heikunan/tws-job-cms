@@ -83,12 +83,6 @@ form p > * {
     background-color: #777777;
 }
 
-#remember_me {
-    position: relative;
-    margin-left: 250px;
-    color: black;
-}
-
 #forget_pwd {
     font-size: 13px;
     color:  black;
@@ -129,5 +123,5 @@ form p > * {
 }
 
 #login_control {
-    padding: 0 28px;
+    padding: 20px 28px;
 }

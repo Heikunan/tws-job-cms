@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 我的发布 <a
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 我的收藏 <a
         class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
         href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
@@ -38,7 +38,7 @@
     <table class="table table-border table-bordered table-hover table-bg">
         <thead>
         <tr>
-            <th scope="col" colspan="6">发布管理</th>
+            <th scope="col" colspan="6">收藏管理</th>
         </tr>
         <tr class="text-c">
             <th width="1"><input type="checkbox" value="" name=""></th>
@@ -61,28 +61,27 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script>
     let str = '';
-    $.get('/myposts', function (data) {
-        console.log('data: ' + JSON.stringify(data));
+    $.get('/getlikesjob', function (data) {
         if (data === 'no') {
             alert('登陆过期，重新登录！');
             top.location = '../index.html'
         }
         else if (data.length === 0) {
             $('#sum').html(0)
-            $(`thead`).html('<tr ><td>暂时没有发布</td></tr>')
+            $(`thead`).html('<tr ><td style="text-align: center">暂时没有收藏!</td></tr>')
 
         } else {
             $('#sum').html(data.length)
             for (let i = 0; i < data.length; i++) {
-                str += `<tr class="text-c row-click-able" data-href="/jobInfo.html?id=${data[i].id}">
+                str += `<tr class="text-c">
                             <td width="1"><input type="checkbox" value="" name=""></td>
                             <td width="300">${data[i].title}</td>
                             <td width="300">${data[i].category}</td>
                             <td width="50" style="text-align: center;">
-                                <a href="jobPost.html" title="编辑" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                                <a href="/jobInfo.html?id=${data[i].id}" title="查看" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe725;</i>
                                 </a>
-                                <a title="删除" onclick=" delpost(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                                <a title="删除" onclick=" delpost(this,${data[i].id})" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6e2;</i>
                                 </a>
                             </td>
@@ -99,24 +98,26 @@
 
 
     //单条删除
-    function delpost(e) {
-        e.stopPropagation();
-        let pid = $(e.target.parentNode).data('pid');
-        console.log(pid)
-        layer.confirm('确认要删除职位吗？', function () {
-            $.post('/deletejob', {jobid: pid})
-                .done(function (data) {
-                    if (data === 'ok') {
-                        layer.msg('已删除!', {icon: 1, time: 1000});
-                        $(e.target).parents('tr').remove();
-                    } else {
-                        layer.msg('删除失败!', {icon: 2, time: 1000});
+    function delpost(obj,id) {
+        layer.confirm('此收藏确认要删除吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/dellikesjob',
+                dataType: 'json',
+                data: {jobsid:[id]},
+                success: function (data) {
+                    $("#sum").html($('tbody tr').length-1);
+                    $(obj).parents("tr").remove();
+                    if($('tbody tr').length===0){
+                        $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂时没有收藏!</td></tr>");
                     }
-
-                }).fail(function (a) {
-                alert('fial')
+                    layer.msg('已删除!', {icon: 1, time: 1000});
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
             });
-        })
+        });
     }
 
     function change(e) {
@@ -138,12 +139,12 @@
         if (jobsid.length === 0) {
             layer.alert("无职位可操作！");
         } else {
-            layer.confirm('确认要删除这些职位吗？', function () {
+            layer.confirm('确认要删除这些收藏吗？', function () {
                 $.ajax({
                     type: 'post',
-                    url: '/deletejobs',
+                    url: '/dellikesjob',
                     data: {jobsid: jobsid}
-                }).done(function () {
+                }).done(function (data) {
                     $('tbody input[type=checkbox]:checked').parents('tr').remove();
                     if ($('tbody tr').length === 0) {
                         $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
