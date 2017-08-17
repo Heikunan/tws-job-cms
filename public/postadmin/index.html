@@ -105,8 +105,7 @@
         if (ans==='no') {
             alert('登陆过期，请重新登录！');
             top.location = '../index.html'
-        }
-        else if (ans.status !== '已审核') {
+        } else if (ans.status !== '已审核') {
             alert('账号未审核，请完成您的个人信息');
         }
         $('#u-name').append(ans.email);
