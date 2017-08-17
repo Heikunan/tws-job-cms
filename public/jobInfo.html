@@ -8,6 +8,7 @@
 	<!-- <script type="text/javascript" src='./src/semantic.min.js'></script> -->
 	<!-- <script src="../node_modules/social-share.js/dist/js/social-share.min.js"></script> -->
 	<script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 
@@ -128,6 +129,31 @@
 						</div>
 
 					</div>
+					<div class="ui divider gyf_divider"></div>
+					<div>
+						<h2 class="left">工作地点</h2>
+						<br/>
+						<div id="allmap" style="width: 100%;height: 300px"></div>
+						<script type="text/javascript">
+                            var map = new BMap.Map("allmap");
+                            var point = new BMap.Point(116.331398,39.897445);
+                            map.centerAndZoom(point,12);
+
+                            var geolocation = new BMap.Geolocation();
+                            geolocation.getCurrentPosition(function(r){
+                                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                                    var mk = new BMap.Marker(r.point);
+                                    map.addOverlay(mk);
+                                    map.panTo(r.point);
+                                    alert('您的位置：'+r.point.lng+','+r.point.lat);
+                                }
+                                else {
+                                    alert('failed'+this.getStatus());
+                                }
+                            },{enableHighAccuracy: true})
+						</script>
+					</div>
+
 				</div>
 				<div class="gyf_all_right col-xs-4">
 					<div class="panel post-job gyf_panel">
