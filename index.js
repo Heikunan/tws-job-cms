@@ -176,7 +176,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 
 
-/*7 用户查看自己创建的职位Post列表
+/*7 用户查看自己的已发布
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 */
 app.get('/myposts', function (req, res) {
@@ -184,7 +184,7 @@ app.get('/myposts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select id,title,category from t_job where userid = ' + userid;
+        let sql = 'select id,title,category from t_job where userid = ' + userid+' and status != 0';
 
         connection.query(sql, function(err, result) {
             if (err) {
@@ -206,7 +206,8 @@ app.get('/mydrafts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的草稿箱
-        let sql = 'select id,title,category from t_job where userid = ' + userid +'and status = 0';
+        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 0';
+        console.log(sql)
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
