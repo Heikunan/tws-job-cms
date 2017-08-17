@@ -5,10 +5,10 @@ function resetPassword() {
         url: `/resettingPassword?email=${email}`,
         type:'POST',
         success: function(res){
-            if(res!=='fail'){
+            if(res===true){
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class="alert">验证码正发送至您的邮箱，请等待！</div>');
-                hide();
+                $('.flash_container').append('<div class="alert_ok">验证码正发送至您的邮箱，请等待！</div>');
+                hide_ok();
                 $('#resetPassword_frame').hide();
                 $('#login_frame').show();
             }else {
@@ -56,4 +56,8 @@ function login() {
 
 function hide() {
     $('.alert').delay(2000).hide(0);
+}
+
+function hide_ok() {
+    $('.alert_ok').delay(2000).hide(0);
 }
