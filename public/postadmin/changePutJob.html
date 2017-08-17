@@ -235,7 +235,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-5">
                 <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
-                <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_save_button" onclick="">保<i class = 'space2'></i>存</button>
+                
             </div>
         </div>
         </form>
@@ -499,40 +499,40 @@
                     });
                 }
             });
-            $('#gyf_save_button').on('click',function(){
-                let number = $('#gyf_myform').serialize();
-                            if (number.indexOf('=&')!==-1) {
-                                alert("请填写全部信息");
-                            } else {
-                                if (choice === 1) {
-                                    description = editor2.txt.html();
-                                    companyIntroduce = editor3.txt.html();
-                                    applyApproach = editor4.txt.html();
-                                } else {
-                                    description = $('#gyf_post_description>*').html();
-                                    companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
-                                    applyApproach = $('#gyf_post_applyApproach>*').html();
-                                }
-                                console.log(' description:'+description);
-                                console.log('companyIntroduce+'+companyIntroduce);
-                                console.log(' applyApproach'+ applyApproach);
-                                let datas = $('#gyf_myform').serialize();
-                                console.log('表单序列化:'+datas);
-                                let editor;
-                                if(choice===1){
-                                    editor='fuwenben';
-                                }else{
-                                    editor='markdown';
-                                }
-                                datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&jobId='+jobId;
-                                $.post('/saveChangeJob', datas).done(function (data) {
-                                    alert("提交成功,已经保存至草稿箱");
-                                    window.location.href = './drafts.html';
-                                }).fail(function (xhr, status) {
-                                    console.log('失败: ' + xhr.status + ', 原因: ' + status);
-                                })
-                            }
-            })
+            // $('#gyf_save_button').on('click',function(){
+            //     let number = $('#gyf_myform').serialize();
+            //                 if (number.indexOf('=&')!==-1) {
+            //                     alert("请填写全部信息");
+            //                 } else {
+            //                     if (choice === 1) {
+            //                         description = editor2.txt.html();
+            //                         companyIntroduce = editor3.txt.html();
+            //                         applyApproach = editor4.txt.html();
+            //                     } else {
+            //                         description = $('#gyf_post_description>*').html();
+            //                         companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
+            //                         applyApproach = $('#gyf_post_applyApproach>*').html();
+            //                     }
+            //                     console.log(' description:'+description);
+            //                     console.log('companyIntroduce+'+companyIntroduce);
+            //                     console.log(' applyApproach'+ applyApproach);
+            //                     let datas = $('#gyf_myform').serialize();
+            //                     console.log('表单序列化:'+datas);
+            //                     let editor;
+            //                     if(choice===1){
+            //                         editor='fuwenben';
+            //                     }else{
+            //                         editor='markdown';
+            //                     }
+            //                     datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&jobId='+jobId;
+            //                     $.post('/saveChangeJob', datas).done(function (data) {
+            //                         alert("提交成功,已经保存至草稿箱");
+            //                         window.location.href = './drafts.html';
+            //                     }).fail(function (xhr, status) {
+            //                         console.log('失败: ' + xhr.status + ', 原因: ' + status);
+            //                     })
+            //                 }
+            // })
 </script>
 <script src="../js/common.js"></script>
 
