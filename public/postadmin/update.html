@@ -564,7 +564,7 @@
                     }else{
                         editor='markdown';
                     }
-                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val()+'&editor='+editor;
+                    datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce + '&company=' + $('#gyf_post_company').val() + '&companyLogo=' + $('#gyf_post_companyLogo').val()+'&editor='+editor+'&jobId='+jobId;
                     $.get('/getUserInfo',function (myuserinfo) {
                         //console.log(myuserinfo);
                         if(myuserinfo){
@@ -573,7 +573,7 @@
                                     console.log('inner' + data);
                                     data = data['max(id)'];
                                      alert("提交成功,等待审核");
-                                    console.log(datas);
+                                     window.location.href='../jobInfo.html?id=${jobId}';
                                 }).fail(function (xhr, status) {
                                     console.log('失败: ' + xhr.status + ', 原因: ' + status);
                                 })
@@ -598,6 +598,9 @@
                                     companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
                                     applyApproach = $('#gyf_post_applyApproach>*').html();
                                 }
+                                console.log(' description:'+description);
+                                console.log('companyIntroduce+'+companyIntroduce);
+                                console.log(' applyApproach'+ applyApproach);
                                 let datas = $('#gyf_myform').serialize();
                                 console.log('表单序列化:'+datas);
                                 let editor;
