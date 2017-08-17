@@ -300,7 +300,7 @@ app.post('/send', function (req, res, next) {
     }
 });
 app.get('/tjobcount', function (req, res) {
-    let sql = 'select count(*) from t_job';
+    let sql = `select count(*) from t_job where status = 1`;
     connection.query(sql, function (err, result) {
         if (err) {
             throw err;
