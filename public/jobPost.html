@@ -9,15 +9,12 @@
 		<script type="text/javascript" src='./src/semantic.min.js'></script>
 		<script type="text/javascript" src="../node_modules/wangeditor/release/wangEditor.min.js"></script>
 		<script type="text/javascript" src="../node_modules/cxselect/js/jquery.cxselect.js"></script>
-		<!-- <script type="text/javascript" src="./cxSelect/js/jquery.cxselect.js"></script> -->
 		<script type="text/javascript" src="./datepicker/js/jquery-ui-datepicker.js"></script>
-		<!-- <script src="./MarkdownIME/dist/MarkdownIME.js"></script> -->
 		<script type="text/javascript" src=" http://build.laobubu.net/MarkdownIME/MarkdownIME.js"></script>
 		<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 		<link rel="stylesheet" type="text/css" href="./src/css/jobP.css">
 		<link rel="stylesheet" type="text/css" href="./datepicker/css/jquery-ui.css" />
-		<!-- <link rel="stylesheet" href="./MarkdownIME/test/style.css"> -->
 		<script type="text/javascript">
 			$.cxSelect.defaults.url ='../node_modules/cxselect/js/globalData.min.json';
 			$.cxSelect.defaults.emptyStyle = 'none';
@@ -333,8 +330,6 @@
 				$('#gyf_post_applyApproach').empty();
 				choice=1;
 				editor2.create();
-			//	description= $('#gyf_post_description>div:last-child>*').html()
-				
 				 editor3.create();
 				 editor4.create();
 			});
@@ -352,22 +347,18 @@
 				}else{
 				description= $('#gyf_post_description>*').html();
 				}
-				console.log(description);
 				$('#gyf_description_view').html(description);
 			});
 			$('#gyf_companyIntroduce_view_button').on('click', function () {
 				if(choice===1){
-					console.log(3);
 					companyIntroduce=editor3.txt.html();
 				}else{
 					companyIntroduce=$('#gyf_post_companyIntroduce>*').html();
 				}
-				//$('#gyf_post_companyIntroduce>div:last-child>*').html()
 				$('#gyf_companyIntroduce_view').html(companyIntroduce);
 			});
 			$('#gyf_applyApproach_view_button').click(function () {
 				if(choice===1){
-					console.log(4);
 						applyApproach=editor4.txt.html();
 				}else{
 					applyApproach=$('#gyf_post_applyApproach>*').html();
@@ -386,10 +377,8 @@
 					applyApproach=$('#gyf_post_applyApproach>*').html();
 				}		
 				let datas = $('#gyf_myform').serialize();
-				console.log(datas);
 				datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce;
 				$.post('/postJob', datas).done(function (data) {
-					console.log('inner' + data);
 					data = data['max(id)'];
 					let confi = alert("提交成功");
 					window.location.href = `/getJobDetail/id=${data}`;

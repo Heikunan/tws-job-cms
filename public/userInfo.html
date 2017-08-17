@@ -211,11 +211,9 @@
     function getMyPosts() {
         let str = '';
         $.get('/myposts', function (data) {
-            console.log('data: ' + JSON.stringify(data))
             for (let i = 0; i < data.length; i++) {
                 str += `<tr class="row-click-able" data-href="/getJobDetail/id=${data[i].id}"><td>${data[i].title}</td><td>${data[i].description}</td></tr>`;
                 if (i === data.length - 1) {
-                    console.log('str: ' + str)
                     $(`#table-body`).html(str);
                     $(".row-click-able").click(function () {
                         window.document.location = $(this).data("href");

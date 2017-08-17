@@ -114,7 +114,6 @@
     function delpost(e) {
         e.stopPropagation();
         let pid = $(e.target.parentNode).data('pid');
-        console.log(pid)
         layer.confirm('确认要删除职位吗？', function () {
             $.post('/deletejob', {jobid: pid})
                 .done(function (data) {
@@ -138,14 +137,10 @@
     //批量删除
     function delchosen() {
         let jobsid = [];
-        console.log($('tbody input[type=checkbox]:checked'));
         $('tbody input[type=checkbox]:checked').each(function () {
             let pid = $(this).parents('tr').find('a').data('pid');
-            console.log('pid: ' + pid);
             jobsid.push(pid);
         });
-        console.log(jobsid);
-
         if (jobsid.length === 0) {
             layer.alert("无职位可操作！");
         } else {
