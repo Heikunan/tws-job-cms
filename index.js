@@ -943,8 +943,25 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
 
 app.post('/supersearch',urlencodedParser,function (req,res) {
     let conditions=req.body;
-    let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
-    let guimo=conditions.guimo; let benefits=conditions.benefits;
+    let sql='select * from t_job';
+    for(let i in conditions){
+        if(i==='salary'){
+            sql+=' where ';
+        }
+        if(conditions[i].indexOf('%%')>2){
+            sql+=' '+i+' in '+conditions[i]+' and ';
+        }
+    }
+    sql+='status=1';
+    console.log(sql);
+    connection.query(sql,function (err,jobs) {
+       if(err){
+           console.log(err);
+       } else {
+           res.send(jobs);
+       }
+    });
+
 });
 
 /*用户得到收藏的职位*/
