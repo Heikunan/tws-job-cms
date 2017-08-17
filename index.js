@@ -450,8 +450,12 @@ app.post('/saveJob',function(req,res){
         }
     });
 });
-app.get('/getChangeJobDetail', urlencodedParser, function(req, res) {
-    let sql = 'SELECT * FROM t_job where id =' + req.query.id;
+app.post('/getChangeJobDetail', function(req, res) {
+    //console.log(req.body.id);
+    console.log(req.body);
+    //console.log('req.query:'+req.query.id);
+    //1console.log('req.params:'+req.param)
+    let sql = 'SELECT * FROM t_job where id =' + req.body.id;
     connection.query(sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -915,10 +919,16 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
 
 app.post('/supersearch',urlencodedParser,function (req,res) {
     let conditions=req.body;
-    let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
-    let guimo=conditions.guimo; let benefits=conditions.benefits;
-    let sql='select * from t_job where city in '+citys+' and salary in '+salary+' and tags in '+type+
-        ' companySize in '+guimo+' and benefits in'+benefits;
+    let sql='select * from t_job';
+    for(let i in conditions){
+        if(i==='salary'){
+            sql+=' where ';
+        }
+        if(conditions[i].indexOf('%%')>2){
+            sql+=' '+i+' in '+conditions[i]+' and ';
+        }
+    }
+    sql=sql.substring(0,sql.length-4);
     console.log(sql);
     connection.query(sql,function (err,jobs) {
        if(err){
