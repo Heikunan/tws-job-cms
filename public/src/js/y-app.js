@@ -240,8 +240,14 @@ $(document).ready(function () {
     $('.btn.my-btn.ya').on('click',function () {
         mysaixuan[0].ya='yes';
        // this.$btn.closest('.ya').css('backgroundColor','rgba(109, 252, 115, 0)');
-        $('this').setAttribute('backgroundColor','rgba(109, 252, 115, 0)');//style.backgroundColor='Red';
-       
+        alert($(this).attr('class'));
+        //$(this).setAttribute('backgroundColor','rgba(109, 252, 115, 0)');//style.backgroundColor='Red';
+        if($(this).attr('class').indexOf('btn-warning')>=0){
+            $(this).removeClass('btn-warning');
+        }else {
+            $(this).addClass('btn-warning');
+        }
+
     });
     $.post('./saixuan',mydate,function (ans) {
         
