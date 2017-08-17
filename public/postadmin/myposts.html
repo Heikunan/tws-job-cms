@@ -77,10 +77,10 @@
             let status;
             for (let i = 0; i < data.length; i++) {
                 switch (data[i].status) {
-                    case 1:
+                    case 0:
                         status = '未审核';
                         break;
-                    case 2:
+                    case 1:
                         status = '已审核';
                         break;
                 }
@@ -90,7 +90,8 @@
                             <td width="300">${data[i].category}</td>
                             <td width="100">${status}</td>
                             <td width="50" style="text-align: center;">
-                                <a href="jobPost.html" title="编辑" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                            <!--//这里修改为 点击后跳转到发布页面-->
+                                <a href="./update.html?id=${data[i].id}" title="编辑" onclick="change(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6df;</i>
                                 </a>
                                 <a title="删除" onclick=" delpost(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">

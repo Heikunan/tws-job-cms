@@ -74,7 +74,7 @@
             $('#sum').html(data.length)
             for (let i = 0; i < data.length; i++) {
                 //这里修改为 点击后跳转到发布页面
-                str += `<tr class="text-c row-click-able" data-href="/jobPost.html?id=${data[i].id}">
+                str += `<tr class="text-c row-click-able" data-href="./update.html?id=${data[i].id}">
                             <td width="1"><input type="checkbox" value="" name=""></td>
                             <td width="300">${data[i].title}</td>
                             <td width="300">${data[i].category}</td>
