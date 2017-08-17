@@ -309,13 +309,13 @@ a {
     
 }
 .my-btn:hover{
-    background-color: rgba(109, 252, 115, 0);
-    border: 2px solid rgba(163, 164, 175, 0.08); 
+    background-color: #f0ad4e;
+    border: 2px solid #eea236;
 }
-.my-btn:visited{
-    background-color: rgba(109, 252, 115, 0); /* Green */
-    border: 2px solid rgba(163, 164, 175, 0.08); /* Green */
-}
+/*.my-btn:visited{*/
+    /*background-color: rgba(109, 252, 115, 0); !* Green *!*/
+    /*border: 2px solid rgba(163, 164, 175, 0.08); !* Green *!*/
+/*}*/
 .myie{
     padding-left: 20px;
 }

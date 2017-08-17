@@ -911,6 +911,14 @@ app.post('/jobstochecked',urlencodedParser,function (req,res) {
     }
 });
 
+
+
+app.post('/supersearch',urlencodedParser,function (req,res) {
+    let conditions=req.body;
+    let citys=conditions.city;  let salary=conditions.salary;   let type=conditions.type;
+    let guimo=conditions.guimo; let benefits=conditions.benefits;
+});
+
 /*用户得到收藏的职位*/
 app.get('/getlikesjob',urlencodedParser,function (req,res) {
     let userid=req.session.user.id;
@@ -956,3 +964,4 @@ app.post('/dellikesjob',urlencodedParser,function (req,res) {
     }
 })
 /**/
+
