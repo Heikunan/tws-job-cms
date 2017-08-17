@@ -272,9 +272,6 @@ a {
     background-color: rgba(60, 60, 60, 0.87);
     color: #fff;
 }
-.myconta{
-    margin-top: 50px;
-}
 .myconta ul{
     list-style: none;
 }
@@ -356,7 +353,7 @@ a {
     margin: 0 auto;
     text-align: center;
     margin-bottom: 20px;
-    background: white;
+    background: #e1e1e3;
 }
 
 .title span{
@@ -389,14 +386,31 @@ a {
 
 .myconta{
     margin-top: 50px;
-    margin-bottom: 50px;
 }
-
+.myxstitle{
+    font-size: 3rem;
+    color: white;
+}
+@media (max-width: 768px) {
+    .search-background-contain{
+        background: none;
+    }
+    .job-tags{
+        display: none;
+    }
+    .job-time{
+        clear: both;
+    }
+    .info-company{
+        float: left;
+    }
+    .mysectionright{
+        margin-top: 20px;
+    }
+}
 #my-footdiv{
     background-color: #222;
     color: #fff;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .ui:hover{

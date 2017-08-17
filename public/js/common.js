@@ -1,7 +1,7 @@
 function logout() {
     $.get('/loginout',function (ans) {
         if(ans){
-            window.location.reload(true);
+            window.location.href='../index.html';
         }
     })
 }

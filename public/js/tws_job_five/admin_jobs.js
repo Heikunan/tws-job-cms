@@ -129,27 +129,33 @@ function admin_job_del(obj,id) {
 
 //**添加热门职业***//
 function admin_hotjob_add(obj,id) {
-    layer.confirm('确定添加此职位为热门吗？',function(index) {
-        $.ajax({
-            type: 'post',
-            url: '/addhotjobs',
-            dataType: 'json',
-            data: {jobsid:[id]},
-            success: function (data) {
-                console.log(data);
-                /*添加职位通过*/
-                if(data){
-                    layer.msg('已添加!', {icon: 1, time: 1000});
-                    $(obj).parents('tr').attr("style", "BACKGROUND-COLOR: #F37B34");
-                }else{
-                    layer.msg('此职位未审核!', {icon: 2, time: 1000});
-                }
-            },
-            error: function (data) {
-                console.log(data);
-            },
+    let color=$($(obj).parents('tr')).css('background-color');
+    if(color!=='rgb(243, 123, 52)'){
+        layer.confirm('确定添加此职位为热门吗？',function(index) {
+            $.ajax({
+                type: 'post',
+                url: '/addhotjobs',
+                dataType: 'json',
+                data: {jobsid:[id]},
+                success: function (data) {
+                    console.log(data);
+                    /*添加职位通过*/
+                    if(data){
+                        layer.msg('已添加!', {icon: 1, time: 1000});
+                        $(obj).parents('tr').attr("style", "BACKGROUND-COLOR: #F37B34");
+                    }else{
+                        layer.msg('此职位未审核!', {icon: 2, time: 1000});
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+            });
         });
-    });
+    }
+    else{
+        layer.msg('此职位已是热门职位!', {icon: 2, time: 1000});
+    }
 };
 
 /*一键审核选中的数据*/
