@@ -120,7 +120,7 @@ app.get('/myinfo', function (req, res) {
 app.post('/testjobs', function (req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum - 1) * 10;
-    let sql = `SELECT * FROM t_job LIMIT ${mynum},10`;
+    let sql = `SELECT * FROM t_job WHERE status = '1' LIMIT ${mynum},10`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result)
@@ -135,7 +135,7 @@ app.post('/searchjobs', urlencodedParser, function (req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
     let jobname = req.body.jobname;
-    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'";
+    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'" + `and status = '1'`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result);
