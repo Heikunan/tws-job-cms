@@ -62,6 +62,7 @@
 <script>
     let str = '';
     $.get('/getlikesjob', function (data) {
+        console.log(data);
         if (data === 'no') {
             alert('登陆过期，重新登录！');
             top.location = '../index.html'
