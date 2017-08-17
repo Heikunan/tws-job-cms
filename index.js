@@ -120,7 +120,7 @@ app.get('/myinfo', function (req, res) {
 app.post('/testjobs', function (req, res) {
     let mynum = parseInt(req.body.num);
     mynum = (mynum - 1) * 10;
-    let sql = `SELECT * FROM t_job LIMIT ${mynum},10`;
+    let sql = `SELECT * FROM t_job WHERE status = '1' LIMIT ${mynum},10`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result)
@@ -135,7 +135,7 @@ app.post('/searchjobs', urlencodedParser, function (req, res) {
     let jobtype = req.body.jobtype;
     let category = req.body.category;
     let jobname = req.body.jobname;
-    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'";
+    let sql = "select * from t_job where category like '%" + category + "%' and jobtype like '%" + jobtype + "%' and title like '%" + jobname + "%'" + `and status = '1'`;
     connection.query(sql, function (err, result) {
         if (err) throw err;
         res.send(result);
@@ -176,7 +176,7 @@ app.post('/getSuggestion', function (req, res) {
 });
 
 
-/*7 用户查看自己创建的职位Post列表
+/*7 用户查看自己的已发布
 作为已注册并登陆的用户（招聘者），我想浏览自己发布的所有工作 以便查看自己手上的所有招聘。
 */
 app.get('/myposts', function (req, res) {
@@ -184,7 +184,7 @@ app.get('/myposts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的post
-        let sql = 'select id,title,category from t_job where userid = ' + userid;
+        let sql = 'select status,id,title,category from t_job where userid = ' + userid+' and status != 0';
 
         connection.query(sql, function(err, result) {
             if (err) {
@@ -206,7 +206,8 @@ app.get('/mydrafts', function (req, res) {
         //得到用户的id
         let userid = req.session.user.id;
         //查找用户的草稿箱
-        let sql = 'select id,title,category from t_job where userid = ' + userid +'and status = 0';
+        let sql = 'select id,title,category from t_job where userid = ' + userid +' and status = 0';
+        console.log(sql)
         connection.query(sql, function(err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
@@ -630,10 +631,12 @@ app.post('/resettingPassword', urlencodedParser, function (req, res) {
             let data = [passwordCode, email];
             connection.query(sql, data, function (err, rep) {
                 if (err) throw err;
-                res.send(rep);
+                if (rep) {
+                    res.send(true);//账号存在且已经激活，更新“激活码”，并返回true
+                }
             });
         } else {
-            res.send('fail');
+            res.send(false);//账号未注册激活，返回false
         }
     })
 });
@@ -648,7 +651,7 @@ app.put('/resettingLogin', function (req, res) {
     let passwordCode = req.body.passwordCode;
     let password = req.body.password;
     let sql = 'SELECT * FROM t_user WHERE email = ?';
-    let data = email;
+    let data = [email];
     connection.query(sql, data, function (err, reply) {
         if (err) throw err;
         reply[0].email = req.query.email;

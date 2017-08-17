@@ -9,7 +9,7 @@ $(function () {
         },function (data) {
             if (data===true) {
                 $('.flash_container').empty();
-                $('.flash_container').append('<div class="alert">注册成功，正在发送验证邮件，请前往邮箱激活账号。5秒后页面将跳转至首页！</div>')
+                $('.flash_container').append('<div class="alert_ok">注册成功，正在发送验证邮件，请前往邮箱激活账号。5秒后页面将跳转至首页！</div>')
                 window.setTimeout("window.location='/'",5000);
             }else if(data===false){
                 $('.flash_container').empty();
