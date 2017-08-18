@@ -787,10 +787,8 @@ app.post('/deletejobs', urlencodedParser, function (req, res) {
                 console.log(err);
             }
         });
-        if (i === jobsid.length - 1) {
-            res.send('ok');
-        }
     }
+    res.send(true);
 });
 app.get('/cretateusers', function(req, res) {
     let sql = "insert into t_user (password,email,status) values (?,?,?);";

@@ -109,7 +109,7 @@ function delchosen() {
 }
 /*删除此工作*/
 function admin_job_del(obj,id) {
-    layer.confirm('工作删除须谨慎，确认要删除吗？',function(index) {
+    layer.confirm('此热门工作，确认要删除吗？',function(index) {
         $.ajax({
             type: 'post',
             url: '/deletejobs',
@@ -119,11 +119,12 @@ function admin_job_del(obj,id) {
                 $("#sum").html($('tbody tr').length-1);
                 $(obj).parents("tr").remove();
                 if($('tbody tr').length===0){
-                    $('tbody').append("<tr><td colspan='9'>暂无任何记录!</td></tr>");
+                    $('tbody').append("<tr><td colspan='9' style='text-align: center'>暂无任何记录!</td></tr>");
                 }
                 layer.msg('已删除!', {icon: 1, time: 1000});
             },
             error: function (data) {
+
                 console.log(data.msg);
             },
         });
