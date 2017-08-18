@@ -107,6 +107,7 @@
                                     <option value="硕士">硕士</option>
                                     <option value="博士">博士</option>
                             </select>
+                       
                     </div>
                 </div>
                 <div class="form-group">
@@ -153,6 +154,7 @@
                                 <option value="股份合作企业">股份合作企业</option>
                                 <option value="其他企业">其他企业</option>
                             </select>
+
                     </div>
                 </div>
 
@@ -218,6 +220,7 @@
             <div class="form-group">
                 <label for="gyf_post_applyApproach" class="control-label">申请方式</label>
                 <div id="gyf_post_applyApproach">
+                
                 </div>
                 <button type="button" class="btn  gyf_view_btn" data-toggle="modal" data-target="#gyf_applyApproach_modal" id="gyf_applyApproach_view_button">预览</button>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="gyf_applyApproach_modal">
@@ -232,7 +235,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-5">
                 <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_post_button" onclick="">发<i class = 'space2'></i>布</button>
-                <button type="button" class="btn" style="background-color:#212121; color:white" id="gyf_save_button" onclick="">保<i class = 'space2'></i>存</button>
+                
             </div>
         </div>
         </form>
@@ -241,7 +244,6 @@
 </body>
 <script type="text/javascript">
     $.get('/getUserInfo',function (ans) {
-        console.log(ans);
        if(ans){
            if(ans.company && ans.companylogo){
                  $('#gyf_post_company').val(ans.company);
@@ -283,7 +285,6 @@
                             $('#gyf_post_companyIntroduce>div:last-child>*').empty();
                             $('#gyf_post_applyApproach>div:last-child>*').empty();
                             $('#gyf_post_description>div:last-child>*').html(ans.description);
-                            //console.log(ans.companyIntroduce)
                             $('#gyf_post_companyIntroduce>div:last-child>*').html(ans.companyIntroduce);
                             $('#gyf_post_applyApproach>div:last-child>*').html(ans.applyApproach);
             }else if(ans.editor==='markdown'){
@@ -476,36 +477,6 @@
                     });
                 }
             });
-            $('#gyf_save_button').on('click',function(){
-                let number = $('#gyf_myform').serialize();
-                            if (number.indexOf('=&')!==-1) {
-                                alert("请填写全部信息");
-                            } else {
-                                if (choice === 1) {
-                                    description = editor2.txt.html();
-                                    companyIntroduce = editor3.txt.html();
-                                    applyApproach = editor4.txt.html();
-                                } else {
-                                    description = $('#gyf_post_description>*').html();
-                                    companyIntroduce = $('#gyf_post_companyIntroduce>*').html();
-                                    applyApproach = $('#gyf_post_applyApproach>*').html();
-                                }
-                                let datas = $('#gyf_myform').serialize();
-                                let editor;
-                                if(choice===1){
-                                    editor='fuwenben';
-                                }else{
-                                    editor='markdown';
-                                }
-                                datas = datas + '&description=' + description + '&applyApproach=' + applyApproach + '&companyIntroduce=' + companyIntroduce+'&editor='+editor+'&jobId='+jobId;
-                                $.post('/saveChangeJob', datas).done(function (data) {
-                                    alert("提交成功,已经保存至草稿箱");
-                                    window.location.href = './drafts.html';
-                                }).fail(function (xhr, status) {
-                                    console.log('失败: ' + xhr.status + ', 原因: ' + status);
-                                })
-                            }
-            })
 </script>
 <script src="../js/common.js"></script>
 

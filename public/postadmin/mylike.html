@@ -62,7 +62,6 @@
 <script>
     let str = '';
     $.get('/getlikesjob', function (data) {
-        console.log(data);
         if (data === 'no') {
             alert('登陆过期，重新登录！');
             top.location = '../index.html'
@@ -123,20 +122,15 @@
 
     function change(e) {
         e.stopPropagation();
-        console.log($(e.target.parentNode).data('pid'))
     }
 
     //批量删除
     function delchosen() {
         let jobsid = [];
-        console.log($('tbody input[type=checkbox]:checked'));
         $('tbody input[type=checkbox]:checked').each(function () {
             let pid = $(this).parents('tr').find('a').data('pid');
-            console.log('pid: ' + pid);
             jobsid.push(pid);
         });
-        console.log(jobsid);
-
         if (jobsid.length === 0) {
             layer.alert("无职位可操作！");
         } else {

@@ -6,7 +6,7 @@ $(document).ready(function () {
             result+=`
                      <tr class="text-c">
                           <td><input type="checkbox"/></td>
-                          <td >${users[i].id}</td>
+                          <td>${users[i].id}</td>
                           <td>${users[i].email}</td>
                           <td>${users[i].identity}</td>
                           <td>${users[i].status},${users[i].isactive?'已激活':'未激活'}</td>

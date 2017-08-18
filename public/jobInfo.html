@@ -5,8 +5,6 @@
 	<meta charset="utf-8">
 	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-	<!-- <script type="text/javascript" src='./src/semantic.min.js'></script> -->
-	<!-- <script src="../node_modules/social-share.js/dist/js/social-share.min.js"></script> -->
 	<script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
 	<script src="http://api.map.baidu.com/api?v=2.0&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
@@ -131,26 +129,21 @@
 					</div>
 					<div class="ui divider gyf_divider"></div>
 					<div>
-						<h2 class="left">工作地点</h2>
+						<h2 class="left">公司详细位置</h2>
 						<br/>
-						<div id="allmap" style="width: 100%;height: 300px"></div>
+						<div id="allmap" style="width: 100%;height: 400px"></div>
 						<script type="text/javascript">
-                            var map = new BMap.Map("allmap");
-                            var point = new BMap.Point(116.331398,39.897445);
-                            map.centerAndZoom(point,12);
-
-                            var geolocation = new BMap.Geolocation();
-                            geolocation.getCurrentPosition(function(r){
-                                if(this.getStatus() == BMAP_STATUS_SUCCESS){
-                                    var mk = new BMap.Marker(r.point);
-                                    map.addOverlay(mk);
-                                    map.panTo(r.point);
-                                    alert('您的位置：'+r.point.lng+','+r.point.lat);
-                                }
-                                else {
-                                    alert('failed'+this.getStatus());
-                                }
-                            },{enableHighAccuracy: true})
+							let myaddress = 'showLocation&&showLocation({"status":0,"result":{"location":{"lng":116.30815063007148,"lat":40.056890127931279},"precise":1,"confidence":80,"level":"道路"}})';
+							myaddress = myaddress.split('showLocation&&showLocation(')[1].split(')')[0];
+                            myaddress = JSON.parse(myaddress);
+                            console.log(myaddress.result.location.lat);
+                            console.log(myaddress.result.location.lng);
+                            // 百度地图API功能
+                            let map = new BMap.Map("allmap");    // 创建Map实例
+                            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+                            map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+                            map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+                            map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 						</script>
 					</div>
 
@@ -195,7 +188,6 @@
 		datas.id = myurl[1];
 		$.post('/getJobDetail', datas).done(function (data) {
 			data = data[0];
-			console.log('data[0]:' + data);
 			$('#gyf_postInfo_image').attr('src', data.Logo);
 			$('#gyf_title').text(data.title);
 			$('#gyf_inner_company_name').text(data.company);
@@ -211,9 +203,10 @@
 			$('#gyf_expiry_time').text(data.expiryDate);
 			$('#gyf_company_type').text(data.companyType);
 			$('#gyf_company_size').text(data.companySize);
-			$('#gyf_descript_content').html(data.description);/*html问题*/
+			$('#gyf_descript_content').html(data.description);
 			$('#gyf_company_introduce_content').html(data.companyIntroduce);
 			$('#gyf_apply_content').html(data.applyApproach);
+           	let mytrueaddress = data.applyApproach.replace(/[^\u4e00-\u9fa5]/gi,"");
 			let language_tags = data.tags.split(',');
 			let benefits_tags = data.benefits.split(',');
 			$("#gyf_jobInfo_tag1").text(language_tags[0]);
@@ -221,20 +214,20 @@
 			$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
 			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
 			$("#gyf_jobInfo_Education").text(data.education);
-			$('#gyf_jobInfo_num').text(data.num);/*人数问题*/
+			$('#gyf_jobInfo_num').text(data.num);
 			jobId = data.id;
 			num = data.likes + 1;
-			//	console.log('jobId:'+jobId);
-			$.post('/isLike', { 'id': jobId }).done(function (reply) {
-				
-					console.log('into /islike');
-					console.log(reply);
-					
+//            let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${mytrueaddress}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
+//            $.get(`${myadress}`,function (ans) {
+//                let ans = JSON.parse(ans);
+//
+//            });
+
+			$.post('/isLike', { 'id': jobId }).done(function (reply) {	
 				if (reply === 'false' || 'first_notlog') {
 					status = '可收藏';
 				} 
 			 if (reply === 'true') {
-					console.log("已收藏")
 					$('#gyf_like_button').css('background-color','red');
 					status = '已收藏';
 				}
@@ -250,14 +243,11 @@
 		datas.category = category;
 		datas.type = type;
 		datas.title = title;
-		/*发送给后台的是一个对象{category:xxx,type:xxx,title:xxx}*/
-		/*返回给我的是[{},{},{},{}]*/
-		/*缺陷：list里的tag 还没做*/
+
 
 		$.post('/getSuggestion', datas).done(
 			function (data) {
 				let suggestion = '';
-				console.log(data);
 				for (let object of data) {
 					let tags = object.tags.split(',');
 					suggestion = suggestion +
@@ -280,7 +270,6 @@
 	}
 	$('#gyf_jobInfo_post').on('click', function () {
 		$.get('/getUserInfo', function (ans) {
-			console.log('ans:' + ans);
 			if (ans !== 'no') {
 				if (ans.identity === "职位发布者" && ans.status === "已审核") {
 					window.location.href = './postadmin';
@@ -295,22 +284,14 @@
 		});
 	});
 	$('#gyf_like_button').on('click', function () {
-		console.log('gyf_like_button');
-		console.log('status:' + status);
 		if (status === '可收藏') {
 		
 			$.post('/addOneUser', { 'id': jobId }).done(function (good) {
-				console.log('into addOneuser');
-				console.log(good);
 				if (good !== 'notlog') {
 					$('#gyf_like_button').css('background-color','red');
 					$('#gyf_like_number').text(num);
-					//console.log('addOneUser'+good);
 					$.post('/addOneLike', { 'id': jobId, 'num': num }).done(function (result) {
-						// console.log('into /addOneLike');
-						// console.log(result);
 						status = '已收藏';
-						// console.log('addOneLike'+result);
 					}).fail(function (xhr, status) {
 						console.log('500服务器出错');
 					});

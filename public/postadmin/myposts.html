@@ -91,7 +91,7 @@
                             <td width="100">${status}</td>
                             <td width="50" style="text-align: center;">
                             <!--//这里修改为 点击后跳转到修改页面-->
-                                <a href="./update.html?id=${data[i].id}" onclick="check(event)" title="编辑" " class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
+                                <a href="./changePutJob.html?id=${data[i].id}" onclick="check(event)" title="编辑" " class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6df;</i>
                                 </a>
                                 <a title="删除" onclick=" delpost(event)" class="ml-5" data-pid=${data[i].id} style="text-decoration:none">
@@ -114,7 +114,6 @@
     function delpost(e) {
         e.stopPropagation();
         let pid = $(e.target.parentNode).data('pid');
-        console.log(pid)
         layer.confirm('确认要删除职位吗？', function () {
             $.post('/deletejob', {jobid: pid})
                 .done(function (data) {
@@ -138,14 +137,10 @@
     //批量删除
     function delchosen() {
         let jobsid = [];
-        console.log($('tbody input[type=checkbox]:checked'));
         $('tbody input[type=checkbox]:checked').each(function () {
             let pid = $(this).parents('tr').find('a').data('pid');
-            console.log('pid: ' + pid);
             jobsid.push(pid);
         });
-        console.log(jobsid);
-
         if (jobsid.length === 0) {
             layer.alert("无职位可操作！");
         } else {
