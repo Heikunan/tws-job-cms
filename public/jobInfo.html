@@ -133,17 +133,21 @@
 						<br/>
 						<div id="allmap" style="width: 100%;height: 400px"></div>
 						<script type="text/javascript">
-							let myaddress = 'showLocation&&showLocation({"status":0,"result":{"location":{"lng":116.30815063007148,"lat":40.056890127931279},"precise":1,"confidence":80,"level":"道路"}})';
-							myaddress = myaddress.split('showLocation&&showLocation(')[1].split(')')[0];
-                            myaddress = JSON.parse(myaddress);
-                            console.log(myaddress.result.location.lat);
-                            console.log(myaddress.result.location.lng);
+
                             // 百度地图API功能
-                            let map = new BMap.Map("allmap");    // 创建Map实例
-                            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
-                            map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
-                            map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
-                            map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+                            let map = new BMap.Map("allmap");
+                            map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
+                            map.enableScrollWheelZoom(true);
+
+//                            let myaddress = 'showLocation&&showLocation({"status":0,"result":{"location":{"lng":116.30815063007148,"lat":40.056890127931279},"precise":1,"confidence":80,"level":"道路"}})';
+//                            myaddress = myaddress.split('showLocation&&showLocation(')[1].split(')')[0];
+//                            myaddress = JSON.parse(myaddress);
+//                            console.log(myaddress.result.location.lat);
+//                            console.log(myaddress.result.location.lng);
+//							let new_point = new BMap.Point(myaddress.result.location.lng,myaddress.result.location.lat);
+//							let marker = new BMap.Marker(new_point);  // 创建标注
+//							map.addOverlay(marker);              // 将标注添加到地图中
+//							map.panTo(new_point);
 						</script>
 					</div>
 
@@ -217,11 +221,11 @@
 			$('#gyf_jobInfo_num').text(data.num);
 			jobId = data.id;
 			num = data.likes + 1;
-//            let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${mytrueaddress}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
-//            $.get(`${myadress}`,function (ans) {
-//                let ans = JSON.parse(ans);
-//
-//            });
+            let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${mytrueaddress}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
+            $.get(`${myadress}`,function (myans) {
+                let ans = JSON.parse(myans);
+				console.log(ans);
+            });
 
 			$.post('/isLike', { 'id': jobId }).done(function (reply) {	
 				if (reply === 'false' || 'first_notlog') {

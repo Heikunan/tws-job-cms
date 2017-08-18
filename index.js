@@ -981,3 +981,14 @@ app.post('/dellikesjob',urlencodedParser,function (req,res) {
 })
 /**/
 
+
+app.post('/suibiansou',urlencodedParser,function (req,res) {
+   let text=req.body.text;
+   let sql="SELECT * FROM t_job WHERE CONCAT(title,company,description,applyApproach,category,jobType,tags,city,country,salary,companyIntroduce,companyType,companySize,benefits,area,num,education) like '%"+text+"%' ORDER BY expiryDate DESC";
+    connection.query(sql,function (err,jobs) {
+       if(err) {
+           console.log(err);
+       }
+       res.send(jobs);
+    });
+});
