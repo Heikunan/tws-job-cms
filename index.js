@@ -56,12 +56,12 @@ let upload = multer({ storage: storage });
 
 /**连接发送邮件的邮箱*/
 let mailTransport = nodemailer.createTransport({
-    host: 'smtp.126.com',
-    port: 25,
+    host: 'smtp.163.com',
+    port: 465,
     secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
     auth: {
-        user: "thoughtworkersfive@126.com",
-        pass: "111aaa"
+        user: '15779165029@163.com',
+        pass: 'WU55555'
     }
 });
 
@@ -268,7 +268,7 @@ app.post('/send', function (req, res, next) {
             } else {
                 /*设置邮件信息,如果可以插入数据库中*/
                 let options = {
-                    from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
+                    from: '15779165029@163.com',
                     to: email,
                     subject: '注册成功，请激活！',
                     text: '欢迎注册',
@@ -310,7 +310,7 @@ app.post('/resend', function (req, res) {
             //邮件中显示的信息
             let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
             let options = {
-                from: 'thoughtworkersfive<thoughtworkersfive@126.com>',
+                from: '15779165029@163.com',
                 to: email,
                 subject: '注册成功，请激活！',
                 text: '欢迎注册',
