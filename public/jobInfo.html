@@ -133,21 +133,10 @@
 						<br/>
 						<div id="allmap" style="width: 100%;height: 400px"></div>
 						<script type="text/javascript">
-
                             // 百度地图API功能
                             let map = new BMap.Map("allmap");
                             map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
                             map.enableScrollWheelZoom(true);
-
-//                            let myaddress = 'showLocation&&showLocation({"status":0,"result":{"location":{"lng":116.30815063007148,"lat":40.056890127931279},"precise":1,"confidence":80,"level":"道路"}})';
-//                            myaddress = myaddress.split('showLocation&&showLocation(')[1].split(')')[0];
-//                            myaddress = JSON.parse(myaddress);
-//                            console.log(myaddress.result.location.lat);
-//                            console.log(myaddress.result.location.lng);
-//							let new_point = new BMap.Point(myaddress.result.location.lng,myaddress.result.location.lat);
-//							let marker = new BMap.Marker(new_point);  // 创建标注
-//							map.addOverlay(marker);              // 将标注添加到地图中
-//							map.panTo(new_point);
 						</script>
 					</div>
 
@@ -210,7 +199,7 @@
 			$('#gyf_descript_content').html(data.description);
 			$('#gyf_company_introduce_content').html(data.companyIntroduce);
 			$('#gyf_apply_content').html(data.applyApproach);
-           	let mytrueaddress = data.applyApproach.replace(/[^\u4e00-\u9fa5]/gi,"");
+           	let mytrueaddress = data.company;
 			let language_tags = data.tags.split(',');
 			let benefits_tags = data.benefits.split(',');
 			$("#gyf_jobInfo_tag1").text(language_tags[0]);
@@ -222,11 +211,23 @@
 			jobId = data.id;
 			num = data.likes + 1;
             let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${mytrueaddress}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
-            $.get(`${myadress}`,function (myans) {
-                let ans = JSON.parse(myans);
-				console.log(ans);
+            console.log(mytrueaddress);
+			$.ajax({
+                url:myadress,
+                type:'get',
+                dataType: 'jsonp',
+                success:function(data){
+                    let myaddress = data;
+                    lat = parseInt(myaddress.result.location.lat);
+                    lng = parseInt(myaddress.result.location.lng);
+                    let new_point = new BMap.Point(lng,lat);
+                    let marker = new BMap.Marker(new_point);  // 创建标注
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    map.panTo(new_point);
+                    console.log(myaddress.result.location.lat);
+                    console.log(myaddress.result.location.lng);
+                }
             });
-
 			$.post('/isLike', { 'id': jobId }).done(function (reply) {	
 				if (reply === 'false' || 'first_notlog') {
 					status = '可收藏';
