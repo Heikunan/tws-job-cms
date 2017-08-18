@@ -13,14 +13,17 @@ $(document).ready(function () {
         }
 
         $.post('/searchjobs',{jobtype:'',category:'',jobname:''},function (jobs) {
-            let result='';
-            for(let i=0;i<jobs.length;i++){
-                if(islike(jobs[i].id)){
-                    result+=`<tr style="background-color: #F37B34">`
-                }else {
-                    result+=`<tr>`;
-                }
-                result+=`
+            if(jobs.length===0){
+                $('tbody').empty().append("<tr><td colspan='9'>暂无任何记录!</td></tr>");
+            }else{
+                let result='';
+                for(let i=0;i<jobs.length;i++){
+                    if(islike(jobs[i].id)){
+                        result+=`<tr style="background-color: #F37B34">`
+                    }else {
+                        result+=`<tr>`;
+                    }
+                    result+=`
                 <td width="20"><input type="checkbox" name="" value=""></td>
 				<td width="70">${jobs[i].id}</td>
 				<td width="120">${jobs[i].userId}</td>
@@ -41,13 +44,14 @@ $(document).ready(function () {
  				    </a>
  				</td>
             </tr>   `
+                }
+                $("#sum").html(jobs.length);
+                if(result.length===0){
+                    $('tbody').append("<tr><td colspan='9'>暂无任何记录!</td></tr>");
+                }
+                $('tbody').empty().append(result);
+                changeback();
             }
-            $("#sum").html(jobs.length);
-            if(result.length===0){
-                $('tbody').append("<tr><td colspan='9'>暂无任何记录!</td></tr>");
-            }
-            $('tbody').empty().append(result);
-            changeback();
         });
     });
 });
