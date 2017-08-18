@@ -180,6 +180,7 @@
 		let datas = {};
 		datas.id = myurl[1];
 		$.post('/getJobDetail', datas).done(function (data) {
+		    console.log(data);
 			data = data[0];
 			$('#gyf_postInfo_image').attr('src', data.Logo);
 			$('#gyf_title').text(data.title);
@@ -199,7 +200,6 @@
 			$('#gyf_descript_content').html(data.description);
 			$('#gyf_company_introduce_content').html(data.companyIntroduce);
 			$('#gyf_apply_content').html(data.applyApproach);
-           	let mytrueaddress = data.company;
 			let language_tags = data.tags.split(',');
 			let benefits_tags = data.benefits.split(',');
 			$("#gyf_jobInfo_tag1").text(language_tags[0]);
@@ -210,24 +210,26 @@
 			$('#gyf_jobInfo_num').text(data.num);
 			jobId = data.id;
 			num = data.likes + 1;
-            let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${mytrueaddress}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
-            console.log(mytrueaddress);
-			$.ajax({
-                url:myadress,
-                type:'get',
-                dataType: 'jsonp',
-                success:function(data){
-                    let myaddress = data;
-                    lat = parseInt(myaddress.result.location.lat);
-                    lng = parseInt(myaddress.result.location.lng);
-                    let new_point = new BMap.Point(lng,lat);
-                    let marker = new BMap.Marker(new_point);  // 创建标注
-                    map.addOverlay(marker);              // 将标注添加到地图中
-                    map.panTo(new_point);
-                    console.log(myaddress.result.location.lat);
-                    console.log(myaddress.result.location.lng);
-                }
+            $.post('/useridgetuser',{userid:data.userId},function (ans) {
+                let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${ans[0].address}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
+                $.ajax({
+                    url:myadress,
+                    type:'get',
+                    dataType: 'jsonp',
+                    success:function(data){
+                        let myaddress = data;
+                        lat = parseInt(myaddress.result.location.lat);
+                        lng = parseInt(myaddress.result.location.lng);
+                        let new_point = new BMap.Point(lng,lat);
+                        let marker = new BMap.Marker(new_point);  // 创建标注
+                        map.addOverlay(marker);              // 将标注添加到地图中
+                        map.panTo(new_point);
+                        console.log(myaddress.result.location.lat);
+                        console.log(myaddress.result.location.lng);
+                    }
+                });
             });
+
 			$.post('/isLike', { 'id': jobId }).done(function (reply) {	
 				if (reply === 'false' || 'first_notlog') {
 					status = '可收藏';

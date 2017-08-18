@@ -978,9 +978,15 @@ app.post('/dellikesjob',urlencodedParser,function (req,res) {
             }
         })
     }
-})
+});
 /**/
-
+app.post('/useridgetuser',urlencodedParser,function (req,res) {
+    let userid = req.body.userid;
+    let sql = `SELECT * FROM t_user WHERE id = ${userid}`;
+    connection.query(sql,function (err,reply) {
+        res.send(reply);
+    })
+});
 
 app.post('/suibiansou',urlencodedParser,function (req,res) {
    let text=req.body.text;
