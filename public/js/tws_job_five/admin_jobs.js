@@ -107,7 +107,6 @@ function delchosen() {
         });
     }
 }
-
 /*删除此工作*/
 function admin_job_del(obj,id) {
     layer.confirm('工作删除须谨慎，确认要删除吗？',function(index) {
