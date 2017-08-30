@@ -1,7 +1,7 @@
 {
     "name": "tws_job_cms",
     "version": "1.0.0",
-    "description": "",
+    "description": "Coding girl club job system",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
