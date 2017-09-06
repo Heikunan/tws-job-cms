@@ -2,263 +2,225 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
-	<script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
-	<script src="http://api.map.baidu.com/api?v=2.0&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./src/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./src/js/bootstrap.min.js"></script>
+    <script src="http://overtrue.me/share.js/dist/js/share.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./src/semantic.min.css">
 
-	<link rel="stylesheet" type="text/css" href="./src/css/jobInfo.css">
-	<link rel="stylesheet" href="../node_modules/social-share.js/dist/css/share.min.css">
+    <link rel="stylesheet" type="text/css" href="./src/css/jobInfo.css">
+    <link rel="stylesheet" href="../node_modules/social-share.js/dist/css/share.min.css">
 
-	<title>JobInfo</title>
+    <title>JobInfo</title>
 </head>
 
 <body onload="load()">
-	<nav class="navbar navbar-default">
-		<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container">
 
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				 aria-expanded="false">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-				<a href="index.html"><img class="img" id="logo" src="picture/logo.png"/></a>
-			</div>
+                <a href="index.html"><img class="img" id="logo" src="picture/logo.png" /></a>
+            </div>
 
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right myheader-right">
-					<li><a href="./login.html">登陆</a></li>
-					<li><a href="./register.html">注册</a></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
-	<div class="container">
-		<div class="row" style="margin-bottom:5em;">
-			<div class="jumbotron gyf_jumbotron">
-				<div class="ui segment row gyf_jobInfo_head ">
-					<img class="ui small left floated image col-md-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'>
-					<div class="gyf_jumbotron_content col-md-6">
-						<h2 id="gyf_title"></h2>
-						<div class="row gyf_company_name">
-							<div class="col-md-5" id="gyf_inner_company_name" ></div>
-							<div class="col-md-2" id="gyf_inner_company_country"></div>
-						</div>
-						<h3 id="gyf_salary"></h3>
-					</div>
-					<div class="gyf_share col-md-4">
-						<div class="ui labeled button" tabindex="0">
-							<div class="ui red button"  id="gyf_like_button"><i class="heart icon"></i> Like </div>
-							<a class="ui basic  left pointing label" id="gyf_like_number">
-							
-							</a>
-						</div>
-						<div class="share_icon" style="margin-top:1em;">
-							<i class="users icon "></i> 招聘人数：
-							<strong id="gyf_jobInfo_num"></strong>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right myheader-right">
+                    <li><a href="./login.html">登陆</a></li>
+                    <li><a href="./register.html">注册</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="row" style="margin-bottom:5em;">
+            <div class="jumbotron gyf_jumbotron">
+                <div class="ui segment row gyf_jobInfo_head ">
+                    <img class="ui small left floated image col-md-1" src="https://i.stack.imgur.com/Nppgg.jpg" id='gyf_postInfo_image'>
+                    <div class="gyf_jumbotron_content col-md-6">
+                        <h2 id="gyf_title"></h2>
+                        <div class="row gyf_company_name">
+                            <div class="col-md-5" id="gyf_inner_company_name"></div>
+                            <div class="col-md-2" id="gyf_inner_company_country"></div>
+                        </div>
+                        <h3 id="gyf_salary"></h3>
+                    </div>
+                    <div class="gyf_share col-md-4">
+                        <div class="ui labeled button" tabindex="0">
+                            <div class="ui red button" id="gyf_like_button"><i class="heart icon"></i> Like </div>
+                            <a class="ui basic  left pointing label" id="gyf_like_number">
 
-						</div>
-						<div class="share_icon" style="margin-top:1em;">
-							<i class="marker icon"></i> 公司地址：
-							<strong id="gyf_inner_company_area"></strong>
-							<strong id="gyf_inner_company_city"></strong>
-						</div>
+                            </a>
+                        </div>
+                        <div class="share_icon" style="margin-top:1em;">
+                            <i class="users icon "></i> 招聘人数：
+                            <strong id="gyf_jobInfo_num"></strong>
 
-					</div>
-				</div>
-				<div class="gyf_all_left col-xs-8">
-					<div class="ui divider gyf_divider"></div>
-					<div class="row gyf_About">
-						<h2 style="padding-left: 0.5em" class="left"> 关于工作</h2>
-						<div class="row col-md-8 gyf_about_row">
-							<div class="col-xs-5 col-md-5 gyf_about_content">工作性质：<strong id="gyf_job_type">Permanent</strong></div>
-							<div class="col-xs-5 col-md-5 gyf_about_content">工作种类：<strong id="gyf_job_category">Permanent</strong></div>
-						</div>
-						<div class="row col-md-8 gyf_about_row">
-							<div class="col-xs-5 col-md-5 gyf_about_content">公司规模：<strong id="gyf_company_size">Permanent</strong></div>
-							<div class="col-xs-5 col-md-5 gyf_about_content">公司性质： <strong id="gyf_company_type">Permanent</strong></div>
-						</div>
-						<div class="row col-md-8 gyf_about_row">
-							<div class="col-xs-5 col-md-5 gyf_about_content">发布时间：<strong id="gyf_release_time">Permanent</strong></div>
-							<div class="col-xs-5 col-md-5 gyf_about_content">截止时间： <strong id="gyf_expiry_time">Permanent</strong></div>
-						</div>
-					</div>
-					<div class="ui divider gyf_divider"></div>
-					<div class="Tags gyf_tags" style="clear: both;">
-						<h2 class="left">标签</h2>
-						<h2>
-							<span class="label gyf_label_main" id="gyf_jobInfo_Education"></span>
-							<span class="label gyf_label_main" id="gyf_jobInfo_tag1"></span>
-							<span class="label gyf_label_main" id="gyf_jobInfo_tag2"></span>
-							<span class="label gyf_label_main" id="gyf_jobInfo_benefits1"></span>
-							<span class="label gyf_label_main" id="gyf_jobInfo_benefits2"></span>
-						</h2>
-					</div>
-					<div class="ui divider gyf_divider"></div>
-					<div class="gyf_descript">
-						<h2 class="left">职位详情</h2>
-						<div class="description_content" id="gyf_descript_content">
+                        </div>
+                        <div class="share_icon" style="margin-top:1em;">
+                            <i class="marker icon"></i> 公司地址：
+                            <strong id="gyf_inner_company_area"></strong>
+                            <strong id="gyf_inner_company_city"></strong>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="gyf_all_left col-xs-8">
+                    <div class="ui divider gyf_divider"></div>
+                    <div class="row gyf_About">
+                        <h2 style="padding-left: 0.5em" class="left"> 关于工作</h2>
+                        <div class="row col-md-8 gyf_about_row">
+                            <div class="col-xs-5 col-md-5 gyf_about_content">工作性质：<strong id="gyf_job_type">Permanent</strong></div>
+                            <div class="col-xs-5 col-md-5 gyf_about_content">工作种类：<strong id="gyf_job_category">Permanent</strong></div>
+                        </div>
+                        <div class="row col-md-8 gyf_about_row">
+                            <div class="col-xs-5 col-md-5 gyf_about_content">公司规模：<strong id="gyf_company_size">Permanent</strong></div>
+                            <div class="col-xs-5 col-md-5 gyf_about_content">公司性质： <strong id="gyf_company_type">Permanent</strong></div>
+                        </div>
+                        <div class="row col-md-8 gyf_about_row">
+                            <div class="col-xs-5 col-md-5 gyf_about_content">发布时间：<strong id="gyf_release_time">Permanent</strong></div>
+                            <div class="col-xs-5 col-md-5 gyf_about_content">截止时间： <strong id="gyf_expiry_time">Permanent</strong></div>
+                        </div>
+                    </div>
+                    <div class="ui divider gyf_divider"></div>
+                    <div class="Tags gyf_tags" style="clear: both;">
+                        <h2 class="left">标签</h2>
+                        <h2>
+                            <span class="label gyf_label_main" id="gyf_jobInfo_Education"></span>
+                            <span class="label gyf_label_main" id="gyf_jobInfo_tag1"></span>
+                            <span class="label gyf_label_main" id="gyf_jobInfo_tag2"></span>
+                            <span class="label gyf_label_main" id="gyf_jobInfo_benefits1"></span>
+                            <span class="label gyf_label_main" id="gyf_jobInfo_benefits2"></span>
+                        </h2>
+                    </div>
+                    <div class="ui divider gyf_divider"></div>
+                    <div class="gyf_descript">
+                        <h2 class="left">职位详情</h2>
+                        <div class="description_content" id="gyf_descript_content">
 
 
-						</div>
-					</div>
-					<div class="ui divider gyf_divider"></div>
-					<div class="company_introduce">
-						<h2 class="left">公司介绍</h2>
-						<div class="company_introduce_content" id="gyf_company_introduce_content">
-						</div>
-					</div>
-					<div class="ui divider gyf_divider"></div>
-					<div class="gyf_apply_Approach">
-						<h2 class="left">申请方式</h2>
-						<div class="gyf_apply_content" id="gyf_apply_content">
+                        </div>
+                    </div>
+                    <div class="ui divider gyf_divider"></div>
+                    <div class="company_introduce">
+                        <h2 class="left">公司介绍</h2>
+                        <div class="company_introduce_content" id="gyf_company_introduce_content">
+                        </div>
+                    </div>
+                    <div class="ui divider gyf_divider"></div>
+                    <div class="gyf_apply_Approach">
+                        <h2 class="left">申请方式</h2>
+                        <div class="gyf_apply_content" id="gyf_apply_content">
 
-						</div>
+                        </div>
 
-					</div>
-					<div class="ui divider gyf_divider"></div>
-					<div>
-						<h2 class="left">公司详细位置</h2>
-						<br/>
-						<div id="allmap" style="width: 100%;height: 400px"></div>
-						<script type="text/javascript">
+                    </div>
+                    <div class="ui divider gyf_divider"></div>
+                    <div>
+                        <h2 class="left">公司详细位置</h2>
+                        <br/>
+                        <div id="allmap" style="width: 100%;height: 400px"></div>
+                        <script type="text/javascript">
                             // 百度地图API功能
                             let map = new BMap.Map("allmap");
-                            map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
+                            map.centerAndZoom(new BMap.Point(116.331398, 39.897445), 11);
                             map.enableScrollWheelZoom(true);
-						</script>
-					</div>
+                        </script>
+                    </div>
 
-				</div>
-				<div class="gyf_all_right col-xs-4">
-					<div class="panel post-job gyf_panel">
-						<div class="post-job-header panel-heading">
-							<div class="header-img"></div>
-						</div>
-						<div class="post-job-content">
-							<h2>职位招聘</h2>
-							<button class=" btn post_job_button " id="gyf_jobInfo_post">
+                </div>
+                <div class="gyf_all_right col-xs-4">
+                    <div class="panel post-job gyf_panel">
+                        <div class="post-job-header panel-heading">
+                            <div class="header-img"></div>
+                        </div>
+                        <div class="post-job-content">
+                            <h2>职位招聘</h2>
+                            <button class=" btn post_job_button " id="gyf_jobInfo_post">
 		 						<span class="glyphicon glyphicon-new-window gyf_icon" aria-hidden="true"></span>发布职位
 		 					</button>
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-					<div class="social-share" data-description="一键分享到微博，QQ空间，腾讯微博，人人，豆瓣" data-wechat-qrcode-title="扫一扫" data-wechat-qrcode-helper="扫码分享" >
-						分享至:&nbsp;
-					</div>
-					<div class="gyf_more_jobs">
-						<h2 class="right">你可能还想看：</h2>
-						<div id="gyf_list">
-						</div>
-					</div>
+                    <div class="social-share" data-description="一键分享到微博，QQ空间，腾讯微博，人人，豆瓣" data-wechat-qrcode-title="扫一扫" data-wechat-qrcode-helper="扫码分享">
+                        分享至:&nbsp;
+                    </div>
+                    <div class="gyf_more_jobs">
+                        <h2 class="right">你可能还想看：</h2>
+                        <div id="gyf_list">
+                        </div>
+                    </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv">
-		<p>© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center" id="my-footdiv">
+        <p>© Coding Girls Club Copyright 2016 - 2017. All Right Reserved.</p>
+    </div>
 </body>
 <script type="text/javascript">
-	let status;
-	let jobId;
-	let num;
-	function load() {
-		let myurl = window.location.href.split("id=");
-		let datas = {};
-		datas.id = myurl[1];
-		$.post('/getJobDetail', datas).done(function (data) {
-		    console.log(data);
-			data = data[0];
-			$('#gyf_postInfo_image').attr('src', data.Logo);
-			$('#gyf_title').text(data.title);
-			$('#gyf_inner_company_name').text(data.company);
-			$('#gyf_inner_company_area').text(data.area);
-			$('#gyf_inner_company_city').text(data.city);
-			$('#gyf_inner_company_country').text(data.country);
-			$('#gyf_salary').text(data.salary);
-			$('#gyf_job_type').text(data.jobType);
-			$('#gyf_job_category').text(data.category);
-			let releaseTime = data.releaseTime.split('T');
-			$('#gyf_release_time').text(releaseTime[0]);
-			$('#gyf_like_number').text(data.likes);
-			$('#gyf_expiry_time').text(data.expiryDate);
-			$('#gyf_company_type').text(data.companyType);
-			$('#gyf_company_size').text(data.companySize);
-			$('#gyf_descript_content').html(data.description);
-			$('#gyf_company_introduce_content').html(data.companyIntroduce);
-			$('#gyf_apply_content').html(data.applyApproach);
-			let language_tags = data.tags.split(',');
-			let benefits_tags = data.benefits.split(',');
-			$("#gyf_jobInfo_tag1").text(language_tags[0]);
-			$('#gyf_jobInfo_tag2').text(language_tags[1]);
-			$('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
-			$('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
-			$("#gyf_jobInfo_Education").text(data.education);
-			$('#gyf_jobInfo_num').text(data.num);
-			jobId = data.id;
-			num = data.likes + 1;
-            $.post('/useridgetuser',{userid:data.userId},function (ans) {
-                let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${ans[0].address}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
-                $.ajax({
-                    url:myadress,
-                    type:'get',
-                    dataType: 'jsonp',
-                    success:function(data){
-                        let myaddress = data;
-                        lat = parseInt(myaddress.result.location.lat);
-                        lng = parseInt(myaddress.result.location.lng);
-                        let new_point = new BMap.Point(lng,lat);
-                        let marker = new BMap.Marker(new_point);  // 创建标注
-                        map.addOverlay(marker);              // 将标注添加到地图中
-                        map.panTo(new_point);
-                        console.log(myaddress.result.location.lat);
-                        console.log(myaddress.result.location.lng);
-                    }
-                });
-            });
+    let status;
+    let jobId;
+    let num;
 
-			$.post('/isLike', { 'id': jobId }).done(function (reply) {	
-				if (reply === 'false' || 'first_notlog') {
-					status = '可收藏';
-				} 
-			 if (reply === 'true') {
-					$('#gyf_like_button').css('background-color','red');
-					status = '已收藏';
-				}
-			}).fail(function (xhr, status) {
-				console.log('500服务器出错');
-			})
-		}).fail(function (xhr, status) {
-			console.log('失败: ' + xhr.status + ', 原因: ' + status);
-		});
-		let category = $('#gyf_job_category').text();
-		let type = $('#gyf_job_type').text();
-		let title = $('#gyf_title').text();
-		datas.category = category;
-		datas.type = type;
-		datas.title = title;
-
-
-		$.post('/getSuggestion', datas).done(
-			function (data) {
-				let suggestion = '';
-				for (let object of data) {
-					let tags = object.tags.split(',');
-					suggestion = suggestion +
-						`<div class="list-group">
+    function load() {
+        let myurl = window.location.href.split("id=");
+        let datas = {};
+        datas.id = myurl[1];
+        $.post('/getJobDetail', datas).done(function(data) {
+            console.log(data);
+            data = data[0];
+            $('#gyf_postInfo_image').attr('src', data.Logo);
+            $('#gyf_title').text(data.title);
+            $('#gyf_inner_company_name').text(data.company);
+            $('#gyf_inner_company_area').text(data.area);
+            $('#gyf_inner_company_city').text(data.city);
+            $('#gyf_inner_company_country').text(data.country);
+            $('#gyf_salary').text(data.salary);
+            $('#gyf_job_type').text(data.jobType);
+            $('#gyf_job_category').text(data.category);
+            let releaseTime = data.releaseTime.split('T');
+            $('#gyf_release_time').text(releaseTime[0]);
+            $('#gyf_like_number').text(data.likes);
+            $('#gyf_expiry_time').text(data.expiryDate);
+            $('#gyf_company_type').text(data.companyType);
+            $('#gyf_company_size').text(data.companySize);
+            $('#gyf_descript_content').html(data.description);
+            $('#gyf_company_introduce_content').html(data.companyIntroduce);
+            $('#gyf_apply_content').html(data.applyApproach);
+            let language_tags = data.tags.split(',');
+            let benefits_tags = data.benefits.split(',');
+            $("#gyf_jobInfo_tag1").text(language_tags[0]);
+            $('#gyf_jobInfo_tag2').text(language_tags[1]);
+            $('#gyf_jobInfo_benefits1').text(benefits_tags[0]);
+            $('#gyf_jobInfo_benefits2').text(benefits_tags[1]);
+            $("#gyf_jobInfo_Education").text(data.education);
+            $('#gyf_jobInfo_num').text(data.num);
+            jobId = data.id;
+            num = data.likes + 1;
+            let mydatas = {};
+            mydatas.category = data.category;
+            mydatas.type = data.jobType;
+            mydatas.title = data.title;
+            $.post('/getSuggestion', mydatas).done(
+                function(data) {
+                    let suggestion = '';
+                    for (let object of data) {
+                        let tags = object.tags.split(',');
+                        suggestion = suggestion +
+                            `<div class="list-group">
 								<a href="/jobInfo.html?id=${object.id}" class="list-group-item success">
 									<h3 class="list-group-item-heading"> ${object.title} </h3>
 									<p class="list-group-item-text"><strong>${object.company}<br>${object.city}&nbsp;${object.country}</strong></p>
@@ -268,51 +230,92 @@
 									</h3>
 								</a>
 							</div>`;
-				}
-				$('#gyf_list').append(suggestion);
-			}).fail(function (xhr, status) {
-				console.log('失败: ' + xhr.status + ', 原因: ' + status);
-			})
+                    }
+                    $('#gyf_list').append(suggestion);
+                }).fail(function(xhr, status) {
+                console.log('失败: ' + xhr.status + ', 原因: ' + status);
+            })
+            $.post('/useridgetuser', {
+                userid: data.userId
+            }, function(ans) {
+                let myadress = `http://api.map.baidu.com/geocoder/v2/?address=${ans[0].address}&output=json&ak=2HIPlVz2fBDQQhxGyWDamOXxNo7ovkG8&callback=showLocation`
+                $.ajax({
+                    url: myadress,
+                    type: 'get',
+                    dataType: 'jsonp',
+                    success: function(data) {
+                        let myaddress = data;
+                        lat = parseInt(myaddress.result.location.lat);
+                        lng = parseInt(myaddress.result.location.lng);
+                        let new_point = new BMap.Point(lng, lat);
+                        let marker = new BMap.Marker(new_point); // 创建标注
+                        map.addOverlay(marker); // 将标注添加到地图中
+                        map.panTo(new_point);
+                        console.log(myaddress.result.location.lat);
+                        console.log(myaddress.result.location.lng);
+                    }
+                });
+            });
 
-	}
-	$('#gyf_jobInfo_post').on('click', function () {
-		$.get('/getUserInfo', function (ans) {
-			if (ans !== 'no') {
-				if (ans.identity === "职位发布者" && ans.status === "已审核") {
-					window.location.href = './postadmin';
-				} else if (ans.identity === "管理员") {
-					window.location.href = '/admin';
-				} else if (ans.identity === "职位发布者" && ans.status === "待审核") {
-					alert("不好意思，你没有发布权限,请联系微信客服");
-				}
-			} else {
-				alert('请先登录');
-			}
-		});
-	});
-	$('#gyf_like_button').on('click', function () {
-		if (status === '可收藏') {
-		
-			$.post('/addOneUser', { 'id': jobId }).done(function (good) {
-				if (good !== 'notlog') {
-					$('#gyf_like_button').css('background-color','red');
-					$('#gyf_like_number').text(num);
-					$.post('/addOneLike', { 'id': jobId, 'num': num }).done(function (result) {
-						status = '已收藏';
-					}).fail(function (xhr, status) {
-						console.log('500服务器出错');
-					});
-				} else {
-					alert("请先登录");
-				}
-			}).fail(function (xhr, status) {
-				console.log('500服务器出错');
-			})
-		} else if (status === '已收藏') {
-			alert('此职位你已经收藏过了');
-		}
-	});
+            $.post('/isLike', {
+                'id': jobId
+            }).done(function(reply) {
+                if (reply === 'false' || 'first_notlog') {
+                    status = '可收藏';
+                }
+                if (reply === 'true') {
+                    $('#gyf_like_button').css('background-color', 'red');
+                    status = '已收藏';
+                }
+            }).fail(function(xhr, status) {
+                console.log('500服务器出错');
+            })
+        }).fail(function(xhr, status) {
+            console.log('失败: ' + xhr.status + ', 原因: ' + status);
+        });
+    }
+    $('#gyf_jobInfo_post').on('click', function() {
+        $.get('/getUserInfo', function(ans) {
+            if (ans !== 'no') {
+                if (ans.identity === "职位发布者" && ans.status === "已审核") {
+                    window.location.href = './postadmin';
+                } else if (ans.identity === "管理员") {
+                    window.location.href = '/admin';
+                } else if (ans.identity === "职位发布者" && ans.status === "待审核") {
+                    alert("不好意思，你没有发布权限,请联系微信客服");
+                }
+            } else {
+                alert('请先登录');
+            }
+        });
+    });
+    $('#gyf_like_button').on('click', function() {
+        if (status === '可收藏') {
 
+            $.post('/addOneUser', {
+                'id': jobId
+            }).done(function(good) {
+                if (good !== 'notlog') {
+                    $('#gyf_like_button').css('background-color', 'red');
+                    $('#gyf_like_number').text(num);
+                    $.post('/addOneLike', {
+                        'id': jobId,
+                        'num': num
+                    }).done(function(result) {
+                        status = '已收藏';
+                    }).fail(function(xhr, status) {
+                        console.log('500服务器出错');
+                    });
+                } else {
+                    alert("请先登录");
+                }
+            }).fail(function(xhr, status) {
+                console.log('500服务器出错');
+            })
+        } else if (status === '已收藏') {
+            alert('此职位你已经收藏过了');
+        }
+    });
 </script>
 <script src="./js/common.js"></script>
 
