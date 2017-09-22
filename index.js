@@ -279,7 +279,7 @@ app.post('/send', function(req, res, next) {
         connection.query(sql, sqlinfor, function(err, result) {
             if (err) {
                 //插入失败，返回false，就是用户已经存在
-                res.send(false);
+                res.send(false);//账号已存在，返回false
             } else {
                 /*设置邮件信息,如果可以插入数据库中*/
                 let options = {
@@ -295,7 +295,7 @@ app.post('/send', function(req, res, next) {
                         return console.log(err);
                     }
                 });
-                res.send(true);
+                res.send(true);//可注册，返回true
             }
         });
     }
@@ -318,12 +318,11 @@ app.post('/resend', function(req, res) {
     let addSql = 'select * from t_user where email=?';
     let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function(err, result) {
-        if (err) {
-            console.log(err);
-        }
         if (result.length === 0) {
             res.send('null'); //用户不存在,则返回null
-        } else {
+        } else if(result[0].isactive===1){
+            res.send('wrong');//用户已激活，则返回wrong
+        }else{
             //邮件中显示的信息
             let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
             let options = {
@@ -377,27 +376,34 @@ app.get('/confirm', function(req, res, next) {
 app.post('/login', urlencodedParser, function(req, res) {
     let email = req.body.email;
     let password = req.body.password;
+    let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!myreg.test(email)) {
+        res.send('wrong_em')//邮箱格式错误，则返回wrong_em
+    }else{
     let addSql = 'select * from t_user where email=?';
     let addSqlParams = [email];
     connection.query(addSql, addSqlParams, function(err, result) {
-        if (err) { console.log(err); }
-        if (result.length === 0) {
-            res.send('null'); //用户不存在,则返回null
-        } else {
-            if (result[0].password !== password) {
-                res.send('wrong') //用户存在，但密码错误,返回wrong
-            } else {
-                if (result[0].isactive === 0) {
-                    res.send('inactivated') //用户存在,但账号未激活，返回inactivated
-                } else {
-                    result[0].email = req.body.email;
-                    req.session.user = result[0];
-                    res.send('ok');
-                } //用户存在,且账号已激活，返回OK
+            if (err) { console.log(err);
             }
-        }
-    })
-});
+            if (result.length === 0) {
+                res.send('null'); //用户不存在,则返回null
+            } else {
+                if (result[0].password !== password) {
+                    res.send('wrong_pw') //用户存在，但密码错误,返回wrong_pw
+                } else {
+                    if (result[0].isactive === 0) {
+                        res.send('inactivated') //用户存在,但账号未激活，返回inactivated
+                    } else {
+                        result[0].email = req.body.email;
+                        req.session.user = result[0];
+                        res.send('ok');
+                    } //用户存在,且账号已激活，返回OK
+                }
+            }
+        })
+    }
+    }
+);
 /*取得某个职位的详细信息*/
 app.post('/getJobDetail', urlencodedParser, function(req, res) {
     let sql = 'SELECT * FROM t_job where id =' + req.body.id;
