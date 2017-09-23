@@ -314,33 +314,38 @@ app.get('/tjobcount', function(req, res) {
 app.post('/resend', function(req, res) {
     /*得到前台的数据*/
     let email = req.body.email;
-    //在数据库中查找
-    let addSql = 'select * from t_user where email=?';
-    let addSqlParams = [email];
-    connection.query(addSql, addSqlParams, function(err, result) {
-        if (result.length === 0) {
-            res.send('null'); //用户不存在,则返回null
-        } else if(result[0].isactive===1){
-            res.send('wrong');//用户已激活，则返回wrong
-        }else{
-            //邮件中显示的信息
-            let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
-            let options = {
-                from: '15779165029@163.com',
-                to: email,
-                subject: '注册成功，请激活！',
-                text: '欢迎注册',
-                html: html
-            };
-            /*发送邮件*/
-            mailTransport.sendMail(options, function(err, msg) {
-                if (err) {
-                    return console.log(err);
-                }
-            });
-            res.send(true);
-        }
-    });
+    let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (!myreg.test(email)) {
+        res.send('wrong_em');
+    }else {
+        //在数据库中查找
+        let addSql = 'select * from t_user where email=?';
+        let addSqlParams = [email];
+        connection.query(addSql, addSqlParams, function (err, result) {
+            if (result.length === 0) {
+                res.send('null'); //用户不存在,则返回null
+            } else if (result[0].isactive === 1) {
+                res.send('wrong');//用户已注册激活，则返回wrong
+            } else {
+                //邮件中显示的信息
+                let html = "欢迎注册本公司账号，请<a href='http://localhost:8081/confirm?hex=" + cp.hex(email) + "'>点击此处</a>激活账号！点击链接后页面将跳转至首页。";
+                let options = {
+                    from: '15779165029@163.com',
+                    to: email,
+                    subject: '注册成功，请激活！',
+                    text: '欢迎注册',
+                    html: html
+                };
+                /*发送邮件*/
+                mailTransport.sendMail(options, function (err, msg) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+                res.send(true);//账号已注册未激活，返回true
+            }
+        });
+    }
 });
 
 //主页获取五条热门职位
