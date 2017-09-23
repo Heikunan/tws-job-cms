@@ -13,8 +13,11 @@ $(function () {
                 $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>账号已注册，请前往首页登陆。5秒后页面将跳转至首页！！</div>');
                 window.setTimeout("window.location='/'",5000);
-            }
-            else{
+            }else if (data='wrong_em') {
+                $('.flash_container').empty();
+                $('.flash_container').append('<div class=alert>邮箱格式错误！</div>');
+                hide();
+            } else {
                 $('.flash_container').empty();
                 $('.flash_container').append('<div class=alert>该账号尚未注册，请注册！</div>');
                 hide();
