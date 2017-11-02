@@ -390,7 +390,7 @@ app.post('/login', urlencodedParser, function(req, res) {
     connection.query(addSql, addSqlParams, function(err, result) {
             if (err) { console.log(err);
             }
-            if (result.length === 0) {
+            if (result || result.length === 0) {
                 res.send('null'); //用户不存在,则返回null
             } else {
                 if (result[0].password !== password) {
