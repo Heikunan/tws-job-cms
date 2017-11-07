@@ -1,0 +1,31 @@
+body {
+    background-image: url("../../picture/logo.png");
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 5%;
+    background-size: 35%;
+}
+
+.head{
+    color: #7a7a7a;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.desc_link{
+    font-size: 18px;
+    color:  black;
+    text-decoration: none;
+    position: relative;
+}
+
+#feel{
+    color: #ffc83d;
+}
+
+.desc_link:hover {
+    color:  black;
+    text-decoration: underline;
+}
