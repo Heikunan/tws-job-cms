@@ -1035,3 +1035,8 @@ app.post('/suibiansou', urlencodedParser, function(req, res) {
         res.send(jobs);
     });
 });
+
+//404页面
+app.use(function(req, res, next) {
+    res.status(404).redirect('/404err.html');
+});
